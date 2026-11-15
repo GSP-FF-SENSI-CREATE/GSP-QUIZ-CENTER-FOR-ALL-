@@ -444,4 +444,75 @@ async function finishQuiz(){
  document.getElementById("resultBox").classList.remove("hidden");
 
  document.getElementById("finalScore").textContent="आपके Points: "+score;
- document
+ document.getElementById("resultMessage").textContent =
+    score >= 100 ? "शानदार प्रदर्शन! 🎉" : "अच्छी कोशिश! अगली बार और बेहतर करो।";
+
+  const playerRef = db.ref("leaderboard/" + currentUser.uid);
+
+  try {
+    await playerRef.transaction(oldData => {
+      oldData = oldData || {
+        uid: currentUser.uid,
+        name: document.getElementById("playerName").value.trim() || currentUser.displayName || "Player",
+        points: 0
+      };
+
+      oldData.name = document.getElementById("playerName").value.trim() || currentUser.displayName || "Player";
+      oldData.points = (Number(oldData.points) || 0) + score;
+      oldData.uid = currentUser.uid;
+
+      return oldData;
+    });
+
+    alert("आपके Points Leaderboard में जुड़ गए! 🎉");
+    loadLeaderboard();
+  } catch (error) {
+    alert("Points सेव नहीं हुए: " + error.message);
+  }
+}
+
+async function loadLeaderboard() {
+  const list = document.getElementById("leaderboard");
+  list.innerHTML = "Loading...";
+
+  try {
+    const snapshot = await db.ref("leaderboard").once("value");
+    const players = [];
+
+    snapshot.forEach(child => {
+      players.push(child.val());
+    });
+
+    players.sort((a, b) => (Number(b.points) || 0) - (Number(a.points) || 0));
+
+    list.innerHTML = "";
+
+    players.slice(0, 10).forEach((player, index) => {
+      const item = document.createElement("div");
+      item.className = "leader-item";
+      item.textContent = `${index + 1}. ${player.name} — ${player.points} Points`;
+      list.appendChild(item);
+    });
+
+    if (players.length === 0) {
+      list.textContent = "अभी कोई खिलाड़ी नहीं है।";
+    }
+  } catch (error) {
+    list.textContent = "Leaderboard लोड नहीं हुआ।";
+  }
+}
+
+function showLeaderboard() {
+  loadLeaderboard();
+  document.getElementById("leaderBox").classList.remove("hidden");
+  document.getElementById("leaderBox").scrollIntoView({ behavior: "smooth" });
+}
+
+function goHome() {
+  hideSections();
+  document.getElementById("homeBox").classList.remove("hidden");
+}
+
+</script>
+</body>
+</html>
