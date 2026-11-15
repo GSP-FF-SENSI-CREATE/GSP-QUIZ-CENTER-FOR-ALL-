@@ -1,0 +1,355 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GSP QUIZ CENTER FOR ALL | Online Quiz</title>
+
+<meta name="description" content="GSP QUIZ CENTER FOR ALL - Play Free Fire, Free Fire India, Cricket, BTS, Movies and General Knowledge quizzes. Test your knowledge and earn points!">
+
+<meta name="keywords" content="GSP Quiz Center, GSP Coaching Center, GSP Quiz Center For All, Free Fire Quiz, Free Fire India Quiz, Cricket Quiz, BTS Quiz, Movies Quiz, GK Quiz">
+
+<meta name="author" content="GSP QUIZ CENTER">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#101020">
+
+<link rel="canonical" href="https://gsp-ff-sensi-create.github.io/GSP-QUIZ-CENTER/">
+
+<meta property="og:title" content="GSP QUIZ CENTER FOR ALL">
+<meta property="og:description" content="Play quizzes, earn points and reach the Top 10 leaderboard!">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gsp-ff-sensi-create.github.io/GSP-QUIZ-CENTER/">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "GSP QUIZ CENTER FOR ALL",
+  "url": "https://gsp-ff-sensi-create.github.io/GSP-QUIZ-CENTER/",
+  "description": "Online quiz website for Free Fire, cricket, movies, BTS and general knowledge."
+}
+</script>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#101020;
+ color:white;
+}
+header{
+ text-align:center;
+ padding:25px 12px;
+ background:linear-gradient(135deg,#171735,#39216d);
+ border-bottom:2px solid #ffc107;
+}
+.logo{font-size:27px;font-weight:bold;color:#ffc107}
+header p{color:#ddd}
+.container{max-width:850px;margin:auto;padding:15px}
+.card{
+ background:#1c1c35;
+ border:1px solid #39395d;
+ border-radius:15px;
+ padding:18px;
+ margin:15px 0;
+}
+h2{color:#ffc107;text-align:center}
+.categories{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:12px;
+}
+button{
+ border:0;
+ border-radius:10px;
+ padding:13px;
+ font-size:15px;
+ font-weight:bold;
+ cursor:pointer;
+}
+.category{
+ background:#303052;
+ color:white;
+ border:1px solid #6666a0;
+}
+.category:focus,.category:hover{background:#6545a5}
+.levels{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.level{background:#ffc107;color:#171717}
+.mainbtn{background:#ffc107;color:#171717;width:100%;margin-top:12px}
+input{
+ width:100%;
+ padding:13px;
+ border-radius:9px;
+ border:1px solid #777;
+ background:#292943;
+ color:white;
+ font-size:16px;
+ margin:8px 0;
+}
+.option{
+ width:100%;
+ display:block;
+ text-align:left;
+ margin:9px 0;
+ background:#303052;
+ color:white;
+ border:1px solid #606080;
+}
+.option:disabled{opacity:.8}
+.correct{background:#176b3a!important}
+.wrong{background:#9b3030!important}
+.hidden{display:none}
+#question{font-size:19px;line-height:1.5}
+.score{font-size:23px;color:#ffc107;text-align:center}
+table{width:100%;border-collapse:collapse}
+td,th{padding:10px;border-bottom:1px solid #444;text-align:center}
+footer{text-align:center;padding:25px;color:#aaa}
+.small{color:#aaa;font-size:12px}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="logo">👑 GSP QUIZ CENTER</div>
+ <h2 style="color:white">FOR ALL</h2>
+ <p>PLAY • LEARN • CHALLENGE • WIN</p>
+</header>
+
+<main class="container">
+
+<section class="card">
+ <h2>🏆 TOP 10 LEADERBOARD</h2>
+ <table>
+ <thead><tr><th>Rank</th><th>Player</th><th>Points</th></tr></thead>
+ <tbody id="leaderboard"></tbody>
+ </table>
+ <p class="small">यह शुरुआती Leaderboard इस डिवाइस के ब्राउज़र में सेव होता है।</p>
+</section>
+
+<section class="card" id="home">
+ <h2>🎯 CHOOSE YOUR QUIZ</h2>
+ <input id="playerName" maxlength="20" placeholder="अपना नाम लिखो">
+
+ <div class="categories">
+  <button class="category" onclick="choose('Free Fire')">🔥 FREE FIRE</button>
+  <button class="category" onclick="choose('Free Fire India')">🇮🇳 FREE FIRE INDIA</button>
+  <button class="category" onclick="choose('Cricket')">🏏 CRICKET</button>
+  <button class="category" onclick="choose('BTS')">💜 BTS</button>
+  <button class="category" onclick="choose('Movies')">🎬 MOVIES</button>
+  <button class="category" onclick="choose('GK')">🌍 GENERAL KNOWLEDGE</button>
+ </div>
+ <p id="selected" style="text-align:center;color:#ffc107">पहले अपनी Quiz Category चुनो</p>
+
+ <h2>⚡ SELECT LEVEL</h2>
+ <div class="levels">
+  <button class="level" onclick="setLevel('Easy')">EASY</button>
+  <button class="level" onclick="setLevel('Medium')">MEDIUM</button>
+  <button class="level" onclick="setLevel('Hard')">HARD</button>
+ </div>
+ <p id="levelText" style="text-align:center">Level चुनो</p>
+ <button class="mainbtn" onclick="startQuiz()">START QUIZ 🚀</button>
+</section>
+
+<section class="card hidden" id="quiz">
+ <p id="quizInfo"></p>
+ <p id="question"></p>
+ <div id="options"></div>
+ <p id="feedback"></p>
+ <button class="mainbtn hidden" id="next" onclick="nextQuestion()">NEXT QUESTION ➜</button>
+</section>
+
+<section class="card hidden" id="result">
+ <h2>🎉 QUIZ COMPLETED!</h2>
+ <p class="score" id="finalScore"></p>
+ <p id="rightAnswers" style="text-align:center"></p>
+ <button class="mainbtn" onclick="goHome()">PLAY AGAIN</button>
+</section>
+
+</main>
+
+<footer>
+ <p>👑 GSP QUIZ CENTER FOR ALL</p>
+ <p>Learn Something New Every Day!</p>
+</footer>
+
+<script>
+const questions = {
+ "Free Fire":{
+  Easy:[
+   {q:"Free Fire किस प्रकार का गेम है?",o:["Racing","Battle Royale","Puzzle","Football"],a:1},
+   {q:"Free Fire किस कंपनी का गेम है?",o:["Garena","Nintendo","Sony","Ubisoft"],a:0}
+  ],
+  Medium:[
+   {q:"Free Fire में एक सामान्य मैच किस प्रकार खेला जाता है?",o:["टीम या अकेले मुकाबला","केवल दौड़","केवल पहेली","केवल कहानी"],a:0},
+   {q:"Free Fire MAX किस गेम का बेहतर संस्करण है?",o:["Minecraft","Free Fire","Roblox","PUBG Mobile"],a:1}
+  ],
+  Hard:[
+   {q:"Free Fire को किस कंपनी ने प्रकाशित किया?",o:["Garena","EA","Valve","Rockstar"],a:0}
+  ]
+ },
+ "Free Fire India":{
+  Easy:[
+   {q:"Free Fire India किस गेम श्रृंखला से जुड़ा है?",o:["Free Fire","Minecraft","Roblox","FIFA"],a:0}
+  ],
+  Medium:[
+   {q:"Free Fire India का मुख्य गेमिंग प्रकार क्या है?",o:["Battle Royale","Racing","Puzzle","Music"],a:0}
+  ],
+  Hard:[
+   {q:"Free Fire India किस गेम कंपनी से संबंधित है?",o:["Garena","Nintendo","Valve","Sony"],a:0}
+  ]
+ },
+ Cricket:{
+  Easy:[
+   {q:"क्रिकेट की एक टीम में कितने खिलाड़ी होते हैं?",o:["9","10","11","12"],a:2},
+   {q:"क्रिकेट में गेंद को मारने के लिए किसका उपयोग होता है?",o:["बैट","रैकेट","स्टिक","क्लब"],a:0}
+  ],
+  Medium:[
+   {q:"एक ODI मैच में एक टीम को कितने ओवर मिलते हैं?",o:["20","40","50","60"],a:2},
+   {q:"क्रिकेट पिच की लंबाई कितनी होती है?",o:["20 गज","22 गज","24 गज","25 गज"],a:1}
+  ],
+  Hard:[
+   {q:"टेस्ट क्रिकेट में एक दिन में सामान्यतः कितने घंटे का खेल निर्धारित होता है?",o:["4","5","6","7"],a:2}
+  ]
+ },
+ BTS:{
+  Easy:[
+   {q:"BTS किस देश का म्यूजिक ग्रुप है?",o:["भारत","दक्षिण कोरिया","जापान","चीन"],a:1},
+   {q:"BTS के फैंस को क्या कहा जाता है?",o:["ARMY","BLINK","ONCE","MOA"],a:0}
+  ],
+  Medium:[
+   {q:"BTS ने किस वर्ष डेब्यू किया था?",o:["2010","2011","2013","2015"],a:2}
+  ],
+  Hard:[
+   {q:"BTS का पहला सिंगल एल्बम कौन-सा था?",o:["2 Cool 4 Skool","Wings","Love Yourself","BE"],a:0}
+  ]
+ },
+ Movies:{
+  Easy:[
+   {q:"बॉलीवुड मुख्य रूप से किस शहर से जुड़ा है?",o:["मुंबई","दिल्ली","जयपुर","लखनऊ"],a:0}
+  ],
+  Medium:[
+   {q:"फिल्मों में निर्देशन का काम कौन करता है?",o:["Director","Editor","Singer"," दर्शक"],a:0}
+  ],
+  Hard:[
+   {q:"ऑस्कर पुरस्कार किस क्षेत्र से संबंधित है?",o:["फिल्म","क्रिकेट","विज्ञान","कृषि"],a:0}
+  ]
+ },
+ GK:{
+  Easy:[
+   {q:"भारत की राजधानी क्या है?",o:["मुंबई","नई दिल्ली","लखनऊ","जयपुर"],a:1},
+   {q:"भारत का राष्ट्रीय पशु कौन है?",o:["शेर","हाथी","बाघ","घोड़ा"],a:2}
+  ],
+  Medium:[
+   {q:"भारत का संविधान कब लागू हुआ?",o:["15 अगस्त 1947","26 जनवरी 1950","2 अक्टूबर 1950","26 नवंबर 1949"],a:1}
+  ],
+  Hard:[
+   {q:"भारतीय संविधान की प्रारूप समिति के अध्यक्ष कौन थे?",o:["डॉ. बी. आर. आंबेडकर","जवाहरलाल नेहरू","राजेंद्र प्रसाद","सरदार पटेल"],a:0}
+  ]
+ }
+};
+
+let category="",level="",index=0,score=0,right=0,quizQuestions=[];
+
+function choose(c){
+ category=c;
+ document.getElementById("selected").textContent="Selected: "+c;
+}
+function setLevel(l){
+ level=l;
+ document.getElementById("levelText").textContent="Selected Level: "+l;
+}
+function startQuiz(){
+ const name=document.getElementById("playerName").value.trim();
+ if(!name){alert("पहले अपना नाम लिखो!");return}
+ if(!category||!level){alert("Category और Level दोनों चुनो!");return}
+ quizQuestions=[...questions[category][level]].sort(()=>Math.random()-.5);
+ index=0;score=0;right=0;
+ document.getElementById("home").classList.add("hidden");
+ document.getElementById("result").classList.add("hidden");
+ document.getElementById("quiz").classList.remove("hidden");
+ showQuestion();
+}
+function showQuestion(){
+ const q=quizQuestions[index];
+ document.getElementById("quizInfo").textContent=
+ category+" | "+level+" | Question "+(index+1)+"/"+quizQuestions.length;
+ document.getElementById("question").textContent=q.q;
+ document.getElementById("feedback").textContent="";
+ document.getElementById("next").classList.add("hidden");
+ const box=document.getElementById("options");
+ box.innerHTML="";
+ q.o.forEach((option,i)=>{
+  const b=document.createElement("button");
+  b.className="option";
+  b.textContent=String.fromCharCode(65+i)+". "+option;
+  b.onclick=()=>answer(i,b);
+  box.appendChild(b);
+ });
+}
+function answer(selected,button){
+ const q=quizQuestions[index];
+ const buttons=document.querySelectorAll(".option");
+ buttons.forEach((b,i)=>{
+  b.disabled=true;
+  if(i===q.a)b.classList.add("correct");
+ });
+ if(selected===q.a){
+  score+=10;right++;
+  document.getElementById("feedback").textContent="✅ सही जवाब! +10 Points";
+ }else{
+  button.classList.add("wrong");
+  document.getElementById("feedback").textContent="❌ गलत जवाब! 0 Points";
+ }
+ document.getElementById("next").classList.remove("hidden");
+}
+function nextQuestion(){
+ index++;
+ if(index<quizQuestions.length){showQuestion();return}
+ finishQuiz();
+}
+function finishQuiz(){
+ document.getElementById("quiz").classList.add("hidden");
+ document.getElementById("result").classList.remove("hidden");
+ document.getElementById("finalScore").textContent="⭐ "+score+" POINTS";
+ document.getElementById("rightAnswers").textContent=
+ "सही जवाब: "+right+" / "+quizQuestions.length;
+ const name=document.getElementById("playerName").value.trim();
+ let board=JSON.parse(localStorage.getItem("gspBoard")||"[]");
+ board.push({name:name,points:score});
+ board.sort((a,b)=>b.points-a.points);
+ board=board.slice(0,10);
+ localStorage.setItem("gspBoard",JSON.stringify(board));
+ renderBoard();
+}
+function renderBoard(){
+ const board=JSON.parse(localStorage.getItem("gspBoard")||"[]");
+ const body=document.getElementById("leaderboard");
+ body.innerHTML="";
+ if(!board.length){
+  body.innerHTML="<tr><td colspan='3'>अभी कोई खिलाड़ी नहीं है</td></tr>";
+  return;
+ }
+ board.forEach((p,i)=>{
+  const tr=document.createElement("tr");
+  [i+1,p.name,p.points+" pts"].forEach(v=>{
+   const td=document.createElement("td");
+   td.textContent=v;
+   tr.appendChild(td);
+  });
+  body.appendChild(tr);
+ });
+}
+function goHome(){
+ document.getElementById("result").classList.add("hidden");
+ document.getElementById("home").classList.remove("hidden");
+}
+renderBoard();
+</script>
+
+</body>
+  </html>
+  
