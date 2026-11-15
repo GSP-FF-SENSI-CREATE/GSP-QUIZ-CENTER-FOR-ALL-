@@ -411,5 +411,159 @@ function showQuestion(){
 
  const box=document.getElementById("options");
  box.innerHTML="";
+ions.forEach((option, index) => {
+  const btn = document.createElement("button");
+  btn.className = "option-btn";
+  btn.textContent = String.fromCharCode(65 + index) + ". " + option.text;
 
- opt
+  btn.onclick = () => selectAnswer(option.correct, btn);
+
+  box.appendChild(btn);
+});
+}
+
+// SELECT ANSWER
+function selectAnswer(correct, selectedBtn) {
+  if (answered) return;
+
+  answered = true;
+
+  const buttons = document.querySelectorAll(".option-btn");
+
+  buttons.forEach(btn => {
+    btn.disabled = true;
+  });
+
+  if (correct) {
+    score += 10;
+    document.getElementById("score").textContent = "Score: " + score;
+    document.getElementById("feedback").textContent = "✅ सही जवाब! +10 Points";
+    selectedBtn.classList.add("correct");
+  } else {
+    document.getElementById("feedback").textContent = "❌ गलत जवाब! अगली बार कोशिश करना।";
+    selectedBtn.classList.add("wrong");
+  }
+
+  document.getElementById("nextBtn").classList.remove("hidden");
+}
+
+// NEXT QUESTION
+function nextQuestion() {
+  questionIndex++;
+
+  if (questionIndex < totalQuestions) {
+    showQuestion();
+  } else {
+    finishQuiz();
+  }
+}
+
+// FINISH QUIZ
+function finishQuiz() {
+  document.getElementById("quizScreen").classList.add("hidden");
+  document.getElementById("resultScreen").classList.remove("hidden");
+
+  document.getElementById("finalScore").textContent =
+    "आपका स्कोर: " + score + " / " + (totalQuestions * 10);
+
+  if (auth.currentUser) {
+    const uid = auth.currentUser.uid;
+    const playerKey = uid;
+
+    const playerRef = database.ref("leaderboard/" + playerKey);
+
+    playerRef.transaction(currentData => {
+      if (currentData === null) {
+        return {
+          uid: uid,
+          name: playerName,
+          points: score
+        };
+      }
+
+      if (currentData.uid !== uid) {
+        return;
+      }
+
+      currentData.name = playerName;
+      currentData.points = (Number(currentData.points) || 0) + score;
+
+      return currentData;
+    }).then(() => {
+      loadLeaderboard();
+    }).catch(error => {
+      console.error("Score save error:", error);
+      alert("Score save nahi ho paya. Internet check karo.");
+    });
+  }
+}
+
+// GO HOME
+function goHome() {
+  document.getElementById("resultScreen").classList.add("hidden");
+  document.getElementById("quizScreen").classList.add("hidden");
+  document.getElementById("homeScreen").classList.remove("hidden");
+
+  loadLeaderboard();
+}
+
+// LOAD LEADERBOARD
+function loadLeaderboard() {
+  database.ref("leaderboard")
+    .orderByChild("points")
+    .limitToLast(10)
+    .once("value")
+    .then(snapshot => {
+      const players = [];
+
+      snapshot.forEach(child => {
+        players.push(child.val());
+      });
+
+      players.sort((a, b) => b.points - a.points);
+
+      const list = document.getElementById("leaderboardList");
+
+      if (!list) return;
+
+      list.innerHTML = "";
+
+      players.forEach((player, index) => {
+        const item = document.createElement("div");
+        item.className = "leaderboard-item";
+
+        item.innerHTML =
+          "<span>" + (index + 1) + ". " +
+          escapeHTML(player.name) +
+          "</span><strong>" +
+          (Number(player.points) || 0) +
+          " Points</strong>";
+
+        list.appendChild(item);
+      });
+    })
+    .catch(error => {
+      console.error("Leaderboard error:", error);
+    });
+}
+
+// SAFE TEXT
+function escapeHTML(text) {
+  return String(text).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  })[char]);
+}
+
+// SHOW LEADERBOARD
+function showLeaderboard() {
+  document.getElementById("leaderboardScreen").classList.remove("hidden");
+  document.getElementById("homeScreen").classList.add("hidden");
+  loadLeaderboard();
+}
+
+// INITIAL LOAD
+loadLeaderboard();
