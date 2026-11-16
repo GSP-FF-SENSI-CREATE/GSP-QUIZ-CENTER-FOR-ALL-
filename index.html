@@ -1144,15 +1144,25 @@ function saveScore() {
 // LOAD GLOBAL LEADERBOARD
 function loadLeaderboard() {
 
+// =====================================
+// GSP QUIZ CENTER - PREMIUM LEADERBOARD
+// =====================================
+
+function loadLeaderboard() {
+
   const leaderboardList =
     document.getElementById("leaderboardList");
 
   if (!leaderboardList) return;
 
+  leaderboardList.innerHTML =
+    "Loading Leaderboard...";
+
   database.ref("leaderboard")
     .orderByChild("points")
     .limitToLast(10)
     .once("value")
+
     .then((snapshot) => {
 
       const players = [];
@@ -1161,39 +1171,68 @@ function loadLeaderboard() {
         players.push(child.val());
       });
 
-      players.sort((a, b) => {
-        return (Number(b.points) || 0) -
-               (Number(a.points) || 0);
-      });
+      players.sort((a, b) =>
+        (Number(b.points) || 0) -
+        (Number(a.points) || 0)
+      );
 
       leaderboardList.innerHTML = "";
 
       if (players.length === 0) {
-        leaderboardList.textContent =
-          "No players yet. Play a quiz first!";
+
+        const empty = document.createElement("div");
+        empty.className = "leaderboard-empty";
+        empty.textContent =
+          "🏆 No Champions Yet! Be The First One.";
+
+        leaderboardList.appendChild(empty);
         return;
       }
 
       players.forEach((player, index) => {
 
         const row = document.createElement("div");
-        row.className = "leaderboard-player";
+        row.className = "leaderboard-player rank-" + (index + 1);
 
-        const rank = document.createElement("span");
+        const rank = document.createElement("div");
         rank.className = "leaderboard-rank";
-        rank.textContent = "#" + (index + 1);
 
-        const name = document.createElement("span");
+        const medals = ["🥇", "🥈", "🥉"];
+
+        rank.textContent =
+          medals[index] || "#" + (index + 1);
+
+        const info = document.createElement("div");
+        info.className = "leaderboard-info";
+
+        const name = document.createElement("div");
         name.className = "leaderboard-name";
         name.textContent = player.name || "Player";
 
-        const points = document.createElement("span");
+        const position = document.createElement("div");
+        position.className = "leaderboard-position";
+
+        if (index === 0) {
+          position.textContent = "👑 GRAND CHAMPION";
+        } else if (index === 1) {
+          position.textContent = "SILVER CHAMPION";
+        } else if (index === 2) {
+          position.textContent = "BRONZE CHAMPION";
+        } else {
+          position.textContent = "QUIZ PLAYER";
+        }
+
+        info.appendChild(name);
+        info.appendChild(position);
+
+        const points = document.createElement("div");
         points.className = "leaderboard-points";
+
         points.textContent =
-          (Number(player.points) || 0) + " Points";
+          (Number(player.points) || 0) + " PTS";
 
         row.appendChild(rank);
-        row.appendChild(name);
+        row.appendChild(info);
         row.appendChild(points);
 
         leaderboardList.appendChild(row);
@@ -1201,18 +1240,18 @@ function loadLeaderboard() {
       });
 
     })
+
     .catch((error) => {
 
       console.error("Leaderboard Error:", error);
 
       leaderboardList.textContent =
-        "Leaderboard load failed. Please try again.";
+        "Leaderboard Load Failed!";
 
     });
 
-}
-
-
+  }
+                      
 // GO BACK HOME
 function goHome() {
 
