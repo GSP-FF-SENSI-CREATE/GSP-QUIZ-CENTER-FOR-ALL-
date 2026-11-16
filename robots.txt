@@ -1,0 +1,5 @@
+
+User-agent: *
+Allow: /
+
+Sitemap: https://gsp-ff-sensi-create.github.io/GSP-QUIZ-CENTER-FOR-ALL-/sitemap.xml
