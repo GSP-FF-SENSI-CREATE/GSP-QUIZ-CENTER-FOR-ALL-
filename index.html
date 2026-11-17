@@ -1,467 +1,147 @@
+
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>GSP Quiz Center – Free Fire, Cricket, BTS & GK Online Quizzes</title>
-
-<meta name="description" content="Play free online quizzes on Free Fire, Free Fire India, Cricket, BTS, Movies and General Knowledge. Test your knowledge, earn points and compete on the global leaderboard at GSP Quiz Center.">
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GSP Quiz Center – Online Quiz & Global Leaderboard</title>
+<meta name="description" content="Play Free Fire, Cricket, BTS, Movies and GK quizzes. Earn points and compete globally.">
 <meta name="google-site-verification" content="O0pH8rL1mS_M0fvuvO-6PiHYKMcqS8sTQZKVJthZF58">
-
-<meta name="theme-color" content="#09091b">
+<meta name="theme-color" content="#100b20">
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0c0918;color:#fff;font-family:Arial,sans-serif;min-height:100vh}
+button{font-family:inherit;cursor:pointer}
+header{padding:17px 5%;background:#171027;border-bottom:1px solid #49336d;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font-size:22px;font-weight:900;color:#c9a2ff}
+.logo span{color:#fff}
+button{border:0}
+.primary,.login-btn,.logout-btn{padding:12px 18px;border-radius:10px;background:linear-gradient(135deg,#a35cff,#6334c7);color:white;font-weight:bold}
+.logout-btn{background:#382653}
+#userInfo{font-size:13px;color:#d8c2ff;margin-bottom:7px}
+.container{width:92%;max-width:1050px;margin:auto}
+.hero{text-align:center;padding:45px 10px 25px}
+.hero h1{font-size:clamp(27px,6vw,44px);margin-bottom:12px}
+.hero h1 span,.section-title span{color:#b58aff}
+.hero p{color:#b7adc9;line-height:1.6}
+.section-title{text-align:center;font-size:23px;margin:30px 0 20px}
+.category-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:40px}
+.category-card{min-height:140px;padding:20px 10px;border:1px solid #48316e;border-radius:17px;background:linear-gradient(145deg,#261a40,#151024);color:white;transition:.2s}
+.category-card:hover{transform:translateY(-4px);border-color:#bd91ff;box-shadow:0 8px 25px #8b4dff30}
+.category-icon{font-size:34px;margin-bottom:10px}
+.category-card h3{font-size:15px;margin-bottom:7px}
+.category-card p{font-size:12px;color:#b8a9d4}
+.panel{display:none;margin:28px auto;padding:24px;border:1px solid #49336e;border-radius:18px;background:#19132a}
+.quiz-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:#d1b9f2;font-size:13px;margin-bottom:18px}
+.progress-track{height:9px;background:#33264b;border-radius:20px;overflow:hidden;margin-bottom:25px}
+#progressBar{height:100%;width:0;background:linear-gradient(90deg,#8b4dff,#d1a5ff);transition:.3s}
+#questionText{font-size:20px;line-height:1.5;margin-bottom:22px}
+#optionsContainer{display:grid;gap:12px}
+.option-btn{width:100%;padding:15px;text-align:left;border:1px solid #584078;border-radius:11px;background:#211832;color:white;font-size:15px}
+.option-btn:disabled{opacity:1}
+.option-btn.correct{border-color:#20d98b;background:#123c30}
+.option-btn.wrong{border-color:#ff5e70;background:#451e2b}
+.quiz-actions{display:flex;justify-content:flex-end;margin-top:24px}
+#nextBtn:disabled{opacity:.4;cursor:not-allowed}
+.result-box{text-align:center}
+#finalScore{font-size:42px;font-weight:900;color:#ffd76a;margin:20px 0}
+#resultMessage{color:#c9b7e5;margin:14px 0;line-height:1.6}
+#correctCount{margin-bottom:22px}
+#leaderboardSection{margin:42px auto;padding:24px;background:#171127;border:1px solid #48316e;border-radius:18px}
+#leaderboardList{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+.leaderboard-player{display:grid;grid-template-columns:48px minmax(0,1fr) auto;align-items:center;gap:12px;padding:14px;border-radius:14px;background:#241a39;border:1px solid #59417d}
+.leaderboard-rank{font-size:23px;text-align:center;font-weight:900}
+.leaderboard-info{min-width:0}
+.leaderboard-name{font-weight:bold;overflow-wrap:anywhere}
+.leaderboard-position{margin-top:5px;color:#b99be9;font-size:10px;letter-spacing:1px}
+.leaderboard-points{padding:9px;border-radius:9px;color:#e1c8ff;background:#49316d;font-weight:bold;font-size:12px;white-space:nowrap}
+.rank-1{border-color:#ffd700;background:linear-gradient(110deg,#49330f,#21172d)}
+.rank-1 .leaderboard-name,.rank-1 .leaderboard-points{color:#ffe17b}
+.rank-2{border-color:#c5d0df}
+.rank-3{border-color:#cd8959}
+.leaderboard-empty{text-align:center;padding:22px;color:#d7c1ff}
+footer{margin-top:45px;padding:24px;text-align:center;color:#9185a8;background:#120e20;border-top:1px solid #302344;font-size:12px}
+@media(max-width:650px){
+.category-grid{grid-template-columns:repeat(2,1fr);gap:11px}
+.category-card{min-height:125px}
+.panel{padding:17px 12px}
+#questionText{font-size:18px}
+.leaderboard-player{grid-template-columns:36px minmax(0,1fr) auto;gap:8px;padding:11px 8px}
+.leaderboard-name{font-size:13px}
+.leaderboard-points{font-size:10px;padding:7px}
 }
-
-body {
-  font-family: Arial, sans-serif;
-  background: #09091b;
-  color: #fff;
-  min-height: 100vh;
-}
-
-header {
-  background: linear-gradient(135deg,#171044,#25105c);
-  padding: 20px 15px;
-  text-align: center;
-  border-bottom: 2px solid #8b5cf6;
-  box-shadow: 0 5px 25px #5b21b655;
-}
-
-.logo {
-  font-size: 27px;
-  font-weight: 900;
-  color: #fff;
-  letter-spacing: 1px;
-}
-
-.logo span {
-  color: #facc15;
-}
-
-.tagline {
-  color: #c4b5fd;
-  font-size: 13px;
-  margin-top: 7px;
-}
-
-.container {
-  width: 94%;
-  max-width: 950px;
-  margin: 22px auto;
-}
-
-.panel {
-  background: #14142b;
-  border: 1px solid #37305f;
-  border-radius: 17px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 8px 25px #0005;
-}
-
-h2 {
-  font-size: 21px;
-  margin-bottom: 15px;
-  color: #c4b5fd;
-}
-
-h3 {
-  margin-bottom: 10px;
-}
-
-button {
-  border: none;
-  outline: none;
-  cursor: pointer;
-  border-radius: 10px;
-  padding: 12px 17px;
-  font-size: 14px;
-  font-weight: bold;
-  transition: .2s;
-}
-
-button:active {
-  transform: scale(.97);
-}
-
-.primary-btn {
-  background: linear-gradient(135deg,#7c3aed,#4f46e5);
-  color: white;
-}
-
-.primary-btn:hover {
-  box-shadow: 0 0 18px #8b5cf6aa;
-}
-
-.google-btn {
-  background: #fff;
-  color: #222;
-  width: 100%;
-  margin-top: 12px;
-}
-
-.logout-btn {
-  background: #3b1c32;
-  color: #fda4af;
-}
-
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 13px;
-}
-
-.category-card {
-  background: linear-gradient(145deg,#211b48,#17172e);
-  border: 1px solid #51418a;
-  border-radius: 14px;
-  padding: 20px 10px;
-  text-align: center;
-  cursor: pointer;
-  transition: .2s;
-}
-
-.category-card:hover {
-  transform: translateY(-4px);
-  border-color: #a78bfa;
-  box-shadow: 0 5px 20px #7c3aed44;
-}
-
-.category-icon {
-  font-size: 31px;
-  margin-bottom: 9px;
-}
-
-.category-name {
-  font-size: 15px;
-  font-weight: bold;
-}
-
-.user-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-#userInfo {
-  color: #c4b5fd;
-  font-size: 14px;
-}
-
-#loginArea {
-  text-align: center;
-}
-
-#quizSection,
-#resultSection {
-  display: none;
-}
-
-.quiz-top {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
-  color: #c4b5fd;
-  font-size: 14px;
-  margin-bottom: 17px;
-}
-
-.progress-bg {
-  width: 100%;
-  height: 9px;
-  background: #302c4e;
-  border-radius: 20px;
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-
-#progressBar {
-  width: 0%;
-  height: 100%;
-  background: linear-gradient(90deg,#8b5cf6,#22d3ee);
-  transition: .3s;
-}
-
-#questionText {
-  font-size: 19px;
-  line-height: 1.5;
-  margin-bottom: 20px;
-}
-
-.options {
-  display: grid;
-  gap: 12px;
-}
-
-.option-btn {
-  width: 100%;
-  text-align: left;
-  background: #22213e;
-  color: #fff;
-  border: 1px solid #49416f;
-  padding: 15px;
-  font-size: 15px;
-}
-
-.option-btn:hover {
-  background: #33265f;
-  border-color: #a78bfa;
-}
-
-.option-btn.selected {
-  background: #4c278c;
-  border-color: #c4b5fd;
-}
-
-.option-btn.correct {
-  background: #14532d;
-  border-color: #22c55e;
-}
-
-.option-btn.wrong {
-  background: #7f1d1d;
-  border-color: #ef4444;
-}
-
-#nextBtn {
-  width: 100%;
-  margin-top: 20px;
-}
-
-.score-box {
-  text-align: center;
-  padding: 25px 10px;
-}
-
-.score-number {
-  font-size: 45px;
-  font-weight: 900;
-  color: #facc15;
-  margin: 15px 0;
-}
-
-.result-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.leaderboard-title {
-  text-align: center;
-  color: #facc15;
-  font-size: 23px;
-  font-weight: 900;
-  margin-bottom: 15px;
-}
-
-.leaderboard-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  background: linear-gradient(90deg,#292044,#19182e);
-  border: 1px solid #65502d;
-  border-radius: 10px;
-  padding: 13px;
-  margin-bottom: 9px;
-}
-
-.rank {
-  color: #facc15;
-  font-weight: 900;
-  min-width: 28px;
-}
-
-.player-name {
-  flex: 1;
-  overflow-wrap: anywhere;
-  font-weight: bold;
-}
-
-.player-points {
-  color: #facc15;
-  font-weight: bold;
-  white-space: nowrap;
-}
-
-.empty-message {
-  text-align: center;
-  color: #a5a5c5;
-  padding: 15px;
-}
-
-footer {
-  text-align: center;
-  color: #8585a8;
-  padding: 25px 10px;
-  font-size: 12px;
-}
-
-.hidden {
-  display: none !important;
-}
-
-@media (min-width:650px) {
-  .category-grid {
-    grid-template-columns: repeat(3,1fr);
-  }
-  .container {
-    margin-top: 30px;
-  }
-}
-
-@media (max-width:420px) {
-  .logo {
-    font-size: 23px;
-  }
-  .panel {
-    padding: 15px;
-  }
-  #questionText {
-    font-size: 17px;
-  }
-}
+@media(max-width:350px){.category-grid{grid-template-columns:1fr}}
 </style>
 </head>
-
 <body>
 
 <header>
   <div class="logo">GSP <span>QUIZ CENTER</span></div>
-  <div class="tagline">Play • Learn • Earn Points • Reach The Top</div>
+  <div id="loginArea">
+    <button class="login-btn" type="button" onclick="loginWithGoogle()">🌐 Login with Google</button>
+  </div>
+  <div id="logoutArea" style="display:none">
+    <div id="userInfo"></div>
+    <button class="logout-btn" type="button" onclick="logout()">Logout</button>
+  </div>
 </header>
 
 <main class="container">
+<section class="hero" id="homeSection">
+  <h1>WELCOME TO <span>GSP QUIZ CENTER</span></h1>
+  <p>Test Your Knowledge • Earn Points • Become A Champion</p>
+  <h2 class="section-title">CHOOSE YOUR <span>QUIZ CATEGORY</span></h2>
 
-  <section class="panel" id="loginPanel">
-    <div class="user-row">
-      <div>
-        <h3>👤 Player Account</h3>
-        <div id="userInfo">Login to save your quiz score</div>
-      </div>
-      <div id="logoutArea" class="hidden">
-        <button class="logout-btn" onclick="logout()">Logout</button>
-      </div>
-    </div>
+  <div class="category-grid">
+    <button class="category-card" onclick="startQuiz('freefire')"><div class="category-icon">🔥</div><h3>FREE FIRE</h3><p>Gaming Knowledge</p></button>
+    <button class="category-card" onclick="startQuiz('freefireindia')"><div class="category-icon">🎮</div><h3>FREE FIRE INDIA</h3><p>India Special Quiz</p></button>
+    <button class="category-card" onclick="startQuiz('cricket')"><div class="category-icon">🏏</div><h3>CRICKET</h3><p>Cricket Challenge</p></button>
+    <button class="category-card" onclick="startQuiz('bts')"><div class="category-icon">💜</div><h3>BTS</h3><p>ARMY Quiz</p></button>
+    <button class="category-card" onclick="startQuiz('movies')"><div class="category-icon">🎬</div><h3>MOVIES</h3><p>Movie Knowledge</p></button>
+    <button class="category-card" onclick="startQuiz('gk')"><div class="category-icon">🧠</div><h3>GENERAL KNOWLEDGE</h3><p>Challenge Your Brain</p></button>
+  </div>
+</section>
 
-    <div id="loginArea">
-      <button class="google-btn" onclick="loginWithGoogle()">
-        🌐 Continue with Google
-      </button>
-    </div>
-  </section>
+<section id="quizSection" class="panel">
+  <div class="quiz-top">
+    <span id="quizCategory">QUIZ</span>
+    <span id="questionCounter">Question 1</span>
+    <span id="quizScore">Score: 0</span>
+  </div>
+  <div class="progress-track"><div id="progressBar"></div></div>
+  <h2 id="questionText"></h2>
+  <div id="optionsContainer"></div>
+  <div class="quiz-actions">
+    <button id="nextBtn" class="primary" type="button" onclick="nextQuestion()" disabled>Next Question →</button>
+  </div>
+</section>
 
-  <section id="homeSection">
+<section id="resultSection" class="panel">
+  <div class="result-box">
+    <h2>🏆 QUIZ COMPLETED!</h2>
+    <div id="finalScore">0 Points</div>
+    <div id="correctCount">0 Correct Answers</div>
+    <p id="resultMessage"></p>
+    <button class="primary" type="button" onclick="goHome()">🏠 BACK TO HOME</button>
+  </div>
+</section>
 
-    <div class="panel">
-      <h2>🎮 Choose Your Quiz Category</h2>
-
-      <div class="category-grid">
-
-        <div class="category-card" onclick="startQuiz('freefire')">
-          <div class="category-icon">🔥</div>
-          <div class="category-name">Free Fire</div>
-        </div>
-
-        <div class="category-card" onclick="startQuiz('freefireindia')">
-          <div class="category-icon">🇮🇳</div>
-          <div class="category-name">Free Fire India</div>
-        </div>
-
-        <div class="category-card" onclick="startQuiz('cricket')">
-          <div class="category-icon">🏏</div>
-          <div class="category-name">Cricket</div>
-        </div>
-
-        <div class="category-card" onclick="startQuiz('bts')">
-          <div class="category-icon">💜</div>
-          <div class="category-name">BTS</div>
-        </div>
-
-        <div class="category-card" onclick="startQuiz('movies')">
-          <div class="category-icon">🎬</div>
-          <div class="category-name">Movies</div>
-        </div>
-
-        <div class="category-card" onclick="startQuiz('gk')">
-          <div class="category-icon">🧠</div>
-          <div class="category-name">General Knowledge</div>
-        </div>
-
-      </div>
-    </div>
-
-    <section class="panel" id="leaderboardSection">
-      <div class="leaderboard-title">🏆 GLOBAL LEADERBOARD</div>
-      <div id="leaderboardList">
-        <div class="empty-message">Loading leaderboard...</div>
-      </div>
-    </section>
-
-  </section>
-
-  <section class="panel" id="quizSection">
-
-    <div class="quiz-top">
-      <span id="quizCategory">Category</span>
-      <span id="questionCounter">Question 1</span>
-      <span id="quizScore">⭐ 0 Points</span>
-    </div>
-
-    <div class="progress-bg">
-      <div id="progressBar"></div>
-    </div>
-
-    <h2 id="questionText">Question will appear here</h2>
-
-    <div class="options" id="optionsContainer"></div>
-
-    <button class="primary-btn" id="nextBtn" onclick="nextQuestion()" disabled>
-      Next Question →
-    </button>
-
-  </section>
-
-  <section class="panel" id="resultSection">
-
-    <div class="score-box">
-      <h2>🎉 QUIZ COMPLETED!</h2>
-      <div class="score-number" id="finalScore">0</div>
-      <p id="resultMessage">Your result</p>
-      <p id="correctCount"></p>
-
-      <div class="result-actions">
-        <button class="primary-btn" onclick="goHome()">🏠 Home</button>
-        <button class="primary-btn" onclick="loadLeaderboard()">🏆 Refresh Leaderboard</button>
-      </div>
-    </div>
-
-  </section>
-
+<section id="leaderboardSection">
+  <h2 class="section-title">🏆 GLOBAL <span>LEADERBOARD</span></h2>
+  <div id="leaderboardList">Loading Leaderboard...</div>
+</section>
 </main>
 
-<footer>
-  © 2026 GSP Quiz Center | Learn Something New Every Day
-</footer>
+<footer>© 2026 GSP QUIZ CENTER | PLAY • LEARN • WIN</footer>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <script>
-
+  
+// FIREBASE CONFIGURATION
 const firebaseConfig = {
   apiKey: "AIzaSyCF7BUNgVoHVjnt5wE3O6U5t0v_HbgoThU",
   authDomain: "gsp-quiz-center.firebaseapp.com",
@@ -479,6 +159,10 @@ const auth = firebase.auth();
 const database = firebase.database();
 const provider = new firebase.auth.GoogleAuthProvider();
 
+provider.setCustomParameters({
+  prompt: "select_account"
+});
+
 let currentUser = null;
 let currentQuestions = [];
 let currentQuestionIndex = 0;
@@ -488,364 +172,313 @@ let selectedAnswer = null;
 let totalQuestions = 0;
 let currentCategory = "";
 let currentDifficulty = "";
-
-const makeQuestions = rows => rows.map(([question, options, answer]) => ({
-  question,
-  options,
-  answer
-}));
-
-const quizData = {
-
-  // ================= FREE FIRE =================
-  freefire: {
-    easy: makeQuestions([
-      ["Free Fire किस प्रकार का गेम है?",["Battle Royale","Racing","Puzzle","Football"],0],
-      ["Free Fire किस कंपनी ने बनाया?",["Garena","Sony","Ubisoft","Valve"],0],
-      ["गेम में मैच जीतने के लिए क्या करना होता है?",["आखिर तक बचना","सबसे पहले हारना","मैच छोड़ना","छिपकर लॉगआउट करना"],0],
-      ["Free Fire में खिलाड़ी किस जगह उतरते हैं?",["Island/Map","School","Airport only","Ocean only"],0],
-      ["गेम में टीम के साथ खेलने को क्या कहते हैं?",["Squad","Solo","Training","Custom only"],0]
-    ]),
-    medium: makeQuestions([
-      ["Free Fire में अधिकतम कितने खिलाड़ी एक सामान्य Battle Royale मैच में होते हैं?",["50","25","20","100"],0],
-      ["Free Fire में Gloo Wall का मुख्य उपयोग क्या है?",["बचाव के लिए कवर","तेजी से दौड़ना","हेल्थ बढ़ाना","मैप बदलना"],0],
-      ["Free Fire में Booyah का क्या अर्थ है?",["जीत","हार","ड्रॉ","नया मैप"],0],
-      ["Free Fire में सुरक्षित क्षेत्र को क्या कहते हैं?",["Safe Zone","Red Zone","Blue Room","Spawn Zone"],0],
-      ["गेम में HP का संबंध किससे है?",["Health","Speed","Sound","Graphics"],0],
-      ["Free Fire में हथियारों के लिए गोला-बारूद को क्या कहते हैं?",["Ammo","Token","Diamond","Coin"],0],
-      ["Free Fire में टीम के साथी को वापस बुलाने की सुविधा किस नाम से जानी जाती है?",["Revival","Headshot","Looting","Gliding"],0],
-      ["गेम में Practice करने के लिए कौन-सा मोड उपयोगी है?",["Training Ground","Ranked only","Spectator","Store"],0],
-      ["Free Fire में Character का उपयोग किसलिए होता है?",["विशेष abilities के लिए","मैप हटाने के लिए","इंटरनेट बढ़ाने के लिए","फोन चार्ज करने के लिए"],0],
-      ["गेम में दुश्मन को दूर से देखने में कौन-सी चीज मदद करती है?",["Scope","Gloo Wall","Medkit","Backpack"],0]
-    ]),
-    hard: makeQuestions([
-      ["Free Fire में Bermuda किसका नाम है?",["Map","Character","Weapon","Pet"],0],
-      ["Free Fire में किस आइटम से HP रिकवर की जा सकती है?",["Medkit","Scope","Magazine","Grenade"],0],
-      ["Free Fire में AWM किस प्रकार का हथियार है?",["Sniper Rifle","Shotgun","Pistol","Melee"],0],
-      ["Free Fire में M1887 किस श्रेणी का हथियार है?",["Shotgun","Sniper","SMG","Launcher"],0],
-      ["Free Fire में SMG का पूरा नाम क्या है?",["Submachine Gun","Super Machine Gear","Special Map Gun","Single Mode Game"],0],
-      ["Free Fire में EP का सामान्य संबंध किससे है?",["Extra HP recovery system","Weapon range","Map size","Internet speed"],0],
-      ["Free Fire में किस चीज से खिलाड़ी की carrying capacity बढ़ती है?",["Backpack","Scope","Helmet","Gloo Wall"],0],
-      ["Free Fire में Helmet किससे बचाव करता है?",["Head damage","Fall damage only","Zone damage only","Sound damage"],0],
-      ["Free Fire में Vest का मुख्य काम क्या है?",["शरीर को नुकसान से बचाना","दौड़ने की गति बढ़ाना","हथियार बदलना","मैप दिखाना"],0],
-      ["Free Fire में Grenade किस प्रकार का आइटम है?",["Throwing weapon","Healing item","Armor","Vehicle"],0],
-      ["Free Fire में कौन-सा हथियार स्नाइपर राइफल है?",["Kar98k","MP40","M1014","UMP"],0],
-      ["Free Fire में MP40 किस प्रकार का हथियार है?",["SMG","Sniper","Shotgun","Pistol"],0],
-      ["Free Fire में M1014 किस श्रेणी में आता है?",["Shotgun","Sniper","Assault Rifle","Melee"],0],
-      ["Free Fire में खिलाड़ी की रैंक किससे संबंधित है?",["Competitive performance","Phone model","Internet company","Account email"],0],
-      ["Free Fire में Custom Room का उपयोग किसलिए होता है?",["अपनी शर्तों पर मैच खेलने के लिए","फोन अपडेट करने के लिए","नया अकाउंट बनाने के लिए","नेटवर्क बदलने के लिए"],0],
-      ["Free Fire में Loot का अर्थ क्या है?",["मैच में सामान इकट्ठा करना","मैच छोड़ना","टीम बदलना","गेम बंद करना"],0],
-      ["Free Fire में Headshot किसे कहते हैं?",["सिर पर लगा निशाना","पैर पर लगा निशाना","दीवार पर निशाना","हवा में गोली"],0],
-      ["Free Fire में कौन-सा आइटम आग से जुड़ा फेंकने वाला हथियार है?",["Incendiary item","Medkit","Helmet","Backpack"],0],
-      ["Free Fire में वाहन का एक उपयोग क्या है?",["तेजी से जगह बदलना","HP अपने आप भरना","हथियार बनाना","खिलाड़ी को अदृश्य करना"],0],
-      ["Free Fire में Mini Map किस काम आता है?",["आसपास की जानकारी देखने में","स्किन खरीदने में","नाम बदलने में","फोन की RAM बढ़ाने में"],0]
-    ])
-  },
-
-  // ================= FREE FIRE INDIA =================
-  freefireindia: {
-    easy: makeQuestions([
-      ["Free Fire India किस गेम से संबंधित है?",["Garena Free Fire","Minecraft","PUBG PC","Roblox"],0],
-      ["Free Fire India के नाम में India किस देश को दर्शाता है?",["भारत","नेपाल","जापान","ब्राजील"],0],
-      ["Free Fire किस शैली का गेम है?",["Battle Royale","Chess","Racing","Puzzle"],0],
-      ["Free Fire में खिलाड़ी किसके खिलाफ खेलते हैं?",["अन्य खिलाड़ी","केवल कंप्यूटर फाइलें","केवल दर्शक","कोई नहीं"],0],
-      ["ऑनलाइन गेम खेलने के लिए क्या जरूरी है?",["इंटरनेट कनेक्शन","प्रिंटर","स्कैनर","पेन ड्राइव"],0]
-    ]),
-    medium: makeQuestions([
-      ["Garena किस देश/क्षेत्र से शुरू हुई गेमिंग कंपनी है?",["Singapore","India","Canada","France"],0],
-      ["Free Fire India का मुख्य गेमप्ले किस पर आधारित है?",["Survival Battle Royale","Car racing","City building","Word puzzle"],0],
-      ["Free Fire में खिलाड़ी मैच शुरू होने पर कहाँ से उतरते हैं?",["विमान से","समुद्र के अंदर से","रेलवे स्टेशन से","अंतरिक्ष स्टेशन से"],0],
-      ["Free Fire में खिलाड़ी को सुरक्षित क्षेत्र के अंदर क्यों रहना चाहिए?",["बाहर रहने पर नुकसान होता है","वहाँ इंटरनेट तेज होता है","वहाँ स्कोर दोगुना होता है","वहाँ मैच रुक जाता है"],0],
-      ["Free Fire में Duo का मतलब कितने खिलाड़ियों की टीम है?",["2","3","4","5"],0],
-      ["Free Fire में Squad में सामान्यतः कितने खिलाड़ी होते हैं?",["4","2","6","8"],0],
-      ["गेम में किसी खिलाड़ी को रिपोर्ट करने का उद्देश्य क्या है?",["गलत व्यवहार की शिकायत","स्किन भेजना","रैंक बढ़ाना","मैप बदलना"],0],
-      ["Free Fire में UID किसकी पहचान के लिए होता है?",["Player account","Weapon","Map","Pet"],0],
-      ["गेम में Ping सामान्यतः किससे जुड़ा होता है?",["Network response time","Screen size","Battery capacity","Game sound"],0],
-      ["गेम में संवेदनशीलता (Sensitivity) सेटिंग किसे प्रभावित करती है?",["कैमरा/aim movement","फोन का वजन","बैटरी का आकार","स्क्रीन की चमक ही"],0]
-    ]),
-    hard: makeQuestions([
-      ["Free Fire का डेवलपर कौन है?",["111 Dots Studio","Mojang","Epic Games","Valve"],0],
-      ["Free Fire का प्रकाशक कौन है?",["Garena","Nintendo","EA Sports","Rockstar"],0],
-      ["Free Fire में BR का पूरा नाम क्या है?",["Battle Royale","Battle Racing","Basic Rank","Bonus Round"],0],
-      ["Free Fire में CS का पूरा नाम क्या है?",["Clash Squad","Combat Speed","Core Survival","Custom Series"],0],
-      ["Clash Squad में मुख्य लक्ष्य क्या होता है?",["राउंड जीतना","सबसे ज्यादा वाहन चलाना","मैप बनाना","सिर्फ सामान जमा करना"],0],
-      ["Free Fire में एक खिलाड़ी के पास कितने मुख्य weapon slots होते हैं?",["दो","एक","चार","छह"],0],
-      ["Free Fire में Armor का संबंध किससे है?",["Damage protection","Movement sound","Map location","Voice chat"],0],
-      ["Free Fire में सुरक्षित क्षेत्र का आकार समय के साथ क्या होता है?",["छोटा होता है","बड़ा होता है","हमेशा समान रहता है","गायब नहीं होता"],0],
-      ["Free Fire में Rank Points का संबंध किससे है?",["Rank progression","Phone storage","Screen resolution","Account password"],0],
-      ["Free Fire में Revive का अर्थ क्या है?",["गिरे हुए साथी को फिर से उठाना","हथियार बदलना","मैप खोलना","मैच शुरू करना"],0],
-      ["Free Fire में कौन-सा हथियार Assault Rifle है?",["AK","MP40","M1887","USP"],0],
-      ["Free Fire में कौन-सा हथियार Pistol है?",["USP","AWM","SCAR","M60"],0],
-      ["Free Fire में कौन-सा हथियार Light Machine Gun है?",["M60","MP40","M1887","Kar98k"],0],
-      ["Free Fire में Shotgun किस दूरी पर सामान्यतः अधिक उपयोगी होती है?",["कम दूरी","बहुत लंबी दूरी","केवल हवा में","किसी दूरी पर नहीं"],0],
-      ["Free Fire में Sniper Rifle का प्रमुख उपयोग क्या है?",["लंबी दूरी पर निशाना","दीवार बनाना","इलाज करना","तेजी से दौड़ना"],0],
-      ["Free Fire में Emote का उपयोग किसलिए होता है?",["अभिव्यक्ति/डांस दिखाने के लिए","HP बढ़ाने के लिए","गोलियां भरने के लिए","मैच रोकने के लिए"],0],
-      ["Free Fire में Guild किससे संबंधित है?",["खिलाड़ियों का समूह","एक हथियार","एक मैप","एक वाहन"],0],
-      ["Free Fire में खिलाड़ी का नाम किसे कहते हैं?",["Nickname","Ping","FPS","Ammo"],0],
-      ["Free Fire में FPS का संबंध किससे है?",["Frames per second","Fire power score","Fast player system","File protection service"],0],
-      ["गेम में Two-Factor Authentication का उद्देश्य क्या है?",["अकाउंट सुरक्षा बढ़ाना","ग्राफिक्स बदलना","मैच तेज करना","स्कोर घटाना"],0]
-    ])
-  },
-
-  // ================= CRICKET =================
-  cricket: {
-    easy: makeQuestions([
-      ["क्रिकेट की एक टीम में मैदान पर कितने खिलाड़ी होते हैं?",["11","9","10","12"],0],
-      ["क्रिकेट में गेंद को मारने के लिए किसका उपयोग होता है?",["Bat","Racket","Stick","Club"],0],
-      ["क्रिकेट में विकेट के पीछे कौन खड़ा होता है?",["Wicketkeeper","Bowler","Umpire","Captain"],0],
-      ["क्रिकेट में गेंद फेंकने वाले खिलाड़ी को क्या कहते हैं?",["Bowler","Batsman","Fielder","Coach"],0],
-      ["क्रिकेट में चौका कितने रन का होता है?",["4","2","3","6"],0]
-    ]),
-    medium: makeQuestions([
-      ["एक ओवर में सामान्यतः कितनी वैध गेंदें होती हैं?",["6","4","5","8"],0],
-      ["क्रिकेट में छक्का कितने रन का होता है?",["6","4","5","3"],0],
-      ["टेस्ट क्रिकेट मैच अधिकतम कितने दिनों तक खेला जा सकता है?",["5 दिन","2 दिन","3 दिन","7 दिन"],0],
-      ["LBW का पूरा नाम क्या है?",["Leg Before Wicket","Long Bat Win","Left Ball Wide","Leg Bat Work"],0],
-      ["क्रिकेट में टॉस कौन करता है?",["दोनों टीमों के कप्तान","अंपायर अकेले","कोच","स्कोरर"],0],
-      ["क्रिकेट में बिना रन दिए विकेट लेने वाले ओवर को क्या कहते हैं?",["Maiden Over","Powerplay","Super Over","Free Hit"],0],
-      ["ODI मैच में प्रत्येक टीम को सामान्यतः कितने ओवर मिलते हैं?",["50","20","10","90"],0],
-      ["T20 मैच में प्रत्येक टीम को कितने ओवर मिलते हैं?",["20","10","40","50"],0],
-      ["क्रिकेट में रन आउट का निर्णय कौन देता है?",["Umpire","Commentator","Coach","दर्शक"],0],
-      ["क्रिकेट में गेंद की दिशा बदलने के लिए पिच पर क्या मदद करता है?",["Seam और spin","Bat का रंग","Stumps की ऊँचाई","जर्सी"],0]
-    ]),
-    hard: makeQuestions([
-      ["क्रिकेट में एक ओवर में 6 वैध गेंदें क्यों गिनी जाती हैं?",["नियम के अनुसार","हर गेंद पर एक रन होता है","दो गेंदें मिलाकर एक होती हैं","यह खिलाड़ी तय करता है"],0],
-      ["क्रिकेट में Hat-trick का अर्थ क्या है?",["लगातार तीन गेंदों पर तीन विकेट","तीन चौके","तीन छक्के","तीन ओवर मेडन"],0],
-      ["क्रिकेट में Duck किसे कहते हैं?",["शून्य रन पर आउट होना","100 रन बनाना","बिना विकेट खेले रहना","छक्का मारना"],0],
-      ["क्रिकेट में Century कितने रन पर होती है?",["100","50","150","200"],0],
-      ["क्रिकेट में Double Century कितने रन पर होती है?",["200","150","100","250"],0],
-      ["क्रिकेट में एक पारी में 5 विकेट लेने को क्या कहते हैं?",["Five-wicket haul","Century","Hat-trick","Duck"],0],
-      ["क्रिकेट में Powerplay किससे संबंधित है?",["Fielding restrictions","पिच की लंबाई","बैट का वजन","टॉस"],0],
-      ["क्रिकेट में DRS का पूरा नाम क्या है?",["Decision Review System","Direct Run Score","Daily Replay Service","Double Run System"],0],
-      ["क्रिकेट पिच की मानक लंबाई कितनी होती है?",["22 yards","20 yards","24 yards","18 yards"],0],
-      ["क्रिकेट में No-ball पर बल्लेबाजी टीम को सामान्यतः क्या मिलता है?",["एक अतिरिक्त रन","कोई रन नहीं","पांच रन","दो विकेट"],0],
-      ["क्रिकेट में Wide ball पर बल्लेबाजी टीम को सामान्यतः कितने अतिरिक्त रन मिलते हैं?",["1","2","4","6"],0],
-      ["क्रिकेट में Super Over का उपयोग कब किया जाता है?",["टाई मैच का नतीजा निकालने के लिए","टॉस करने के लिए","पारी शुरू करने के लिए","बारिश रोकने के लिए"],0],
-      ["क्रिकेट में Follow-on किस प्रारूप में लागू हो सकता है?",["टेस्ट क्रिकेट","T20 only","ODI only","हर प्रारूप में"],0],
-      ["क्रिकेट में Declaration कौन कर सकता है?",["Batting team captain","Umpire","Wicketkeeper only","दर्शक"],0],
-      ["क्रिकेट में गेंदबाज के रन-अप का उद्देश्य क्या है?",["गेंद फेंकने की गति और लय बनाना","स्कोर लिखना","विकेट लगाना","बैट पकड़ना"],0],
-      ["क्रिकेट में तीसरे अंपायर की सहायता किसमें ली जाती है?",["वीडियो रीप्ले निर्णय","टॉस के सिक्के का रंग","टीम चयन","जर्सी नंबर"],0],
-      ["क्रिकेट में Stumping किसके द्वारा की जाती है?",["Wicketkeeper","Bowler","Umpire","Non-striker"],0],
-      ["क्रिकेट में गेंदबाज की Economy Rate क्या बताती है?",["प्रति ओवर दिए गए औसत रन","कुल विकेट","कुल मैच","बल्लेबाज का औसत"],0],
-      ["क्रिकेट में Strike Rate बल्लेबाज के लिए क्या दर्शाता है?",["प्रति 100 गेंदों पर रन","कुल विकेट","कुल ओवर","औसत गेंद की गति"],0],
-      ["क्रिकेट में Yorker गेंद सामान्यतः कहाँ पिच करने का लक्ष्य रखती है?",["बल्लेबाज के पैरों के पास","बाउंड्री के बाहर","विकेटकीपर के पीछे","पिच के बीच से बहुत आगे"],0]
-    ])
-  },
-
-  // ================= BTS =================
-  bts: {
-    easy: makeQuestions([
-      ["BTS किस देश का म्यूजिक ग्रुप है?",["South Korea","Japan","India","USA"],0],
-      ["BTS का फैनडम नाम क्या है?",["ARMY","BLINK","ONCE","MOA"],0],
-      ["BTS में कितने सदस्य हैं?",["7","5","6","8"],0],
-      ["BTS का पूरा नाम क्या है?",["Bangtan Sonyeondan","Big Trend Stars","Best Team Seven","Bright Talent Show"],0],
-      ["BTS का डेब्यू वर्ष कौन-सा है?",["2013","2010","2015","2017"],0]
-    ]),
-    medium: makeQuestions([
-      ["BTS का पहला सिंगल एल्बम कौन-सा था?",["2 Cool 4 Skool","Wings","Map of the Soul: 7","BE"],0],
-      ["BTS के लीडर कौन हैं?",["RM","Jin","Jimin","Jungkook"],0],
-      ["BTS का सबसे बड़ा सदस्य कौन है?",["Jin","Jungkook","V","Jimin"],0],
-      ["BTS में सबसे कम उम्र के सदस्य को क्या कहा जाता है?",["Jungkook","RM","Suga","J-Hope"],0],
-      ["BTS का गाना Dynamite किस भाषा में मुख्य रूप से है?",["English","Japanese","Hindi","Spanish"],0],
-      ["BTS का गाना Butter किस वर्ष रिलीज हुआ?",["2021","2018","2019","2023"],0],
-      ["BTS की एजेंसी का वर्तमान नाम क्या है?",["BIGHIT MUSIC","YG Entertainment","JYP Entertainment","SM Entertainment"],0],
-      ["BTS सदस्य Suga का असली नाम क्या है?",["Min Yoongi","Kim Namjoon","Park Jimin","Kim Taehyung"],0],
-      ["BTS सदस्य V का असली नाम क्या है?",["Kim Taehyung","Kim Seokjin","Jeon Jungkook","Jung Hoseok"],0],
-      ["BTS सदस्य J-Hope का असली नाम क्या है?",["Jung Hoseok","Min Yoongi","Kim Namjoon","Park Jimin"],0]
-    ]),
-    hard: makeQuestions([
-      ["BTS ने Billboard Hot 100 में पहला नंबर-1 किस गाने से पाया?",["Dynamite","DNA","Fire","Spring Day"],0],
-      ["BTS का एल्बम Map of the Soul: 7 किस वर्ष आया?",["2020","2018","2019","2022"],0],
-      ["BTS के सदस्य RM का जन्म नाम क्या है?",["Kim Namjoon","Kim Taehyung","Min Yoongi","Jung Hoseok"],0],
-      ["BTS के सदस्य Jin का असली नाम क्या है?",["Kim Seokjin","Park Jimin","Jeon Jungkook","Kim Namjoon"],0],
-      ["BTS के सदस्य Jimin का पूरा नाम क्या है?",["Park Jimin","Kim Jimin","Jung Jimin","Lee Jimin"],0],
-      ["BTS के सदस्य Jungkook का पूरा नाम क्या है?",["Jeon Jungkook","Kim Jungkook","Park Jungkook","Lee Jungkook"],0],
-      ["BTS का गाना Spring Day किस एल्बम में शामिल है?",["You Never Walk Alone","BE","Wings","Love Yourself: Answer"],0],
-      ["BTS का गाना DNA किस वर्ष रिलीज हुआ?",["2017","2015","2019","2021"],0],
-      ["BTS का गाना Fake Love किस एल्बम का है?",["Love Yourself: Tear","Wings","BE","Dark & Wild"],0],
-      ["BTS का पहला अंग्रेज़ी सिंगल कौन-सा था?",["Dynamite","DNA","Idol","Fire"],0],
-      ["BTS ने अपना आधिकारिक डेब्यू किस तारीख को किया?",["13 June 2013","13 July 2013","1 January 2014","21 June 2015"],0],
-      ["BTS का गाना Life Goes On किस एल्बम में है?",["BE","Wings","Dark & Wild","Skool Luv Affair"],0],
-      ["BTS का गाना Idol किस एल्बम में शामिल है?",["Love Yourself: Answer","BE","Wings","2 Cool 4 Skool"],0],
-      ["BTS के सदस्य Suga का स्टेज नाम Agust D किससे जुड़ा है?",["उनका solo project","उनका पहला स्कूल","एक फिल्म","एक फैन क्लब"],0],
-      ["BTS के सदस्य J-Hope का solo एल्बम कौन-सा है?",["Jack In The Box","Golden","D-Day","Face"],0],
-      ["Jungkook का solo एल्बम कौन-सा है?",["Golden","Face","Layover","Indigo"],0],
-      ["Jimin का solo एल्बम कौन-सा है?",["Face","Golden","D-Day","Jack In The Box"],0],
-      ["V का solo एल्बम कौन-सा है?",["Layover","Indigo","Golden","Face"],0],
-      ["RM का solo एल्बम Indigo किस वर्ष रिलीज हुआ?",["2022","2019","2020","2024"],0],
-      ["BTS का गाना Permission to Dance किस वर्ष रिलीज हुआ?",["2021","2017","2019","2023"],0]
-    ])
-  },
-
-  // ================= MOVIES =================
-  movies: {
-    easy: makeQuestions([
-      ["फिल्मों में अभिनय करने वाले व्यक्ति को क्या कहते हैं?",["Actor","Doctor","Pilot","Farmer"],0],
-      ["फिल्म बनाने वाले निर्देशक को अंग्रेजी में क्या कहते हैं?",["Director","Singer","Dancer","Painter"],0],
-      ["भारत की फिल्म इंडस्ट्री बॉलीवुड मुख्य रूप से किस शहर से जुड़ी है?",["Mumbai","Delhi","Jaipur","Patna"],0],
-      ["फिल्म में गाने गाने वाले व्यक्ति को क्या कहते हैं?",["Singer","Editor","Producer","Writer"],0],
-      ["फिल्म देखने के स्थान को क्या कहते हैं?",["Cinema Hall","Library","Hospital","Stadium"],0]
-    ]),
-    medium: makeQuestions([
-      ["फिल्म 3 Idiots किस वर्ष रिलीज हुई थी?",["2009","2005","2012","2015"],0],
-      ["फिल्म Dangal किस खेल पर आधारित है?",["कुश्ती","क्रिकेट","हॉकी","फुटबॉल"],0],
-      ["फिल्म Sholay के निर्देशक कौन थे?",["Ramesh Sippy","Raj Kapoor","Karan Johar","Sanjay Leela Bhansali"],0],
-      ["फिल्म Lagaan किस वर्ष रिलीज हुई?",["2001","1998","2005","2010"],0],
-      ["फिल्म PK में मुख्य अभिनेता कौन थे?",["Aamir Khan","Salman Khan","Shah Rukh Khan","Ajay Devgn"],0],
-      ["फिल्म Baahubali के निर्देशक कौन हैं?",["S. S. Rajamouli","Rohit Shetty","Anurag Kashyap","Rajkumar Hirani"],0],
-      ["फिल्म Chennai Express के मुख्य अभिनेता कौन हैं?",["Shah Rukh Khan","Akshay Kumar","Aamir Khan","Ranbir Kapoor"],0],
-      ["फिल्म Taare Zameen Par किस विषय को प्रमुखता देती है?",["बच्चों की सीखने की कठिनाइयाँ","अंतरिक्ष यात्रा","क्रिकेट","युद्ध"],0],
-      ["फिल्म Zindagi Na Milegi Dobara मुख्य रूप से किस बारे में है?",["दोस्ती और यात्रा","अंतरिक्ष युद्ध","जासूसी","खेल प्रतियोगिता"],0],
-      ["फिल्म RRR के निर्देशक कौन हैं?",["S. S. Rajamouli","Ramesh Sippy","Imtiaz Ali","Farah Khan"],0]
-    ]),
-    hard: makeQuestions([
-      ["भारत की पहली पूर्ण लंबाई वाली फीचर फिल्म कौन-सी मानी जाती है?",["Raja Harishchandra","Alam Ara","Kisan Kanya","Pather Panchali"],0],
-      ["Raja Harishchandra के निर्देशक कौन थे?",["Dadasaheb Phalke","Satyajit Ray","Bimal Roy","Guru Dutt"],0],
-      ["भारत की पहली बोलती फिल्म कौन-सी थी?",["Alam Ara","Raja Harishchandra","Mother India","Sholay"],0],
-      ["फिल्म Mother India किस वर्ष रिलीज हुई?",["1957","1947","1965","1975"],0],
-      ["फिल्म Pather Panchali के निर्देशक कौन थे?",["Satyajit Ray","Raj Kapoor","V. Shantaram","Mehboob Khan"],0],
-      ["फिल्म Mughal-e-Azam के निर्देशक कौन थे?",["K. Asif","Raj Kapoor","B. R. Chopra","Yash Chopra"],0],
-      ["फिल्म Guide के निर्देशक कौन थे?",["Vijay Anand","Ramesh Sippy","Hrishikesh Mukherjee","Manmohan Desai"],0],
-      ["फिल्म Deewar किस वर्ष रिलीज हुई?",["1975","1965","1980","1990"],0],
-      ["फिल्म Dilwale Dulhania Le Jayenge के निर्देशक कौन हैं?",["Aditya Chopra","Karan Johar","Yash Chopra","Sooraj Barjatya"],0],
-      ["फिल्म Swades के निर्देशक कौन हैं?",["Ashutosh Gowariker","Rajkumar Hirani","Farhan Akhtar","Anurag Basu"],0],
-      ["फिल्म Black के निर्देशक कौन हैं?",["Sanjay Leela Bhansali","Rohit Shetty","Anurag Kashyap","Imtiaz Ali"],0],
-      ["फिल्म Barfi! के निर्देशक कौन हैं?",["Anurag Basu","Rajkumar Hirani","Kabir Khan","Vishal Bhardwaj"],0],
-      ["फिल्म Kahaani की मुख्य अभिनेत्री कौन हैं?",["Vidya Balan","Deepika Padukone","Kareena Kapoor","Alia Bhatt"],0],
-      ["फिल्म Queen की मुख्य अभिनेत्री कौन हैं?",["Kangana Ranaut","Priyanka Chopra","Anushka Sharma","Katrina Kaif"],0],
-      ["फिल्म Article 15 के निर्देशक कौन हैं?",["Anubhav Sinha","Anurag Kashyap","Shoojit Sircar","Neeraj Pandey"],0],
-      ["फिल्म The Lunchbox के निर्देशक कौन हैं?",["Ritesh Batra","Zoya Akhtar","R. Balki","Vikramaditya Motwane"],0],
-      ["फिल्म Chak De! India किस खेल पर आधारित है?",["हॉकी","क्रिकेट","कबड्डी","फुटबॉल"],0],
-      ["फिल्म Mary Kom किस खिलाड़ी के जीवन से प्रेरित है?",["मैरी कॉम","पी. वी. सिंधु","सानिया मिर्जा","साइना नेहवाल"],0],
-      ["फिल्म Bhaag Milkha Bhaag किस खिलाड़ी पर आधारित है?",["Milkha Singh","Dhyan Chand","Kapil Dev","P. T. Usha"],0],
-      ["फिल्म Super 30 किस शिक्षक के जीवन से प्रेरित है?",["Anand Kumar","Khan Sir","Dr. A. P. J. Abdul Kalam","Homi Bhabha"],0]
-    ])
-  },
-
-  // ================= GENERAL KNOWLEDGE =================
-  gk: {
-    easy: makeQuestions([
-      ["भारत की राजधानी क्या है?",["नई दिल्ली","मुंबई","लखनऊ","जयपुर"],0],
-      ["भारत का राष्ट्रीय पशु कौन-सा है?",["बाघ","शेर","हाथी","घोड़ा"],0],
-      ["भारत का राष्ट्रीय पक्षी कौन-सा है?",["मोर","तोता","कबूतर","हंस"],0],
-      ["सप्ताह में कितने दिन होते हैं?",["7","5","6","8"],0],
-      ["सूर्य किस दिशा से निकलता है?",["पूर्व","पश्चिम","उत्तर","दक्षिण"],0]
-    ]),
-    medium: makeQuestions([
-      ["भारत का संविधान कब लागू हुआ?",["26 जनवरी 1950","15 अगस्त 1947","2 अक्टूबर 1950","26 नवंबर 1949"],0],
-      ["भारत के पहले राष्ट्रपति कौन थे?",["डॉ. राजेंद्र प्रसाद","डॉ. सर्वपल्ली राधाकृष्णन","जवाहरलाल नेहरू","सरदार पटेल"],0],
-      ["भारत का राष्ट्रीय गान किसने लिखा?",["रवीन्द्रनाथ टैगोर","बंकिमचंद्र चट्टोपाध्याय","महात्मा गांधी","प्रेमचंद"],0],
-      ["क्षेत्रफल के अनुसार भारत का सबसे बड़ा राज्य कौन-सा है?",["राजस्थान","उत्तर प्रदेश","महाराष्ट्र","मध्य प्रदेश"],0],
-      ["ताजमहल किस शहर में है?",["आगरा","दिल्ली","जयपुर","लखनऊ"],0],
-      ["पृथ्वी का प्राकृतिक उपग्रह कौन-सा है?",["चंद्रमा","मंगल","शुक्र","सूर्य"],0],
-      ["भारत की मुद्रा क्या है?",["रुपया","डॉलर","यूरो","येन"],0],
-      ["कंप्यूटर का मस्तिष्क किसे कहा जाता है?",["CPU","Mouse","Keyboard","Monitor"],0],
-      ["विश्व पर्यावरण दिवस कब मनाया जाता है?",["5 जून","15 अगस्त","2 अक्टूबर","14 नवंबर"],0],
-      ["भारत में शिक्षक दिवस कब मनाया जाता है?",["5 सितंबर","14 नवंबर","26 जनवरी","5 जून"],0]
-    ]),
-    hard: makeQuestions([
-      ["भारतीय संविधान की प्रारूप समिति के अध्यक्ष कौन थे?",["डॉ. बी. आर. आंबेडकर","डॉ. राजेंद्र प्रसाद","जवाहरलाल नेहरू","सरदार पटेल"],0],
-      ["भारतीय संविधान सभा के स्थायी अध्यक्ष कौन थे?",["डॉ. राजेंद्र प्रसाद","डॉ. बी. आर. आंबेडकर","जवाहरलाल नेहरू","सी. राजगोपालाचारी"],0],
-      ["भारत का पहला उपग्रह कौन-सा था?",["आर्यभट्ट","भास्कर","रोहिणी","इनसैट-1A"],0],
-      ["ISRO की स्थापना किस वर्ष हुई?",["1969","1952","1975","1984"],0],
-      ["भारत में हरित क्रांति का प्रमुख संबंध किससे है?",["कृषि उत्पादन","दूध उत्पादन","मछली उत्पादन","औद्योगिक उत्पादन"],0],
-      ["श्वेत क्रांति का संबंध किससे है?",["दूध उत्पादन","गेहूँ उत्पादन","तेल उत्पादन","कपास उत्पादन"],0],
-      ["भारत में पंचायती राज व्यवस्था को संवैधानिक दर्जा किस संशोधन से मिला?",["73वाँ","42वाँ","44वाँ","86वाँ"],0],
-      ["मौलिक कर्तव्य भारतीय संविधान के किस भाग में हैं?",["भाग IVA","भाग II","भाग III","भाग V"],0],
-      ["भारत का सर्वोच्च न्यायालय कहाँ स्थित है?",["नई दिल्ली","मुंबई","कोलकाता","चेन्नई"],0],
-      ["भारत की सबसे लंबी नदी, जो पूरी तरह भारत में बहती है, कौन-सी है?",["गोदावरी","गंगा","यमुना","नर्मदा"],0],
-      ["विश्व का सबसे बड़ा महासागर कौन-सा है?",["प्रशांत महासागर","अटलांटिक महासागर","हिंद महासागर","आर्कटिक महासागर"],0],
-      ["प्रकाश की गति लगभग कितनी है?",["3 लाख km/s","30 हजार km/s","300 km/s","30 लाख km/s"],0],
-      ["मानव शरीर की सबसे बड़ी ग्रंथि कौन-सी है?",["यकृत","थायरॉइड","अग्न्याशय","पिट्यूटरी"],0],
-      ["रक्त का लाल रंग किसके कारण होता है?",["हीमोग्लोबिन","प्लाज्मा","प्लेटलेट्स","इंसुलिन"],0],
-      ["पौधे प्रकाश संश्लेषण में कौन-सी गैस लेते हैं?",["कार्बन डाइऑक्साइड","ऑक्सीजन","नाइट्रोजन","हाइड्रोजन"],0],
-      ["विटामिन C की कमी से कौन-सा रोग होता है?",["स्कर्वी","रिकेट्स","बेरी-बेरी","रतौंधी"],0],
-      ["भारत छोड़ो आंदोलन किस वर्ष शुरू हुआ?",["1942","1930","1920","1947"],0],
-      ["दांडी मार्च किस वर्ष हुआ?",["1930","1920","1942","1947"],0],
-      ["संयुक्त राष्ट्र संघ की स्थापना किस वर्ष हुई?",["1945","1919","1950","1960"],0],
-      ["भारतीय रिजर्व बैंक की स्थापना किस वर्ष हुई?",["1935","1947","1950","1920"],0]
-    ])
-  }
-
-};
-// ===============================
-// PART 3A: GOOGLE LOGIN SYSTEM
-// ===============================
+let quizFinished = false;
 
 // GOOGLE LOGIN
 function loginWithGoogle() {
   auth.signInWithPopup(provider)
-    .then((result) => {
-      currentUser = result.user;
-      alert("Login Successful! Welcome " + currentUser.displayName);
-    })
     .catch((error) => {
-      console.error("Login Error:", error);
+      console.error("Google Login Error:", error);
 
       if (
         error.code === "auth/popup-blocked" ||
-        error.code === "auth/popup-closed-by-user"
+        error.code === "auth/cancelled-popup-request"
       ) {
-        auth.signInWithRedirect(provider);
-      } else {
-        alert("Login Error: " + error.message);
+        return auth.signInWithRedirect(provider);
       }
+
+      alert("Login Error: " + error.message);
     });
 }
-
 
 // LOGOUT
 function logout() {
-  auth.signOut()
-    .then(() => {
-      currentUser = null;
-      alert("You have logged out successfully!");
-    })
-    .catch((error) => {
-      alert("Logout Error: " + error.message);
-    });
+  auth.signOut().catch((error) => {
+    alert("Logout Error: " + error.message);
+  });
+}
+// QUESTION BUILDER
+function Q(question, answer, wrong1, wrong2, wrong3) {
+  return {
+    question,
+    answer,
+    options: [answer, wrong1, wrong2, wrong3]
+  };
 }
 
+const quizData = {
 
-// LOGIN STATUS CHECK
-auth.onAuthStateChanged((user) => {
-  currentUser = user;
+// FREE FIRE
+freefire: {
+easy: [
+Q("Which company publishes Free Fire?","Garena","Tencent","Krafton","Ubisoft"),
+Q("Which genre is Free Fire?","Battle Royale","Racing","Puzzle","Football"),
+Q("What is the main goal in Battle Royale?","Be the last survivor","Build a city","Score a goal","Solve a crossword"),
+Q("Which item restores HP?","Medkit","Gloo Wall","Backpack","Scope"),
+Q("What is the name of Free Fire's in-game currency?","Diamonds","Robux","V-Bucks","Coins only")
+],
+medium: [
+Q("Which studio originally developed Free Fire?","111 Dots Studio","Mojang","Supercell","Epic Games"),
+Q("What does HP mean in a game?","Health Points","High Power","Hero Position","Head Player"),
+Q("Which item creates temporary cover?","Gloo Wall","Medkit","Grenade","Scope"),
+Q("Which mode usually features one player against others?","Solo","Duo","Squad","Training"),
+Q("What does a sniper rifle mainly help with?","Long-range shots","Healing","Fast running","Building walls"),
+Q("What is a parachute used for?","Landing from the plane","Healing teammates","Reloading","Driving"),
+Q("What does an ammo icon represent?","Ammunition","Health","Armor level","Player rank"),
+Q("Which action helps a player avoid enemy fire?","Taking cover","Standing still in open ground","Removing armor","Dropping all supplies"),
+Q("What does a squad commonly contain?","A team of players","A vehicle","A weapon skin","A map"),
+Q("What does the safe zone do?","Restricts the playable area","Gives free diamonds","Changes usernames","Stops all weapons")
+],
+hard: [
+Q("Which company owns the Free Fire publishing brand?","Garena","Valve","Nintendo","Riot Games"),
+Q("What is the purpose of a revive feature?","Bring a teammate back into play","Increase weapon range","Change the map","Add diamonds"),
+Q("Which weapon class is designed for close combat?","Shotgun","Sniper rifle","Long-range DMR","Launcher only"),
+Q("What does recoil describe?","Weapon movement after firing","Player healing","Map rotation","Armor colour"),
+Q("What is a headshot?","A hit on the head","A hit on a vehicle","A missed shot","A healing action"),
+Q("What does a scope help with?","Aiming at distant targets","Restoring HP","Increasing backpack space","Changing character"),
+Q("What is loot?","Items collected during a match","The match timer","A player title","A map boundary"),
+Q("What does a ranked match usually affect?","Competitive rank","Phone storage","Screen brightness","Internet plan"),
+Q("What does a loadout mean?","Selected equipment setup","A team name","A map location","A victory animation"),
+Q("What is a respawn point for?","Returning to a match in supported modes","Changing the game language","Buying a skin","Saving screenshots"),
+Q("What does ping usually measure?","Network response time","Battery health","Screen size","Player height"),
+Q("What is a melee weapon used for?","Close-range combat","Long-distance aiming","Healing","Flying"),
+Q("What is a battle pass?","A seasonal reward progression system","A phone passcode","A map","A weapon category"),
+Q("What is a character skill?","A special character ability","A username","A network setting","A graphics filter"),
+Q("What does a vehicle provide?","Faster movement across the map","Extra account security","More screen resolution","Unlimited ammo"),
+Q("What is a match lobby?","The waiting area before a match","The final safe zone","The in-game shop only","A weapon attachment"),
+Q("What does an attachment do?","Modifies a weapon","Changes the player name","Restores internet","Creates a team"),
+Q("What does survival time measure?","How long a player stays alive","How many skins are owned","How fast a phone charges","How many friends are online"),
+Q("What does an elimination mean?","Removing an opponent from the match","Collecting a medkit","Changing a character","Opening a map"),
+Q("What is a training ground for?","Practising game skills","Buying a phone","Watching films","Sending messages")
+]
+},
 
-  const loginArea = document.getElementById("loginArea");
-  const logoutArea = document.getElementById("logoutArea");
-  const userInfo = document.getElementById("userInfo");
+// FREE FIRE INDIA
+freefireindia: {
+easy: [
+Q("Free Fire India is associated with which game?","Garena Free Fire","Minecraft","Clash of Clans","PUBG PC"),
+Q("Which country is represented by the India version name?","India","Japan","Brazil","Canada"),
+Q("What does UID identify?","A game account","A weapon","A map","A vehicle"),
+Q("Which company is associated with Free Fire?","Garena","Sony Music","Microsoft Word","NASA"),
+Q("What does IGN commonly mean?","In-game name","Internet game number","India gaming network","Instant gold number")
+],
+medium: [
+Q("What does a player UID help identify?","A specific player account","A match location","A gun type","A game mode"),
+Q("Which platform is commonly used to install Android games?","Google Play Store","Google Docs","Google Maps","Google Photos"),
+Q("What should players do to protect an account?","Use account security features","Share passwords publicly","Use unknown login links","Give away verification codes"),
+Q("What does an in-game event usually offer?","Limited-time activities and rewards","A phone repair","A school timetable","A new operating system"),
+Q("What does a guild represent?","A player community or group","A weapon attachment","A map zone","A graphics setting"),
+Q("What is an emote?","A character animation","A healing item","A gun scope","A network cable"),
+Q("What does a game update usually do?","Adds fixes or changes","Deletes the internet","Changes phone hardware","Charges the battery"),
+Q("What is a nickname used for?","Displaying a player's chosen name","Changing game servers","Restoring HP","Increasing FPS"),
+Q("What does FPS stand for in gaming?","Frames Per Second","Fast Player Score","Free Points System","First Person Sound"),
+Q("What is a fair-play rule meant to prevent?","Cheating and unfair play","Team communication","Practice matches","Normal gameplay")
+],
+hard: [
+Q("What is two-factor authentication designed to add?","An extra account security step","More game currency","Higher graphics","A new character"),
+Q("What should you do if an account login looks suspicious?","Use official account recovery and security steps","Share the password with strangers","Ignore every warning","Install an unknown APK"),
+Q("What does server maintenance mean?","Temporary work on game servers","A new phone battery","A player rank","A weapon skin"),
+Q("What is latency?","Delay in data communication","Screen resolution","Game download size","Character level"),
+Q("What does an anti-cheat system aim to detect?","Unfair software or cheating","Low battery","Screen cracks","Phone colour"),
+Q("Why should game downloads come from official stores?","To reduce security risks","To increase phone weight","To remove all updates","To change the display"),
+Q("What is a patch note?","A description of update changes","A player password","A match result","A character costume"),
+Q("What does cross-platform play mean?","Players on supported platforms can play together","One player uses two phones","A game has no servers","A game works offline only"),
+Q("What does a server region affect?","Which regional game server is used","The phone camera","The account password","The screen shape"),
+Q("What is a leaderboard?","A ranking of player results","A weapon storage box","A game map","A chat sticker"),
+Q("What is a tournament?","An organised competitive event","A phone setting","A character ability","A download error"),
+Q("What does spectator mode allow?","Watching a match","Changing account passwords","Buying a phone","Editing a map"),
+Q("What is a match result screen for?","Showing the outcome and statistics","Changing the device language","Installing updates","Creating an email"),
+Q("What does a cosmetic skin usually change?","Appearance","Internet speed","Account password","Game server"),
+Q("What is a custom room?","A privately configured match room","A phone gallery","A public website","A network provider"),
+Q("What does an in-game report feature help with?","Reporting suspected rule violations","Increasing points automatically","Unlocking every item","Changing phone settings"),
+Q("What does a season reset commonly affect?","Seasonal competitive progress","Phone storage","Email address","Screen size"),
+Q("What is a daily mission?","A task available for a daily reward","A permanent password","A phone update","A map boundary"),
+Q("What does matchmaking do?","Finds players for a match","Repairs the phone","Changes the account name","Downloads music"),
+Q("What does account recovery help with?","Regaining access to an account","Increasing FPS","Changing weapon damage","Adding storage")
+]
+},
 
-  if (user) {
-    loginArea.style.display = "none";
-    logoutArea.style.display = "block";
-    userInfo.textContent = "Welcome, " + (user.displayName || "Player");
+// CRICKET
+cricket: {
+easy: [
+Q("How many players are on a cricket team on the field?","11","9","10","12"),
+Q("How many balls are in a standard over?","6","5","8","10"),
+Q("What is the main tool used to hit the ball?","Bat","Racket","Club","Stick"),
+Q("What is the person who bowls called?","Bowler","Batter","Umpire","Captain"),
+Q("How many runs are scored for a boundary along the ground?","4","2","3","6")
+],
+medium: [
+Q("How many runs does a batter score for a six?","6","4","5","3"),
+Q("What is the maximum number of overs in a standard T20 innings?","20","10","50","40"),
+Q("What does LBW stand for?","Leg Before Wicket","Long Bat Wide","Left Boundary Win","Leg By Wicket"),
+Q("Which format is traditionally played over up to five days?","Test cricket","T20","The Hundred","One-over match"),
+Q("What is a wicketkeeper's main role?","Collecting balls behind the stumps","Bowling every over","Scoring from the boundary","Choosing the pitch"),
+Q("What is a hat-trick in cricket?","Three wickets in three consecutive deliveries","Three sixes in an over","Three completed runs","Three catches in one match"),
+Q("How many runs is a no-ball penalty in most limited-overs formats?","1","2","4","6"),
+Q("What is the third umpire known for using?","Video replays","A bat","A scoreboard pencil","A stopwatch only"),
+Q("What is the playing area called?","Cricket ground","Court","Ring","Track"),
+Q("What does a maiden over mean?","An over with no runs charged to the bowler","An over with six wickets","An over with six boundaries","An over with no balls")
+],
+hard: [
+Q("What is the length of a cricket pitch between wickets?","22 yards","20 yards","24 yards","18 yards"),
+Q("How many legal balls are in a standard ODI innings maximum?","300","120","360","240"),
+Q("What is the follow-on associated with?","Test and first-class cricket","T20 only","Indoor cricket only","Street cricket only"),
+Q("What is a yorker?","A delivery aimed near the batter's feet","A high full toss","A slow bouncer","A wide outside off stump"),
+Q("What does DRS stand for?","Decision Review System","Direct Run Score","Delivery Replay Setup","Double Run Signal"),
+Q("What is the Duckworth-Lewis-Stern method used for?","Adjusting targets in rain-affected limited-overs matches","Measuring bat weight","Counting fielders","Choosing the toss"),
+Q("How many stumps make up a wicket?","3","2","4","6"),
+Q("What is the width of a cricket pitch?","10 feet","8 feet","12 feet","15 feet"),
+Q("What is a century?","100 runs by a batter","50 wickets","10 overs","A team score of 100 only"),
+Q("What is a double century?","200 runs by a batter","Two wickets","20 boundaries","Two innings"),
+Q("What does a run out involve?","A batter being out of the crease when the wicket is put down","A bowler delivering a no-ball","A ball crossing the boundary","A batter hitting a six"),
+Q("What is a bouncer?","A short-pitched delivery that rises towards the batter","A slow full toss","A spin delivery on the ground","A wide yorker"),
+Q("What does strike rate measure for a batter?","Runs scored per 100 balls faced","Runs per over conceded","Wickets per match","Catches per innings"),
+Q("What does economy rate measure for a bowler?","Runs conceded per over","Wickets per season","Balls per innings","Boundaries hit"),
+Q("What is the toss used to decide?","Which team bats or fields first","Who wins the match","The ball colour in every format","The umpire's salary"),
+Q("What is a powerplay in limited-overs cricket?","A period with fielding restrictions","A drinks break","A type of bat","A penalty shootout"),
+Q("What is a declaration in Test cricket?","A captain voluntarily ends their team's innings","An umpire calls a no-ball","A batter retires hurt","A team changes its kit"),
+Q("What is a golden duck?","Out on the first ball faced","Scoring 100 on debut","A duck in the field","A wicket on the last ball"),
+Q("What is a nightwatchman?","A lower-order batter sent in late in the day","The stadium security guard","A third umpire","A new ball"),
+Q("What is the boundary rope used to mark?","The edge of the playing field","The pitch centre","The bowler's run-up","The team dugout")
+]
+},
 
-    loadLeaderboard();
-  } else {
-    loginArea.style.display = "block";
-    logoutArea.style.display = "none";
-    userInfo.textContent = "Please Login to Save Your Score";
+// BTS
+bts: {
+easy: [
+Q("How many members are in BTS?","7","5","6","8"),
+Q("What country is BTS from?","South Korea","Japan","Thailand","China"),
+Q("What is BTS's fandom called?","ARMY","BLINK","ONCE","MOA"),
+Q("Which company manages BTS?","BIGHIT MUSIC","JYP Entertainment","SM Entertainment","YG Entertainment"),
+Q("What does BTS stand for in Korean branding?","Bangtan Sonyeondan","Blue Team Stars","Best Talent Show","Bright Tomorrow Sound")
+],
+medium: [
+Q("Who is the leader of BTS?","RM","Jin","Jimin","Jungkook"),
+Q("Which BTS member is known as Worldwide Handsome?","Jin","Suga","J-Hope","V"),
+Q("What is Suga's solo stage name also known as?","Agust D","JinHit","Vante","Hope World"),
+Q("Which member released the album Jack in the Box?","J-Hope","RM","Jin","Jimin"),
+Q("Which BTS song features the phrase Dynamite in its title?","Dynamite","Spring Day","Run","Fire"),
+Q("Which member is known by the nickname V?","Kim Taehyung","Kim Namjoon","Park Jimin","Min Yoongi"),
+Q("Which member's real name is Jeon Jungkook?","Jungkook","Jin","RM","J-Hope"),
+Q("What is the name of BTS's 2020 English-language hit?","Dynamite","Idol","DNA","Dope"),
+Q("Which member released the solo album FACE?","Jimin","Jin","V","RM"),
+Q("Which BTS song includes the title Butter?","Butter","Black Swan","Life Goes On","Mic Drop")
+],
+hard: [
+Q("What year did BTS debut?","2013","2011","2015","2017"),
+Q("What was BTS's debut single album called?","2 Cool 4 Skool","Wings","Love Yourself: Tear","Map of the Soul: 7"),
+Q("Which member released the solo album Indigo?","RM","Jin","Suga","J-Hope"),
+Q("Which BTS album includes Black Swan?","Map of the Soul: 7","Dark & Wild","Skool Luv Affair","BE"),
+Q("What is the title of Jin's 2022 solo single?","The Astronaut","Wild Flower","More","Like Crazy"),
+Q("Which member released the solo album D-DAY?","Suga","Jimin","V","Jin"),
+Q("Which BTS song was released in 2017 and features DNA in its title?","DNA","Dynamite","Butter","Yet to Come"),
+Q("Which member released the solo album Layover?","V","Jin","RM","J-Hope"),
+Q("Which BTS album was released in 2020 and includes Life Goes On?","BE","Wings","Dark & Wild","Skool Luv Affair"),
+Q("Which member's solo song is named Arson?","J-Hope","Jin","Jimin","Jungkook"),
+Q("Which member released the solo album Golden?","Jungkook","RM","Suga","V"),
+Q("Which song is from BTS's album Wings?","Blood Sweat & Tears","Butter","Dynamite","Take Two"),
+Q("What is the title of RM's 2022 solo album?","Indigo","FACE","D-DAY","Layover"),
+Q("Which BTS member is also known as Hobi?","J-Hope","Jin","V","RM"),
+Q("Which BTS song was released for the 2022 anthology album Proof?","Yet To Come","Dope","Fire","No More Dream"),
+Q("Which member's real name is Park Jimin?","Jimin","Jin","Suga","Jungkook"),
+Q("Which member's real name is Kim Seokjin?","Jin","RM","V","J-Hope"),
+Q("Which BTS song features the title Spring Day?","Spring Day","Black Swan","Run BTS","Permission to Dance"),
+Q("Which member released the solo track Wild Flower featuring youjeen?","RM","V","Jin","Jungkook"),
+Q("Which BTS member is known by the nickname Golden Maknae?","Jungkook","Jin","Suga","J-Hope")
+]
+},
 
-    loadLeaderboard();
-  }
-});
+// MOVIES
+movies: {
+easy: [
+Q("Which country is Bollywood mainly associated with?","India","USA","France","Japan"),
+Q("What is the person who directs a film called?","Director","Umpire","Editor-in-chief","Reporter"),
+Q("What is a film soundtrack?","Music used in a film","A camera lens","A movie ticket","A film poster"),
+Q("Which award is associated with the Indian film industry?","Filmfare Award","Grammy Award","Wimbledon Trophy","Ballon d'Or"),
+Q("What does a movie trailer show?","A preview of the film","The full script","The cinema seats","The film budget only")
+],
+medium: [
+Q("Who directed the film 3 Idiots?","Rajkumar Hirani","Sanjay Leela Bhansali","Karan Johar","Rohit Shetty"),
+Q("Which actor played the character Rancho in 3 Idiots?","Aamir Khan","Shah Rukh Khan","Salman Khan","Akshay Kumar"),
+Q("Which film features the character Mogambo?","Mr. India","Sholay","Lagaan","Dangal"),
+Q("Which Indian film is about a wrestler and his daughters?","Dangal","Swades","Barfi!","Queen"),
+Q("Who directed the film Dangal?","Nitesh Tiwari","Rajkumar Hirani","Zoya Akhtar","Anurag Kashyap"),
+Q("Which movie features the song Jai Ho?","Slumdog Millionaire","Dangal","PK","Chennai Express"),
+Q("Which actor played the lead in the film PK?","Aamir Khan","Ajay Devgn","Ranbir Kapoor","Hrithik Roshan"),
+Q("What does CGI stand for?","Computer-Generated Imagery","Cinema Graphic Index","Camera Generated Input","Colour Grade Interface"),
+Q("What is a screenplay?","The written script for a film","A movie poster","A cinema hall","A film award"),
+Q("What is a sequel?","A follow-up to an earlier film","A film's trailer","A short advertisement","A movie review")
+],
+hard: [
+Q("Which Indian film won the Academy Award for Best Original Song for Naatu Naatu?","RRR","Lagaan","Dangal","Gully Boy"),
+Q("Who directed the film Pather Panchali?","Satyajit Ray","Bimal Roy","Guru Dutt","Raj Kapoor"),
+Q("Which year was the first Indian feature film Raja Harishchandra released?","1913","1920","1931","1947"),
+Q("Who composed the music for the film Roja?","A. R. Rahman","Ilaiyaraaja","Pritam","Shankar-Ehsaan-Loy"),
+Q("Which film won the 2001 Academy Award for Best Foreign Language Film?","Crouching Tiger, Hidden Dragon","Lagaan","Amélie","Monsoon Wedding"),
+Q("Who directed the film Mughal-e-Azam?","K. Asif","Mehboob Khan","V. Shantaram","B. R. Chopra"),
+Q("Which actor played the title role in the film Gandhi (1982)?","Ben Kingsley","Amitabh Bachchan","Peter O'Toole","Sean Connery"),
+Q("Which Indian film was nominated for the Academy Award for Best Foreign Language Film in 2002?","Lagaan","Swades","Devdas","Black"),
+Q("Who directed the film Pyaasa?","Guru Dutt","Raj Kapoor","Chetan Anand","Vijay Anand"),
+Q("Which film features the fictional town of Rameshwaram and the character Bhuvan?","Lagaan","Guide","Sholay","Deewaar"),
+Q("Who directed the film Gully Boy?","Zoya Akhtar","Farah Khan","Mira Nair","Reema Kagti"),
+Q("Which film features the character Geet?","Jab We Met","Queen","Piku","English Vinglish"),
+Q("Who composed the soundtrack for Dil Se..?","A. R. Rahman","Anu Malik","Amit Trivedi","Vishal-Shekhar"),
+Q("Which director made the film The Lunchbox?","Ritesh Batra","Anurag Kashyap","Vishal Bhardwaj","Shoojit Sircar"),
+Q("Which film is based on the life of mathematician Anand Kumar?","Super 30","Chhichhore","Hichki","Taare Zameen Par"),
+Q("Who directed the film Sholay?","Ramesh Sippy","Manmohan Desai","Yash Chopra","Prakash Mehra"),
+Q("Which film features the characters Jai and Veeru?","Sholay","Deewaar","Don","Zanjeer"),
+Q("Which Indian film won the Grand Prix at Cannes in 2024?","All We Imagine as Light","RRR","The Lunchbox","Court"),
+Q("Who directed the film Barfi!?","Anurag Basu","Rajkumar Hirani","Imtiaz Ali","Sanjay Leela Bhansali"),
+Q("Which film features the character Bhuvan in a cricket-based story?","Lagaan","Chak De! India","Iqbal","Jersey")
+]
+},
+const gkQuestions = {
 
+  easy: [
+    Q("भारत की राजधानी क्या है?", "नई दिल्ली", "मुंबई", "कोलकाता", "चेन्नई"),
+    Q("भारत का राष्ट्रीय पशु कौन-सा है?", "बाघ", "शेर", "हाथी", "तेंदुआ"),
+    Q("सूर्य किस दिशा से निकलता है?", "पूर्व", "पश्चिम", "उत्तर", "दक्षिण"),
+    Q("भारत का राष्ट्रीय फूल कौन-सा है?", "कमल", "गुलाब", "सूरजमुखी", "चमेली"),
+    Q("एक सप्ताह में कितने दिन होते हैं?", "7", "5", "6", "8"),
+    Q("ताजमहल किस शहर में है?", "आगरा", "दिल्ली", "जयपुर", "लखनऊ"),
+    Q("भारत का राष्ट्रीय पक्षी कौन-सा है?", "मोर", "तोता", "कबूतर", "हंस"),
+    Q("पृथ्वी का प्राकृतिक उपग्रह कौन है?", "चंद्रमा", "मंगल", "सूर्य", "शुक्र"),
+    Q("भारत का स्वतंत्रता दिवस कब मनाया जाता है?", "15 अगस्त", "26 जनवरी", "2 अक्टूबर", "14 नवंबर"),
+    Q("एक वर्ष में कितने महीने होते हैं?", "12", "10", "11", "13")
+  ],
 
-// MOBILE REDIRECT LOGIN RESULT
-auth.getRedirectResult()
-  .catch((error) => {
-    console.error("Redirect Login Error:", error);
-  });
+  medium: [
+    Q("भारत का संविधान कब लागू हुआ?", "26 जनवरी 1950", "15 अगस्त 1947", "26 नवंबर 1949", "2 अक्टूबर 1950"),
+    Q("भारत के पहले राष्ट्रपति कौन थे?", "डॉ. राजेंद्र प्रसाद", "डॉ. सर्वपल्ली राधाकृष्णन", "जवाहरलाल नेहरू", "जाकिर हुसैन"),
+    Q("विश्व का सबसे बड़ा महासागर कौन-सा है?", "प्रशांत महासागर", "हिंद महासागर", "अटलांटिक महासागर", "आर्कटिक महासागर"),
+    Q("ISRO की स्थापना कब हुई?", "1969", "1947", "1975", "1980"),
+    Q("भारत में हरित क्रांति के जनक कौन हैं?", "एम. एस. स्वामीनाथन", "वर्गीज कुरियन", "होमी भाभा", "सी. वी. रमन"),
+    Q("मानव शरीर में रक्त पंप करने वाला अंग कौन-सा है?", "हृदय", "फेफड़ा", "गुर्दा", "यकृत"),
+    Q("क्षेत्रफल के आधार पर भारत का सबसे बड़ा राज्य कौन-सा है?", "राजस्थान", "उत्तर प्रदेश", "मध्य प्रदेश", "महाराष्ट्र"),
+    Q("संयुक्त राष्ट्र संघ की स्थापना कब हुई?", "1945", "1947", "1950", "1939"),
+    Q("भारतीय रिजर्व बैंक की स्थापना कब हुई?", "1935", "1947", "1950", "1920"),
+    Q("शून्य के गणितीय नियमों को व्यवस्थित रूप से समझाने वाले भारतीय गणितज्ञ कौन थे?", "ब्रह्मगुप्त", "आर्यभट्ट", "भास्कराचार्य", "रामानुजन")
+  ],
 
+  hard: [
+    Q("भारतीय संविधान की प्रारूप समिति के अध्यक्ष कौन थे?", "डॉ. भीमराव अंबेडकर", "डॉ. राजेंद्र प्रसाद", "जवाहरलाल नेहरू", "सरदार पटेल"),
+    Q("भारत का पहला उपग्रह कौन-सा था?", "आर्यभट्ट", "रोहिणी", "भास्कर", "इनसैट-1A"),
+    Q("मौलिक कर्तव्य किस संविधान संशोधन द्वारा जोड़े गए?", "42वाँ संशोधन", "44वाँ संशोधन", "52वाँ संशोधन", "61वाँ संशोधन"),
+    Q("भारत में पहली यात्री रेलगाड़ी कब चली?", "1853", "1857", "1885", "1901"),
+    Q("पंचायती राज व्यवस्था को संवैधानिक दर्जा किस संशोधन से मिला?", "73वाँ संशोधन", "42वाँ संशोधन", "44वाँ संशोधन", "74वाँ संशोधन"),
+    Q("भारत का पहला परमाणु परीक्षण किस वर्ष हुआ?", "1974", "1969", "1984", "1998"),
+    Q("संवैधानिक उपचारों का अधिकार किस अनुच्छेद में है?", "अनुच्छेद 32", "अनुच्छेद 14", "अनुच्छेद 19", "अनुच्छेद 21"),
+    Q("भारत के नियंत्रक एवं महालेखा परीक्षक की नियुक्ति कौन करता है?", "राष्ट्रपति", "प्रधानमंत्री", "मुख्य न्यायाधीश", "लोकसभा अध्यक्ष"),
+    Q("दांडी मार्च किस वर्ष शुरू हुआ?", "1930", "1920", "1942", "1935"),
+    Q("भारत में योजना आयोग की स्थापना कब हुई?", "1950", "1947", "1952", "1960")
+  ]
 
-// LOAD LEADERBOARD ON START
-loadLeaderboard();
-// ===============================
-// PART 3B: QUIZ FUNCTIONS
-// ===============================
+};
+  
+// QUIZ SYSTEM
 
+let scoreSaveStarted = false;
 
-// SHUFFLE FUNCTION
 function shuffleArray(array) {
   const result = [...array];
 
@@ -857,12 +490,23 @@ function shuffleArray(array) {
   return result;
 }
 
+const categoryNames = {
+  freefire: "FREE FIRE",
+  freefireindia: "FREE FIRE INDIA",
+  cricket: "CRICKET",
+  bts: "BTS",
+  movies: "MOVIES",
+  gk: "GENERAL KNOWLEDGE"
+};
 
-// START QUIZ
 function startQuiz(category) {
+  if (!currentUser) {
+    alert("पहले Google से Login करें!");
+    return;
+  }
 
   if (!quizData[category]) {
-    alert("Category not found!");
+    alert("Category नहीं मिली!");
     return;
   }
 
@@ -872,66 +516,52 @@ function startQuiz(category) {
 
   if (choice === null) return;
 
-  const difficultyChoice = choice.trim();
+  const options = {
+    "1": { name: "easy", count: 5 },
+    "2": { name: "medium", count: 10 },
+    "3": { name: "hard", count: 20 }
+  };
 
-  let difficulty;
-  let questionCount;
+  const selected = options[choice.trim()];
 
-  if (difficultyChoice === "1") {
-    difficulty = "easy";
-    questionCount = 5;
-  } else if (difficultyChoice === "2") {
-    difficulty = "medium";
-    questionCount = 10;
-  } else if (difficultyChoice === "3") {
-    difficulty = "hard";
-    questionCount = 20;
-  } else {
+  if (!selected) {
     alert("कृपया 1, 2 या 3 चुनें!");
     return;
   }
 
-  const questionPool = quizData[category][difficulty];
+  const pool = quizData[category][selected.name];
 
-  if (!questionPool || questionPool.length < questionCount) {
+  if (!pool || pool.length < selected.count) {
     alert("Questions उपलब्ध नहीं हैं!");
     return;
   }
 
-  currentQuestions = shuffleArray(questionPool).map((question) => {
-    const shuffledOptions = shuffleArray(
-      question.options.map((option, index) => ({
-        text: option,
-        originalIndex: index
-      }))
-    );
-
-    return {
-      question: question.question,
-      answer: question.answer,
-      options: shuffledOptions
-    };
-  });
+  currentQuestions = shuffleArray(pool)
+    .slice(0, selected.count)
+    .map((item) => ({
+      question: item.question,
+      answer: item.answer,
+      options: shuffleArray(item.options)
+    }));
 
   currentQuestionIndex = 0;
   score = 0;
   correctAnswers = 0;
   selectedAnswer = null;
-  totalQuestions = questionCount;
+  totalQuestions = selected.count;
   currentCategory = category;
-  currentDifficulty = difficulty;
+  currentDifficulty = selected.name;
+  quizFinished = false;
+  scoreSaveStarted = false;
 
   document.getElementById("homeSection").style.display = "none";
-  document.getElementById("resultSection").style.display = "none";
   document.getElementById("quizSection").style.display = "block";
+  document.getElementById("resultSection").style.display = "none";
 
   showQuestion();
 }
 
-
-// SHOW QUESTION
 function showQuestion() {
-
   if (currentQuestionIndex >= totalQuestions) {
     finishQuiz();
     return;
@@ -942,10 +572,12 @@ function showQuestion() {
   const question = currentQuestions[currentQuestionIndex];
 
   document.getElementById("quizCategory").textContent =
-    currentCategory.toUpperCase() + " - " + currentDifficulty.toUpperCase();
+    categoryNames[currentCategory] + " - " +
+    currentDifficulty.toUpperCase();
 
   document.getElementById("questionCounter").textContent =
-    "Question " + (currentQuestionIndex + 1) + " / " + totalQuestions;
+    "Question " + (currentQuestionIndex + 1) +
+    " / " + totalQuestions;
 
   document.getElementById("quizScore").textContent =
     "Score: " + score;
@@ -956,28 +588,26 @@ function showQuestion() {
   document.getElementById("questionText").textContent =
     question.question;
 
-  const optionsContainer =
+  const container =
     document.getElementById("optionsContainer");
 
-  optionsContainer.innerHTML = "";
+  container.innerHTML = "";
 
   question.options.forEach((option, index) => {
-
     const button = document.createElement("button");
 
+    button.type = "button";
     button.className = "option-btn";
-    button.textContent = option.text;
+    button.textContent = option;
 
-    button.onclick = function () {
+    button.addEventListener("click", () => {
       selectAnswer(index);
-    };
+    });
 
-    optionsContainer.appendChild(button);
-
+    container.appendChild(button);
   });
 
   const nextBtn = document.getElementById("nextBtn");
-
   nextBtn.disabled = true;
   nextBtn.textContent =
     currentQuestionIndex === totalQuestions - 1
@@ -985,40 +615,36 @@ function showQuestion() {
       : "Next Question →";
 }
 
-
-// SELECT ANSWER
 function selectAnswer(index) {
-
-  if (selectedAnswer !== null) return;
+  if (selectedAnswer !== null || quizFinished) return;
 
   selectedAnswer = index;
 
   const question = currentQuestions[currentQuestionIndex];
   const selectedOption = question.options[index];
 
-  const buttons =
-    document.querySelectorAll("#optionsContainer button");
+  const buttons = document.querySelectorAll(
+    "#optionsContainer .option-btn"
+  );
 
   buttons.forEach((button, buttonIndex) => {
-
     button.disabled = true;
 
     const option = question.options[buttonIndex];
 
-    if (option.originalIndex === question.answer) {
+    if (option === question.answer) {
       button.classList.add("correct");
     }
 
     if (
       buttonIndex === index &&
-      option.originalIndex !== question.answer
+      option !== question.answer
     ) {
       button.classList.add("wrong");
     }
-
   });
 
-  if (selectedOption.originalIndex === question.answer) {
+  if (selectedOption === question.answer) {
     score += 10;
     correctAnswers++;
   }
@@ -1029,14 +655,8 @@ function selectAnswer(index) {
   document.getElementById("nextBtn").disabled = false;
 }
 
-
-// NEXT QUESTION
 function nextQuestion() {
-
-  if (selectedAnswer === null) {
-    alert("पहले अपना जवाब चुनें!");
-    return;
-  }
+  if (selectedAnswer === null) return;
 
   currentQuestionIndex++;
 
@@ -1047,9 +667,10 @@ function nextQuestion() {
   }
 }
 
-
-// FINISH QUIZ
 function finishQuiz() {
+  if (quizFinished) return;
+
+  quizFinished = true;
 
   document.getElementById("quizSection").style.display = "none";
   document.getElementById("resultSection").style.display = "block";
@@ -1058,46 +679,53 @@ function finishQuiz() {
     score + " Points";
 
   document.getElementById("correctCount").textContent =
-    correctAnswers + " / " + totalQuestions + " Correct Answers";
+    correctAnswers + " / " + totalQuestions +
+    " Correct Answers";
 
   document.getElementById("progressBar").style.width = "100%";
 
-  const resultMessage =
-    document.getElementById("resultMessage");
+  const message = document.getElementById("resultMessage");
 
   if (correctAnswers === totalQuestions) {
-    resultMessage.textContent = "Excellent! Perfect Score!";
+    message.textContent = "🏆 Perfect Score! Excellent!";
   } else if (correctAnswers >= totalQuestions / 2) {
-    resultMessage.textContent = "Great Job! Keep Practicing!";
+    message.textContent = "🔥 Great Job! Keep Practicing!";
   } else {
-    resultMessage.textContent = "Good Try! Practice More!";
+    message.textContent = "💜 Good Try! Practice More!";
   }
 
   if (!currentUser) {
-    resultMessage.textContent +=
-      " Please Login to save your score.";
+    message.textContent += " Login to save your score.";
     return;
   }
 
   saveScore();
 }
 
+function goHome() {
+  document.getElementById("quizSection").style.display = "none";
+  document.getElementById("resultSection").style.display = "none";
+  document.getElementById("homeSection").style.display = "block";
 
-// SAVE SCORE TO FIREBASE
+  loadLeaderboard();
+}
+  
+// SAVE PLAYER SCORE
+
 function saveScore() {
+  if (!currentUser || scoreSaveStarted) return;
 
-  if (!currentUser) return;
+  scoreSaveStarted = true;
 
   const playerName = (
     currentUser.displayName || "Player"
-  ).trim().substring(0, 20);
+  ).trim().substring(0, 20) || "Player";
 
   const playerRef = database.ref(
     "leaderboard/" + currentUser.uid
   );
 
   playerRef.transaction((currentData) => {
-
     if (currentData === null) {
       return {
         uid: currentUser.uid,
@@ -1106,10 +734,7 @@ function saveScore() {
       };
     }
 
-    if (
-      typeof currentData !== "object" ||
-      currentData === null
-    ) {
+    if (typeof currentData !== "object") {
       return;
     }
 
@@ -1120,43 +745,36 @@ function saveScore() {
     };
 
   }, (error, committed) => {
+    const message = document.getElementById("resultMessage");
 
     if (error) {
-      document.getElementById("resultMessage").textContent =
+      scoreSaveStarted = false;
+      message.textContent =
         "Score Save Error: " + error.message;
 
     } else if (!committed) {
-      document.getElementById("resultMessage").textContent =
-        "Score could not be saved.";
+      scoreSaveStarted = false;
+      message.textContent =
+        "Score could not be saved. Please try again.";
 
     } else {
-      document.getElementById("resultMessage").textContent +=
-        " Score saved to Leaderboard!";
+      message.textContent +=
+        " 🏆 Score saved to Global Leaderboard!";
 
       loadLeaderboard();
     }
-
   });
-
 }
 
 
 // LOAD GLOBAL LEADERBOARD
-function loadLeaderboard() {
-
-// =====================================
-// GSP QUIZ CENTER - PREMIUM LEADERBOARD
-// =====================================
 
 function loadLeaderboard() {
+  const list = document.getElementById("leaderboardList");
 
-  const leaderboardList =
-    document.getElementById("leaderboardList");
+  if (!list) return;
 
-  if (!leaderboardList) return;
-
-  leaderboardList.innerHTML =
-    "Loading Leaderboard...";
+  list.textContent = "Loading Leaderboard...";
 
   database.ref("leaderboard")
     .orderByChild("points")
@@ -1164,11 +782,14 @@ function loadLeaderboard() {
     .once("value")
 
     .then((snapshot) => {
-
       const players = [];
 
       snapshot.forEach((child) => {
-        players.push(child.val());
+        const player = child.val();
+
+        if (player && typeof player === "object") {
+          players.push(player);
+        }
       });
 
       players.sort((a, b) =>
@@ -1176,29 +797,27 @@ function loadLeaderboard() {
         (Number(a.points) || 0)
       );
 
-      leaderboardList.innerHTML = "";
+      list.innerHTML = "";
 
       if (players.length === 0) {
-
         const empty = document.createElement("div");
         empty.className = "leaderboard-empty";
         empty.textContent =
-          "🏆 No Champions Yet! Be The First One.";
-
-        leaderboardList.appendChild(empty);
+          "🏆 No Champions Yet! Play the First Quiz!";
+        list.appendChild(empty);
         return;
       }
 
-      players.forEach((player, index) => {
+      const medals = ["🥇", "🥈", "🥉"];
 
+      players.forEach((player, index) => {
         const row = document.createElement("div");
-        row.className = "leaderboard-player rank-" + (index + 1);
+
+        row.className =
+          "leaderboard-player rank-" + (index + 1);
 
         const rank = document.createElement("div");
         rank.className = "leaderboard-rank";
-
-        const medals = ["🥇", "🥈", "🥉"];
-
         rank.textContent =
           medals[index] || "#" + (index + 1);
 
@@ -1215,9 +834,9 @@ function loadLeaderboard() {
         if (index === 0) {
           position.textContent = "👑 GRAND CHAMPION";
         } else if (index === 1) {
-          position.textContent = "SILVER CHAMPION";
+          position.textContent = "🥈 SILVER CHAMPION";
         } else if (index === 2) {
-          position.textContent = "BRONZE CHAMPION";
+          position.textContent = "🥉 BRONZE CHAMPION";
         } else {
           position.textContent = "QUIZ PLAYER";
         }
@@ -1227,7 +846,6 @@ function loadLeaderboard() {
 
         const points = document.createElement("div");
         points.className = "leaderboard-points";
-
         points.textContent =
           (Number(player.points) || 0) + " PTS";
 
@@ -1235,33 +853,57 @@ function loadLeaderboard() {
         row.appendChild(info);
         row.appendChild(points);
 
-        leaderboardList.appendChild(row);
-
+        list.appendChild(row);
       });
-
     })
 
     .catch((error) => {
-
       console.error("Leaderboard Error:", error);
 
-      leaderboardList.textContent =
-        "Leaderboard Load Failed!";
-
+      list.textContent =
+        "Leaderboard Load Failed: " + error.message;
     });
+}
+// AUTHENTICATION STATUS
 
+auth.onAuthStateChanged((user) => {
+  currentUser = user;
+
+  const loginArea = document.getElementById("loginArea");
+  const logoutArea = document.getElementById("logoutArea");
+  const userInfo = document.getElementById("userInfo");
+
+  if (user) {
+    loginArea.style.display = "none";
+    logoutArea.style.display = "block";
+
+    userInfo.textContent =
+      "Welcome, " + (user.displayName || "Player");
+
+  } else {
+    loginArea.style.display = "block";
+    logoutArea.style.display = "none";
+
+    userInfo.textContent = "";
   }
-                      
-// GO BACK HOME
-function goHome() {
-
-  document.getElementById("quizSection").style.display = "none";
-  document.getElementById("resultSection").style.display = "none";
-  document.getElementById("homeSection").style.display = "block";
 
   loadLeaderboard();
+});
 
-}
+
+// CHECK GOOGLE REDIRECT LOGIN RESULT
+
+auth.getRedirectResult()
+  .catch((error) => {
+    console.error("Google Redirect Error:", error);
+    alert("Google Login Error: " + error.message);
+  });
+
+
+// INITIAL LEADERBOARD LOAD
+
+loadLeaderboard();
+
 </script>
 </body>
 </html>
