@@ -427,7 +427,7 @@ function selectAnswer(button, chosen, item) {
   });
 
   if (chosen === item.answer) {
-    score += 10;
+    score += 5;
     $("answerStatus").textContent = "✅ बिल्कुल सही! आपको 10 अंक मिले।";
     $("answerStatus").style.color = "#22c55e";
   } else {
@@ -456,7 +456,7 @@ async function finishQuiz() {
   $("resultPanel").classList.remove("hidden");
   $("progressBar").style.width = "100%";
 
-  $("finalScore").textContent = score + " / " + (quizQuestions.length * 10);
+  $("finalScore").textContent = score + " / " + (quizQuestions.length * 5);
   $("resultMessage").textContent =
     score >= quizQuestions.length * 8
       ? "शानदार प्रदर्शन! 🏆"
