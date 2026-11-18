@@ -748,5 +748,240 @@ $("homeBtn").addEventListener("click", goHome);
 renderCategories();
 loadLeaderboard();
 </script>
+  
+<style>
+#funZoneButton{
+  display:block;width:100%;padding:17px;margin:18px 0;
+  border:0;border-radius:15px;color:white;font-size:18px;
+  font-weight:800;background:linear-gradient(110deg,#9333ea,#2563eb);
+  cursor:pointer;box-shadow:0 5px 20px #7435d755;
+}
+#funZonePage{
+  display:none;position:fixed;inset:0;z-index:99999;
+  overflow-y:auto;background:#09091b;color:white;
+  padding:18px;font-family:Arial,sans-serif;
+}
+#funZonePage.show{display:block}
+.fz-head{text-align:center;padding:20px 5px}
+.fz-head h1{font-size:30px;color:#d8a7ff;margin:8px}
+.fz-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fz-card{
+  background:linear-gradient(145deg,#21183c,#141c35);
+  border:1px solid #ffffff25;border-radius:16px;
+  padding:18px 8px;text-align:center;cursor:pointer;
+}
+.fz-card b{display:block;margin-top:9px;font-size:14px}
+.fz-card span{font-size:35px}
+.fz-box{
+  background:#17172c;border:1px solid #ffffff25;
+  border-radius:17px;padding:20px;margin-top:18px;text-align:center;
+}
+.fz-btn{
+  border:0;border-radius:12px;padding:13px 18px;
+  margin:7px;color:white;background:#7436c9;
+  font-weight:bold;font-size:15px;cursor:pointer;
+}
+.fz-back{background:#34344c}
+.fz-task{font-size:20px;line-height:1.6;margin:18px 0}
+.fz-points{color:#ffd45c;font-weight:bold}
+#fzTimer{font-size:28px;color:#7ee7ff}
+.fz-btn:disabled{opacity:.5}
+</style>
+
+<button id="funZoneButton">🎉 FUN CHALLENGE ZONE</button>
+
+<div id="funZonePage">
+  <div class="fz-head">
+    <h1>🎉 GSP FUN ZONE</h1>
+    <p>PLAY • LAUGH • EARN POINTS</p>
+    <p class="fz-points">⭐ हर Challenge पर 5 Points</p>
+  </div>
+
+  <div id="fzHome">
+    <div class="fz-grid">
+      <div class="fz-card" data-type="funny"><span>😂</span><b>Funny Challenge</b></div>
+      <div class="fz-card" data-type="brain"><span>🧠</span><b>Brain Challenge</b></div>
+      <div class="fz-card" data-type="acting"><span>🎭</span><b>Acting Challenge</b></div>
+      <div class="fz-card" data-type="singing"><span>🎤</span><b>Singing Challenge</b></div>
+      <div class="fz-card" data-type="quick"><span>⚡</span><b>Quick Challenge</b></div>
+      <div class="fz-card" data-type="random"><span>🎲</span><b>Random Challenge</b></div>
+    </div>
+    <button class="fz-btn fz-back" id="fzClose">← Back to Home</button>
+  </div>
+
+  <div id="fzGame" style="display:none">
+    <div class="fz-box">
+      <h2 id="fzTitle">Challenge</h2>
+      <div class="fz-task" id="fzTask"></div>
+      <div id="fzTimer">30</div>
+      <p id="fzMessage">चैलेंज पूरा करो!</p>
+      <button class="fz-btn" id="fzStart">▶ START TIMER</button>
+      <button class="fz-btn" id="fzDone" disabled>⭐ CHALLENGE COMPLETE</button>
+      <button class="fz-btn fz-back" id="fzNext">दूसरा Challenge</button>
+    </div>
+    <button class="fz-btn fz-back" id="fzBack">← सभी Challenges</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  const page=document.getElementById("funZonePage");
+  const home=document.getElementById("fzHome");
+  const game=document.getElementById("fzGame");
+  const task=document.getElementById("fzTask");
+  const title=document.getElementById("fzTitle");
+  const timer=document.getElementById("fzTimer");
+  const message=document.getElementById("fzMessage");
+  const start=document.getElementById("fzStart");
+  const done=document.getElementById("fzDone");
+  let interval=null,seconds=30,currentType="",currentTask=null;
+
+  const challenges={
+    funny:[
+      "30 सेकंड में 3 मजेदार चेहरे बनाओ 😂",
+      "किसी रोबोट की तरह 20 सेकंड बात करो 🤖",
+      "बिना हँसे 20 सेकंड तक मजेदार चेहरा बनाकर रखो 😆"
+    ],
+    brain:[
+      "बताओ: 5 + 5 × 2 = कितना?",
+      "एक दर्जन में कितनी चीजें होती हैं?",
+      "ऐसी कौन सी चीज है जो पानी पीते ही मर जाती है?"
+    ],
+    acting:[
+      "20 सेकंड तक किसी न्यूज़ एंकर की एक्टिंग करो 📺",
+      "एक सुपरहीरो की तरह अपना परिचय दो 🦸",
+      "बिना बोले खुशी और हैरानी का अभिनय करो 🎭"
+    ],
+    singing:[
+      "अपना पसंदीदा गाना 20 सेकंड गुनगुनाओ 🎵",
+      "किसी कार्टून की आवाज निकालो 😄",
+      "एक गाने को बहुत धीमी आवाज में गुनगुनाओ 🎶"
+    ],
+    quick:[
+      "10 सेकंड में 5 फलों के नाम बोलो 🍎",
+      "10 सेकंड में 5 जानवरों के नाम बताओ 🐯",
+      "10 सेकंड में 5 रंगों के नाम बताओ 🌈"
+    ]
+  };
+
+  function stopTimer(){
+    if(interval){clearInterval(interval);interval=null}
+    start.disabled=false;
+  }
+
+  function openGame(type){
+    currentType=type;
+    let pool;
+    if(type==="random"){
+      const all=Object.keys(challenges);
+      currentType=all[Math.floor(Math.random()*all.length)];
+    }
+    pool=challenges[currentType];
+    currentTask=pool[Math.floor(Math.random()*pool.length)];
+    const names={
+      funny:"😂 Funny Challenge",
+      brain:"🧠 Brain Challenge",
+      acting:"🎭 Acting Challenge",
+      singing:"🎤 Singing Challenge",
+      quick:"⚡ Quick Challenge"
+    };
+    title.textContent=names[currentType];
+    task.textContent=currentTask;
+    home.style.display="none";
+    game.style.display="block";
+    seconds=30;
+    timer.textContent=seconds;
+    message.textContent="चैलेंज पूरा करो!";
+    start.disabled=false;
+    done.disabled=true;
+  }
+
+  document.getElementById("funZoneButton").addEventListener("click",()=>{
+    page.classList.add("show");
+    home.style.display="block";
+    game.style.display="none";
+  });
+
+  document.getElementById("fzClose").onclick=()=>{
+    stopTimer();page.classList.remove("show");
+  };
+  document.getElementById("fzBack").onclick=()=>{
+    stopTimer();game.style.display="none";home.style.display="block";
+  };
+  document.querySelectorAll(".fz-card").forEach(card=>{
+    card.onclick=()=>openGame(card.dataset.type);
+  });
+
+  start.onclick=()=>{
+    stopTimer();
+    seconds=30;
+    timer.textContent=seconds;
+    start.disabled=true;
+    message.textContent="समय शुरू हो गया!";
+    interval=setInterval(()=>{
+      seconds--;
+      timer.textContent=seconds;
+      if(seconds<=0){
+        stopTimer();
+        message.textContent="⏰ समय पूरा! अब Challenge पूरा करें।";
+        done.disabled=false;
+      }
+    },1000);
+  };
+
+  done.onclick=async()=>{
+    done.disabled=true;
+    stopTimer();
+
+    if(typeof currentUser==="undefined" || !currentUser){
+      message.textContent="Points पाने के लिए पहले Google Login करें।";
+      done.disabled=false;
+      return;
+    }
+    if(typeof db==="undefined"){
+      message.textContent="Database उपलब्ध नहीं है।";
+      done.disabled=false;
+      return;
+    }
+
+    const uid=currentUser.uid;
+    const today=new Date().toISOString().slice(0,10);
+    const key="gsp_fun_"+uid+"_"+today+"_"+currentType;
+
+    if(localStorage.getItem(key)){
+      message.textContent="आज इस Challenge के Points पहले ही मिल चुके हैं।";
+      return;
+    }
+
+    try{
+      const ref=db.ref("leaderboard/"+uid);
+      const result=await ref.transaction(old=>{
+        old=old||{};
+        return {
+          uid:uid,
+          name:currentUser.displayName||"Player",
+          points:(Number(old.points)||0)+5
+        };
+      });
+
+      if(result.committed){
+        localStorage.setItem(key,"yes");
+        message.textContent="🏆 शानदार! आपके 5 Points Leaderboard में जुड़ गए!";
+      }else{
+        message.textContent="Points नहीं जुड़ पाए। दोबारा कोशिश करें।";
+        done.disabled=false;
+      }
+    }catch(error){
+      console.error(error);
+      message.textContent="Points जोड़ने में समस्या आई।";
+      done.disabled=false;
+    }
+  };
+
+  document.getElementById("fzNext").onclick=()=>openGame(
+    currentType
+  );
+})();
+</script>
 </body>
 </html>
