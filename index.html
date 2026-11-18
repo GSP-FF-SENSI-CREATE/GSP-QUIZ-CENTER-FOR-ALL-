@@ -631,7 +631,7 @@ async function saveScore() {
 
 async function loadLeaderboard() {
   const body = $("leaderboardBody");
-  body.innerHTML = "<tr><td colspan='3'>लीडरबोर्ड लोड हो रहा है...</td></tr>";
+  body.innerHTML = "<tr><td colspan='3'>Loading...</td></tr>";
 
   try {
     const snapshot = await db.ref("leaderboard")
@@ -650,7 +650,7 @@ async function loadLeaderboard() {
 
     if (!players.length) {
       body.innerHTML =
-        "<tr><td colspan='3'>अभी कोई खिलाड़ी दर्ज नहीं है।</td></tr>";
+        "<tr><td colspan='3'>No Anyone In The Leaderboard</td></tr>";
       return;
     }
 
