@@ -1,743 +1,528 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#030712">
-<title>QUIZ KING | FUTURISTIC 3D</title>
+<meta name="theme-color" content="#080817">
+<title>QUIZ KING | Ultimate Quiz</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --bg:#030712;
-  --panel:#091426;
-  --cyan:#00f0ff;
-  --blue:#287bff;
-  --purple:#9b4dff;
-  --pink:#ff36c7;
-  --green:#00ffae;
-  --gold:#ffcf55;
-  --text:#eafaff;
-  --muted:#8498b7;
-  --border:rgba(0,240,255,.23);
-}
-
-* {
+*{
   margin:0;
   padding:0;
   box-sizing:border-box;
 }
 
-html {scroll-behavior:smooth}
+:root{
+  --bg:#080817;
+  --panel:#12122b;
+  --purple:#9b5cff;
+  --blue:#318bff;
+  --cyan:#39e5ff;
+  --gold:#ffd166;
+  --white:#ffffff;
+  --muted:#a5a5c5;
+  --green:#20d99a;
+  --red:#ff526f;
+}
 
-body {
-  background:var(--bg);
-  color:var(--text);
-  font-family:Poppins,Hind,sans-serif;
+body{
+  font-family:'Poppins','Hind',sans-serif;
+  background:
+    radial-gradient(circle at 15% 10%,#39206c55,transparent 35%),
+    radial-gradient(circle at 90% 30%,#063f7750,transparent 35%),
+    var(--bg);
+  color:var(--white);
   min-height:100vh;
   overflow-x:hidden;
 }
 
-/* FUTURISTIC BACKGROUND */
-
-body:before {
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:-3;
-  background:
-    radial-gradient(ellipse at 50% 0%,#07365b 0%,transparent 42%),
-    radial-gradient(ellipse at 0% 70%,#24104b 0%,transparent 38%),
-    radial-gradient(ellipse at 100% 80%,#063d4b 0%,transparent 35%),
-    #030712;
-}
-
-body:after {
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:-2;
-  pointer-events:none;
-  background-image:
-    linear-gradient(rgba(0,240,255,.055) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,240,255,.055) 1px,transparent 1px);
-  background-size:45px 45px;
-  transform:perspective(500px) rotateX(58deg) scale(1.8);
-  transform-origin:center bottom;
-  opacity:.4;
-}
-
-button {
+button{
   font-family:inherit;
   cursor:pointer;
-  border:none;
 }
 
-.hidden {display:none!important}
-
-/* COMMON */
-
-.container {
-  width:min(1150px,94%);
-  margin:auto;
+.hidden{
+  display:none!important;
 }
 
-.neon-text {
-  color:var(--cyan);
-  text-shadow:0 0 12px #00f0ff99;
-}
-
-.section-heading {
-  font-family:Orbitron,sans-serif;
-  font-size:19px;
-  letter-spacing:1px;
-  margin-bottom:20px;
-}
-
-.section-heading span {color:var(--cyan)}
-
-.glass-panel {
-  background:linear-gradient(135deg,
-    rgba(12,35,59,.88),
-    rgba(8,13,32,.92));
-  border:1px solid var(--border);
-  border-radius:20px;
-  box-shadow:
-    0 0 25px rgba(0,240,255,.06),
-    inset 0 0 25px rgba(0,240,255,.035),
-    0 20px 60px #0009;
-  backdrop-filter:blur(18px);
-}
-
-/* HEADER */
-
-header {
+header{
   position:sticky;
   top:0;
   z-index:100;
-  background:rgba(3,7,18,.88);
-  backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
-}
-
-.navbar {
-  min-height:75px;
+  padding:13px 5%;
   display:flex;
+  align-items:center;
   justify-content:space-between;
-  align-items:center;
   gap:12px;
+  background:#09091bee;
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid #ffffff18;
 }
 
-.brand {
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.brand-icon {
-  width:47px;
-  height:47px;
-  display:grid;
-  place-items:center;
-  font-size:25px;
-  border:1px solid var(--cyan);
-  border-radius:14px;
-  background:linear-gradient(145deg,#073f60,#17113c);
-  box-shadow:0 0 20px #00f0ff55,inset 0 0 15px #00f0ff22;
-}
-
-.brand-name {
-  font-family:Orbitron,sans-serif;
-  font-weight:900;
-  font-size:18px;
+.logo{
+  font-size:23px;
+  font-weight:800;
   letter-spacing:1px;
-  color:white;
-}
-
-.brand-sub {
-  color:var(--cyan);
-  font-size:9px;
-  letter-spacing:3px;
-}
-
-.nav-actions {
-  display:flex;
-  gap:9px;
-  align-items:center;
-}
-
-/* BUTTONS */
-
-.btn {
-  color:white;
-  padding:11px 17px;
-  border-radius:10px;
-  background:linear-gradient(120deg,#087eae,#4934b6);
-  border:1px solid #00eaff66;
-  box-shadow:0 0 15px #00eaff22;
-  font-weight:700;
-  font-size:12px;
-  transition:.25s;
-}
-
-.btn:hover {
-  transform:translateY(-3px);
-  box-shadow:0 0 25px #00eaff77;
-  filter:brightness(1.2);
-}
-
-.btn:active {transform:scale(.97)}
-
-.btn-outline {
-  background:rgba(255,255,255,.04);
-  border:1px solid #ffffff35;
-  box-shadow:none;
-}
-
-/* HERO */
-
-.hero {
-  text-align:center;
-  padding:55px 0 35px;
-  position:relative;
-}
-
-.hero-tag {
-  display:inline-block;
-  color:var(--cyan);
-  border:1px solid #00f0ff66;
-  background:#00f0ff0c;
-  padding:8px 17px;
-  border-radius:30px;
-  font-family:Orbitron,sans-serif;
-  font-size:10px;
-  letter-spacing:3px;
-  box-shadow:0 0 20px #00f0ff22;
-}
-
-.hero h1 {
-  font-family:Orbitron,sans-serif;
-  font-size:clamp(30px,7vw,65px);
-  font-weight:900;
-  line-height:1.25;
-  margin:23px 0 14px;
-  text-shadow:0 0 30px #00f0ff44;
-}
-
-.hero h1 span {
-  background:linear-gradient(90deg,#00f0ff,#9b4dff,#ff36c7);
+  background:linear-gradient(90deg,#c084fc,#38bdf8,#fff);
   -webkit-background-clip:text;
   color:transparent;
 }
 
-.hero-description {
+.logo span{
+  color:var(--gold);
+}
+
+.account{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+#userName{
+  font-size:12px;
   color:var(--muted);
-  font-size:13px;
-  max-width:570px;
+  max-width:110px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.login-btn,.logout-btn{
+  border:0;
+  border-radius:10px;
+  padding:9px 13px;
+  color:white;
+  font-weight:700;
+  background:linear-gradient(120deg,#8b5cf6,#287cff);
+}
+
+.logout-btn{
+  background:#33334f;
+}
+
+.container{
+  width:min(1100px,92%);
   margin:auto;
-  line-height:1.8;
 }
 
-/* 3D CORE */
+.hero{
+  text-align:center;
+  padding:45px 10px 30px;
+}
 
-.core-wrap {
-  width:170px;
-  height:170px;
-  margin:28px auto 5px;
+.hero-tag{
+  display:inline-block;
+  padding:7px 15px;
+  border:1px solid #a855f755;
+  border-radius:30px;
+  background:#8b5cf622;
+  color:#d8b4fe;
+  font-size:12px;
+  margin-bottom:17px;
+}
+
+.hero h1{
+  font-size:clamp(35px,8vw,65px);
+  line-height:1.15;
+  font-weight:800;
+  background:linear-gradient(100deg,#fff,#bd8aff,#4dd9ff);
+  -webkit-background-clip:text;
+  color:transparent;
+  text-shadow:0 0 35px #8b5cf655;
+}
+
+.hero p{
+  color:var(--muted);
+  margin-top:13px;
+  font-size:14px;
+}
+
+.section-title{
+  font-size:22px;
+  margin:25px 0 17px;
+}
+
+.category-grid{
   display:grid;
-  place-items:center;
-  perspective:700px;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
 }
 
-.energy-core {
-  width:115px;
-  height:115px;
-  border-radius:50%;
-  position:relative;
-  display:grid;
-  place-items:center;
-  font-size:45px;
-  background:radial-gradient(circle at 35% 30%,
-    #ffffff,#00f0ff 12%,#075b94 45%,#090b2d 75%);
-  box-shadow:
-    0 0 20px #00f0ff,
-    0 0 50px #00f0ff77,
-    inset -12px -15px 25px #000b;
-  animation:corePulse 3s ease-in-out infinite;
-}
-
-.energy-core:before,
-.energy-core:after {
-  content:"";
-  position:absolute;
-  inset:-15px;
-  border:2px solid #00f0ff99;
-  border-radius:50%;
-  transform:rotateX(70deg);
-  box-shadow:0 0 15px #00f0ff66;
-}
-
-.energy-core:after {
-  inset:-27px;
-  border-color:#9b4dff99;
-  transform:rotateY(70deg);
-}
-
-@keyframes corePulse {
-  0%,100% {transform:scale(1);filter:brightness(1)}
-  50% {transform:scale(1.08);filter:brightness(1.4)}
-}
-
-/* CATEGORY CARDS */
-
-.category-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
-  gap:18px;
-}
-
-.category-card {
-  min-height:165px;
-  padding:20px 12px;
+.category{
   position:relative;
   overflow:hidden;
+  min-height:145px;
+  padding:20px 12px;
+  border-radius:20px;
+  border:1px solid #ffffff20;
+  background:linear-gradient(145deg,#242044,#11152c);
+  color:white;
   text-align:center;
-  border-radius:17px;
-  border:1px solid #00eaff35;
-  background:linear-gradient(145deg,#102b47,#091326 70%);
-  box-shadow:
-    0 8px 0 #020610,
-    0 15px 35px #0009,
-    inset 0 0 20px #00eaff09;
-  transform-style:preserve-3d;
-  transition:.3s;
+  box-shadow:0 12px 28px #0006,inset 0 1px 0 #ffffff18;
+  transition:.25s;
 }
 
-.category-card:before {
-  content:"";
-  position:absolute;
-  width:100px;
-  height:100px;
-  top:-50px;
-  right:-30px;
-  border-radius:50%;
-  background:var(--card-glow,var(--cyan));
-  filter:blur(45px);
-  opacity:.35;
+.category:hover{
+  transform:translateY(-6px) scale(1.02);
+  border-color:#a78bfa;
+  box-shadow:0 15px 35px #8b5cf633;
 }
 
-.category-card:hover {
-  transform:perspective(700px) rotateX(7deg) rotateY(-7deg) translateY(-7px);
-  border-color:var(--cyan);
-  box-shadow:0 12px 0 #020610,0 20px 35px #0009,0 0 22px #00eaff44;
-}
-
-.category-card.selected {
-  border-color:var(--cyan);
-  box-shadow:0 0 25px #00eaff55,inset 0 0 20px #00eaff15;
-}
-
-.category-emoji {
+.category .emoji{
   display:block;
-  font-size:42px;
-  margin-bottom:12px;
-  transform:translateZ(25px);
+  font-size:37px;
+  margin-bottom:9px;
 }
 
-.category-card h3 {
-  font-size:14px;
-  position:relative;
+.category strong{
+  display:block;
+  font-size:15px;
 }
 
-.category-card p {
+.category small{
+  display:block;
   color:var(--muted);
-  font-size:10px;
-  margin-top:6px;
-  position:relative;
+  margin-top:5px;
+  font-size:11px;
 }
 
-/* LEVEL SELECTOR */
-
-.level-section {
-  padding:22px;
-  margin-top:25px;
+.panel{
+  margin-top:24px;
+  padding:23px;
+  border-radius:22px;
+  border:1px solid #ffffff20;
+  background:linear-gradient(145deg,#191932ee,#10182bee);
+  box-shadow:0 15px 45px #0007,inset 0 1px 0 #ffffff12;
 }
 
-.level-buttons {
+.panel h2{
+  font-size:21px;
+  margin-bottom:15px;
+}
+
+.level-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:12px;
 }
 
-.level-btn {
-  padding:15px 8px;
-  color:white;
-  background:#ffffff08;
+.level-btn{
   border:1px solid #ffffff25;
-  border-radius:12px;
-  font-weight:700;
-  transition:.25s;
-}
-
-.level-btn:hover,
-.level-btn.selected {
-  background:linear-gradient(135deg,#075d81,#542b91);
-  border-color:var(--cyan);
-  box-shadow:0 0 18px #00f0ff44;
-}
-
-/* QUIZ PANEL */
-
-.quiz-panel {
-  padding:22px;
-  margin-top:25px;
-}
-
-.quiz-top {
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  color:var(--muted);
-  font-size:12px;
-}
-
-.progress-track {
-  height:7px;
-  background:#ffffff12;
-  border-radius:20px;
-  overflow:hidden;
-  margin:18px 0 25px;
-}
-
-.progress-fill {
-  height:100%;
-  width:0;
-  background:linear-gradient(90deg,var(--cyan),var(--purple),var(--pink));
-  box-shadow:0 0 15px var(--cyan);
-  transition:width .35s;
-}
-
-.question-text {
-  font-size:clamp(17px,4vw,23px);
-  line-height:1.6;
-  font-weight:700;
-  margin-bottom:20px;
-}
-
-.options-box {
-  display:grid;
-  gap:12px;
-}
-
-.option-btn {
-  width:100%;
-  padding:15px;
-  border-radius:12px;
-  text-align:left;
+  background:#20203d;
   color:white;
-  background:linear-gradient(110deg,#10213a,#0b1326);
-  border:1px solid #ffffff22;
-  transition:.2s;
+  padding:14px 5px;
+  border-radius:13px;
+  font-weight:700;
 }
 
-.option-btn:hover:not(:disabled) {
-  border-color:var(--cyan);
-  background:#00f0ff12;
-  transform:translateX(4px);
+.level-btn.active{
+  background:linear-gradient(120deg,#9333ea,#2563eb);
+  border-color:#c4b5fd;
+  box-shadow:0 0 20px #8b5cf655;
 }
 
-.option-btn.correct {
-  border-color:var(--green);
-  background:#00ffae18;
+.primary-btn{
+  width:100%;
+  border:0;
+  padding:15px;
+  margin-top:17px;
+  border-radius:13px;
+  color:white;
+  font-size:16px;
+  font-weight:800;
+  background:linear-gradient(110deg,#9333ea,#2563eb,#0891b2);
+  box-shadow:0 8px 25px #7435d755;
 }
 
-.option-btn.wrong {
-  border-color:var(--pink);
-  background:#ff36c718;
+.primary-btn:disabled{
+  opacity:.4;
+  cursor:not-allowed;
 }
 
-.answer-status {
-  min-height:30px;
-  margin:16px 0;
-  color:var(--gold);
-  font-weight:600;
+#selectionStatus,#statusMessage{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:12px;
 }
 
-.quiz-bottom {
+.question-info{
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-/* RESULT */
-
-.result-panel {
-  padding:30px 20px;
-  margin-top:25px;
-  text-align:center;
-}
-
-.result-score {
-  font-family:Orbitron,sans-serif;
-  font-size:clamp(42px,10vw,65px);
-  font-weight:900;
   color:var(--cyan);
-  text-shadow:0 0 25px #00f0ff77;
+  font-size:13px;
+  gap:10px;
+}
+
+.progress-track{
+  height:8px;
+  background:#30304a;
+  border-radius:20px;
+  margin:16px 0;
+  overflow:hidden;
+}
+
+#progressBar{
+  width:0%;
+  height:100%;
+  background:linear-gradient(90deg,#9333ea,#38bdf8);
+  transition:.3s;
+}
+
+#questionText{
+  font-size:19px;
+  line-height:1.6;
   margin:20px 0;
 }
 
-/* LEADERBOARD */
-
-.leaderboard {
-  padding:22px;
-  margin:30px 0;
+.options{
+  display:grid;
+  gap:11px;
 }
 
-.leader-row {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  padding:14px 10px;
-  border-bottom:1px solid #ffffff12;
+.option{
+  width:100%;
+  text-align:left;
+  padding:14px;
+  border:1px solid #ffffff20;
+  border-radius:13px;
+  background:#20203a;
+  color:white;
+  font-size:14px;
+  transition:.2s;
+}
+
+.option:disabled{
+  cursor:default;
+  opacity:1;
+}
+
+.option.correct{
+  border-color:var(--green);
+  background:#0d593e;
+}
+
+.option.wrong{
+  border-color:var(--red);
+  background:#641d35;
+}
+
+#answerStatus{
+  min-height:25px;
+  margin-top:15px;
+  font-size:14px;
+  font-weight:600;
+}
+
+#nextBtn{
+  margin-top:15px;
+}
+
+#nextBtn:disabled{
+  opacity:.4;
+}
+
+.result-score{
+  font-size:42px;
+  color:var(--gold);
+  font-weight:800;
+  text-align:center;
+  margin:15px;
+}
+
+#resultMessage{
+  text-align:center;
+  color:var(--muted);
+}
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:300px;
+}
+
+th,td{
+  padding:12px 9px;
+  text-align:left;
+  border-bottom:1px solid #ffffff16;
   font-size:13px;
 }
 
-.leader-row:last-child {border-bottom:0}
-
-.status {
-  font-size:12px;
-  color:var(--muted);
-  margin-top:10px;
-  min-height:18px;
+th{
+  color:var(--cyan);
 }
 
-/* FOOTER */
+tr.me{
+  background:#8b5cf622;
+  color:#d8b4fe;
+}
 
-footer {
+#refreshBoardBtn{
+  padding:10px 15px;
+  border:1px solid #ffffff25;
+  border-radius:10px;
+  color:white;
+  background:#252544;
+  margin-bottom:12px;
+}
+
+#funZoneButton{
+  display:block;
+  width:100%;
+  padding:17px;
+  margin:22px 0;
+  border:0;
+  border-radius:16px;
+  color:white;
+  font-size:17px;
+  font-weight:800;
+  background:linear-gradient(110deg,#9333ea,#2563eb);
+  box-shadow:0 8px 25px #7435d755;
+}
+
+footer{
   text-align:center;
-  color:#758ba9;
   padding:30px 10px;
-  font-size:10px;
-  letter-spacing:1px;
-  border-top:1px solid #00eaff18;
+  color:#777795;
+  font-size:12px;
 }
 
-/* MOBILE */
+@media(max-width:650px){
+  .category-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:11px;
+  }
 
-@media(max-width:600px) {
-  .navbar {min-height:65px}
-  .brand-icon {width:39px;height:39px;font-size:20px}
-  .brand-name {font-size:14px}
-  .brand-sub {font-size:8px}
-  .btn {padding:9px 11px;font-size:10px}
-  .hero {padding-top:38px}
-  .category-grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-  .category-card {min-height:145px;padding:16px 8px}
-  .quiz-panel,.level-section,.leaderboard {padding:16px}
-  .core-wrap {width:145px;height:145px}
-  .energy-core {width:95px;height:95px}
+  .category{
+    min-height:130px;
+    padding:15px 7px;
+  }
+
+  .panel{
+    padding:17px;
+  }
+
+  .hero{
+    padding-top:35px;
+  }
+
+  #userName{
+    display:none;
+  }
 }
 
+@media(max-width:360px){
+  .level-grid{
+    grid-template-columns:1fr;
+  }
+}
 </style>
 </head>
+
 <body>
-<!-- PART 2: MAIN QUIZ KING INTERFACE -->
 
 <header>
-  <div class="container navbar">
-    <div class="brand">
-      <div class="brand-icon">👑</div>
-      <div>
-        <div class="brand-name">QUIZ KING</div>
-        <div class="brand-sub">GSP DIGITAL ARENA</div>
-      </div>
-    </div>
+  <div class="logo">QUIZ <span>KING</span> 👑</div>
 
-    <div class="nav-actions">
-      <button class="btn" id="loginBtn">LOGIN</button>
-      <button class="btn btn-outline hidden" id="logoutBtn">LOGOUT</button>
-    </div>
+  <div class="account">
+    <span id="userName">लॉगिन नहीं है</span>
+    <button class="login-btn" id="loginBtn">Google Login</button>
+    <button class="logout-btn hidden" id="logoutBtn">Logout</button>
   </div>
 </header>
 
 <main class="container">
 
-  <!-- FUTURISTIC HOME -->
+  <section class="hero">
+    <div class="hero-tag">⚡ THE ULTIMATE QUIZ EXPERIENCE</div>
+    <h1>QUIZ KING 👑</h1>
+    <p>खेलो • सीखो • अपना ज्ञान बढ़ाओ • Leaderboard में चमको</p>
+    <div id="statusMessage"></div>
+  </section>
 
-  <section class="hero" id="homeSection">
+  <h2 class="section-title">🎯 अपनी Category चुनें</h2>
 
-    <div class="hero-tag">✦ SYSTEM ONLINE • VERSION 3.0 ✦</div>
+  <section class="category-grid" id="categoryCards"></section>
 
-    <div class="core-wrap">
-      <div class="energy-core">👑</div>
-    </div>
-
-    <h1>WELCOME TO<br><span>QUIZ KING</span></h1>
-
-    <p class="hero-description">
-      ENTER THE KNOWLEDGE UNIVERSE.
-      Challenge your brain, unlock new levels
-      and become the ultimate Quiz King.
+  <section class="panel hidden" id="levelPanel">
+    <h2 id="selectedCategoryTitle">Category</h2>
+    <p style="color:#aaa;font-size:13px;margin-bottom:15px">
+      अपना Difficulty Level चुनें
     </p>
 
-    <div style="margin-top:25px">
-      <button class="btn" onclick="document.getElementById('categorySection').scrollIntoView({behavior:'smooth'})">
-        ENTER THE ARENA ⚡
-      </button>
+    <div class="level-grid">
+      <button class="level-btn" data-level="easy">🟢 Easy</button>
+      <button class="level-btn" data-level="medium">🟡 Medium</button>
+      <button class="level-btn" data-level="hard">🔴 Hard</button>
     </div>
 
+    <p id="selectionStatus">पहले Level चुनें।</p>
+    <button class="primary-btn" id="startBtn" disabled>🚀 START QUIZ</button>
   </section>
 
-  <!-- CATEGORY SELECTION -->
-
-  <section id="categorySection">
-
-    <h2 class="section-heading">
-      <span>01.</span> SELECT YOUR MISSION
-    </h2>
-
-    <div class="category-grid" id="categoryGrid"></div>
-
-  </section>
-
-  <!-- LEVEL SELECT -->
-
-  <section class="glass-panel level-section hidden" id="levelSection">
-
-    <h2 class="section-heading">
-      <span>02.</span> SELECT DIFFICULTY
-    </h2>
-
-    <div class="level-buttons">
-
-      <button class="level-btn" data-level="easy">
-        🟢 EASY
-      </button>
-
-      <button class="level-btn" data-level="medium">
-        🟡 MEDIUM
-      </button>
-
-      <button class="level-btn" data-level="hard">
-        🔴 HARD
-      </button>
-
-    </div>
-
-    <p class="status" id="levelStatus">
-      Select a difficulty level to continue.
-    </p>
-
-  </section>
-
-  <!-- QUIZ SCREEN -->
-
-  <section class="glass-panel quiz-panel hidden" id="quizPanel">
-
-    <div class="quiz-top">
-      <span id="questionCounter">QUESTION 1</span>
-      <span id="scoreDisplay">⭐ SCORE: 0</span>
+  <section class="panel hidden" id="quizPanel">
+    <div class="question-info">
+      <span id="questionCount">प्रश्न 1</span>
+      <span id="quizScore">अंक: 0</span>
     </div>
 
     <div class="progress-track">
-      <div class="progress-fill" id="progressFill"></div>
+      <div id="progressBar"></div>
     </div>
 
-    <h2 class="question-text" id="questionText"></h2>
+    <h2 id="questionText">Question</h2>
+    <div class="options" id="optionsBox"></div>
+    <div id="answerStatus"></div>
+    <button class="primary-btn" id="nextBtn" disabled>अगला प्रश्न</button>
+  </section>
 
-    <div class="options-box" id="optionsBox"></div>
+  <section class="panel hidden" id="resultPanel">
+    <h2 style="text-align:center">🏆 QUIZ RESULT</h2>
+    <div class="result-score" id="finalScore">0 / 0</div>
+    <p id="resultMessage"></p>
+    <button class="primary-btn" id="homeBtn">🏠 HOME</button>
+  </section>
 
-    <div class="answer-status" id="answerStatus"></div>
+  <button id="funZoneButton">🎉 FUN CHALLENGE ZONE</button>
 
-    <div class="quiz-bottom">
-      <span class="status" id="quizStatus"></span>
-      <button class="btn hidden" id="nextBtn">NEXT MISSION ➜</button>
+  <section class="panel" id="leaderboardPanel">
+    <h2>🏆 Global Leaderboard</h2>
+    <button id="refreshBoardBtn">↻ Refresh</button>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Player</th>
+            <th>Points</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+          <tr><td colspan="3">Loading...</td></tr>
+        </tbody>
+      </table>
     </div>
-
-  </section>
-
-  <!-- RESULT SCREEN -->
-
-  <section class="glass-panel result-panel hidden" id="resultPanel">
-
-    <div style="font-size:55px">🏆</div>
-
-    <h2 class="section-heading">MISSION COMPLETED</h2>
-
-    <p>YOUR FINAL SCORE</p>
-
-    <div class="result-score" id="finalScore">0</div>
-
-    <h3 id="resultMessage"></h3>
-
-    <p class="status" id="saveStatus"></p>
-
-    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px">
-
-      <button class="btn" id="playAgainBtn">REPLAY ↻</button>
-
-      <button class="btn btn-outline" id="homeBtn">MAIN LOBBY</button>
-
-    </div>
-
-  </section>
-
-  <!-- LEADERBOARD -->
-
-  <section class="glass-panel leaderboard" id="leaderboardSection">
-
-    <h2 class="section-heading">
-      <span>03.</span> GLOBAL LEADERBOARD 👑
-    </h2>
-
-    <div id="leaderboardList">
-      <p class="status">Connecting to leaderboard...</p>
-    </div>
-
-  </section>
-
-  <!-- FUN ZONE -->
-
-  <section style="margin:25px 0">
-
-    <button class="btn" id="funZoneButton" style="width:100%;padding:17px;font-size:14px">
-      🎯 ENTER FUN CHALLENGE ZONE
-    </button>
-
-  </section>
-
-  <section class="glass-panel hidden" id="funZonePage" style="padding:22px;margin:20px 0">
-
-    <h2 class="section-heading">
-      <span>04.</span> FUN CHALLENGE ZONE
-    </h2>
-
-    <div id="funZoneContent"></div>
-
-    <button class="btn btn-outline" id="funBackButton">
-      ← BACK TO LOBBY
-    </button>
-
   </section>
 
 </main>
 
 <footer>
-  QUIZ KING • GSP DIGITAL ARENA • ALL RIGHTS RESERVED
-        </footer>
-        
-<!-- PART 3: FIREBASE + QUESTION BANK + APP STATE -->
+  © 2026 QUIZ KING • Made for Quiz Lovers 👑
+</footer>
+
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <script>
-
-// ===================================
-// 1. FIREBASE CONFIGURATION
-// ===================================
-
 const firebaseConfig = {
   apiKey: "AIzaSyCF7BUNgVoHVjnt5wE3O6U5t0v_HbgoThU",
   authDomain: "gsp-quiz-center.firebaseapp.com",
@@ -753,45 +538,26 @@ firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.database();
-const googleProvider = new firebase.auth.GoogleAuthProvider();
-
-
-// ===================================
-// 2. APP VARIABLES
-// ===================================
+const provider = new firebase.auth.GoogleAuthProvider();
 
 let currentUser = null;
-
-let selectedCategory = null;
-let selectedLevel = null;
-
+let selectedCategory = "";
+let selectedLevel = "";
 let quizQuestions = [];
 let questionIndex = 0;
 let score = 0;
 let answered = false;
 let savingScore = false;
 
-
-// ===================================
-// 3. HELPER FUNCTIONS
-// ===================================
-
 const $ = id => document.getElementById(id);
 
-function showStatus(id, message) {
-  const element = $(id);
-  if (element) element.textContent = message;
+function showStatus(message, isError=false) {
+  $("statusMessage").textContent = message;
+  $("statusMessage").style.color = isError ? "#ff7188" : "#39e5ff";
 }
 
 function shuffleArray(array) {
-  const result = [...array];
-
-  for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [result[i], result[j]] = [result[j], result[i]];
-  }
-
-  return result;
+  return [...array].sort(() => Math.random() - 0.5);
 }
 
 function Q(question, answer, wrongOptions) {
@@ -802,723 +568,1040 @@ function Q(question, answer, wrongOptions) {
   };
 }
 
-
-// ===================================
-// 4. ORIGINAL QUESTION BANK
-// ===================================
-
-// IMPORTANT:
-// यहाँ अपने पुराने कोड का पूरा questionBank
-// object ज्यों का त्यों paste करना है.
-//
-// इसमें ये categories होनी चाहिए:
-// gk
-// freefire
-// freefireindia
-// cricket
-// bts
-//
-// हर category में:
-// easy, medium, hard
-//
-// पुराने सवालों के answers और options मत बदलना.
-
-
-// ===================================
-// 5. CATEGORY LIST
-// ===================================
-
 const categories = [
-  {
-    id: "gk",
-    name: "सामान्य ज्ञान",
-    emoji: "🧠",
-    detail: "ज्ञान और जानकारी",
-    glow: "#00eaff"
-  },
-  {
-    id: "freefire",
-    name: "फ्री फायर",
-    emoji: "🎮",
-    detail: "गेमिंग क्विज",
-    glow: "#ff9b35"
-  },
-  {
-    id: "freefireindia",
-    name: "फ्री फायर इंडिया",
-    emoji: "🇮🇳",
-    detail: "इंडिया स्पेशल",
-    glow: "#35ffae"
-  },
-  {
-    id: "cricket",
-    name: "क्रिकेट",
-    emoji: "🏏",
-    detail: "क्रिकेट चैलेंज",
-    glow: "#ffd34e"
-  },
-  {
-    id: "bts",
-    name: "BTS",
-    emoji: "💜",
-    detail: "BTS Quiz",
-    glow: "#b58aff"
-  }
+  {id:"gk",name:"सामान्य ज्ञान",emoji:"🧠",detail:"ज्ञान और जानकारी"},
+  {id:"freefire",name:"फ्री फायर",emoji:"🎮",detail:"गेमिंग क्विज"},
+  {id:"freefireindia",name:"फ्री फायर इंडिया",emoji:"🇮🇳",detail:"भारत विशेष क्विज"},
+  {id:"cricket",name:"क्रिकेट",emoji:"🏏",detail:"क्रिकेट की दुनिया"},
+  {id:"bts",name:"बीटीएस",emoji:"🎵",detail:"के-पॉप क्विज"}
 ];
 
-  </script>
-  <script>
-// ==========================================
-// QUIZ KING — QUIZ ENGINE
-// ==========================================
+const questionBank = {
 
-// CATEGORY CARDS
-function renderCategories() {
-  const grid = document.getElementById("categoryGrid");
-  if (!grid) return;
+gk:{
+easy:[
+Q("भारत की राजधानी क्या है?","नई दिल्ली",["मुंबई","लखनऊ","जयपुर"]),
+Q("भारत का राष्ट्रीय पशु कौन है?","बाघ",["शेर","हाथी","घोड़ा"]),
+Q("भारत का राष्ट्रीय पक्षी कौन है?","मोर",["कबूतर","तोता","हंस"]),
+Q("सूर्य किस दिशा से निकलता है?","पूर्व",["पश्चिम","उत्तर","दक्षिण"]),
+Q("एक सप्ताह में कितने दिन होते हैं?","7",["5","6","8"]),
+Q("भारत का राष्ट्रीय फूल कौन सा है?","कमल",["गुलाब","सूरजमुखी","चमेली"]),
+Q("पृथ्वी का प्राकृतिक उपग्रह कौन है?","चंद्रमा",["मंगल","सूर्य","शुक्र"]),
+Q("ताजमहल कहाँ स्थित है?","आगरा",["दिल्ली","लखनऊ","जयपुर"]),
+Q("भारत का राष्ट्रीय फल कौन सा है?","आम",["सेब","केला","अंगूर"]),
+Q("एक वर्ष में कितने महीने होते हैं?","12",["10","11","13"])
+],
+medium:[
+Q("भारत का संविधान कब लागू हुआ?","26 जनवरी 1950",["15 अगस्त 1947","26 नवंबर 1949","2 अक्टूबर 1950"]),
+Q("क्षेत्रफल की दृष्टि से भारत का सबसे बड़ा राज्य कौन सा है?","राजस्थान",["उत्तर प्रदेश","मध्य प्रदेश","महाराष्ट्र"]),
+Q("भारत की सबसे लंबी नदी कौन सी है?","गंगा",["यमुना","गोदावरी","नर्मदा"]),
+Q("भारत के प्रथम राष्ट्रपति कौन थे?","डॉ. राजेंद्र प्रसाद",["डॉ. सर्वपल्ली राधाकृष्णन","जवाहरलाल नेहरू","डॉ. जाकिर हुसैन"]),
+Q("कंप्यूटर का जनक किसे कहा जाता है?","चार्ल्स बैबेज",["एलन ट्यूरिंग","बिल गेट्स","टिम बर्नर्स-ली"]),
+Q("विश्व पर्यावरण दिवस कब मनाया जाता है?","5 जून",["22 अप्रैल","16 सितंबर","1 दिसंबर"]),
+Q("भारत का राष्ट्रीय जलीय जीव कौन है?","गंगा डॉल्फिन",["मगरमच्छ","कछुआ","नीली व्हेल"]),
+Q("ISRO का मुख्यालय कहाँ है?","बेंगलुरु",["मुंबई","चेन्नई","हैदराबाद"]),
+Q("भारत का सर्वोच्च नागरिक सम्मान कौन सा है?","भारत रत्न",["पद्मश्री","पद्म भूषण","परमवीर चक्र"]),
+Q("ओलंपिक खेल सामान्यतः कितने वर्ष के अंतराल पर होते हैं?","4 वर्ष",["2 वर्ष","3 वर्ष","5 वर्ष"])
+],
+hard:[
+Q("भारतीय संविधान की प्रारूप समिति के अध्यक्ष कौन थे?","डॉ. भीमराव आंबेडकर",["डॉ. राजेंद्र प्रसाद","जवाहरलाल नेहरू","सरदार पटेल"]),
+Q("भारत में हरित क्रांति के जनक किसे कहा जाता है?","एम. एस. स्वामीनाथन",["वर्गीज कुरियन","होमी भाभा","सी. वी. रमन"]),
+Q("भारत का पहला उपग्रह कौन सा था?","आर्यभट्ट",["रोहिणी","भास्कर","इनसैट-1A"]),
+Q("भारतीय रिजर्व बैंक की स्थापना किस वर्ष हुई?","1935",["1947","1950","1921"]),
+Q("भारत में योजना आयोग की स्थापना कब हुई?","1950",["1947","1952","1960"]),
+Q("सांची स्तूप किस राज्य में स्थित है?","मध्य प्रदेश",["उत्तर प्रदेश","बिहार","राजस्थान"]),
+Q("प्रकाश की गति लगभग कितनी है?","3 लाख किमी/सेकंड",["30 हजार किमी/सेकंड","3 हजार किमी/सेकंड","30 लाख किमी/सेकंड"]),
+Q("भारत का पहला परमाणु परीक्षण किस वर्ष हुआ?","1974",["1965","1980","1998"]),
+Q("भारतीय संविधान में मौलिक कर्तव्य किस संशोधन द्वारा जोड़े गए?","42वाँ संशोधन",["44वाँ संशोधन","52वाँ संशोधन","61वाँ संशोधन"]),
+Q("भारत का सबसे लंबा बाँध कौन सा है?","हीराकुंड बाँध",["भाखड़ा नांगल","टिहरी","सरदार सरोवर"])
+]
+},
 
-  grid.innerHTML = "";
+freefire:{
+easy:[
+Q("Free Fire किस कंपनी का गेम है?","Garena",["Tencent","Krafton","Supercell"]),
+Q("Free Fire किस प्रकार का गेम है?","Battle Royale",["Racing","Puzzle","Sports"]),
+Q("मैच में खिलाड़ियों का मुख्य उद्देश्य क्या है?","अंत तक जीवित रहना",["सबसे पहले बाहर होना","केवल दौड़ना","मैप से बाहर जाना"]),
+Q("गेम में HP का मतलब क्या है?","Health Points",["High Power","Head Player","Hero Point"]),
+Q("गेम में Gloo Wall का उपयोग किसलिए होता है?","बचाव के लिए",["गाड़ी चलाने","उड़ने","स्कोर देखने"]),
+Q("Free Fire में खिलाड़ी किससे उतरते हैं?","हवाई जहाज",["नाव","ट्रेन","बस"]),
+Q("गेम में नक्शे को क्या कहते हैं?","Map",["Book","Card","Board"]),
+Q("गेम में टीम के साथी को क्या कहते हैं?","Teammate",["Enemy","Spectator","Bot"]),
+Q("गेम में जीतने पर क्या संदेश आता है?","BOOYAH!",["GAME OVER","TRY AGAIN","LOST"]),
+Q("Free Fire में डायमंड किस प्रकार की चीज है?","इन-गेम करेंसी",["मैप","हथियार","वाहन"])
+],
+medium:[
+Q("Free Fire किस वर्ष लॉन्च हुआ था?","2017",["2015","2018","2020"]),
+Q("Free Fire को किस कंपनी ने विकसित किया?","111 Dots Studio",["Epic Games","Valve","Mojang"]),
+Q("गेम में BR का पूरा नाम क्या है?","Battle Royale",["Battle Racing","Best Rank","Bullet Rush"]),
+Q("गेम में EP का पूरा नाम क्या है?","Energy Points",["Extra Power","Enemy Points","Elite Player"]),
+Q("कौन सा मोड टीम आधारित मुकाबले के लिए प्रसिद्ध है?","Clash Squad",["Training","Craftland","Lone Wolf"]),
+Q("गेम में सुरक्षित क्षेत्र को क्या कहते हैं?","Safe Zone",["Red Zone","Dark Zone","Danger Room"]),
+Q("गेम में कौन सा उपकरण दूर से देखने में मदद करता है?","Scope",["Gloo Wall","Medkit","Grenade"]),
+Q("गेम में खिलाड़ी की रैंक किससे जुड़ी होती है?","Ranked Matches",["Profile Picture","Chat","Settings"]),
+Q("गेम में Character Skill का उद्देश्य क्या है?","विशेष क्षमता देना",["मैप बदलना","नाम हटाना","ग्राफिक्स बंद करना"]),
+Q("Free Fire का लोकप्रिय बैटल रॉयल मैप कौन सा है?","Bermuda",["Erangel","Miramar","Sanhok"])
+],
+hard:[
+Q("Free Fire MAX का बेहतर अनुभव मुख्यतः किससे जुड़ा है?","बेहतर ग्राफिक्स और इफेक्ट्स",["केवल नया मैप","केवल चैट","केवल नाम बदलना"]),
+Q("Free Fire में Booyah Pass किससे जुड़ा है?","सीजनल रिवॉर्ड सिस्टम",["नेटवर्क सेटिंग","मैप एडिटर","फ्रेंड लिस्ट"]),
+Q("Free Fire में Guild का अर्थ क्या है?","खिलाड़ियों का समूह",["एक हथियार","एक मैप","एक वाहन"]),
+Q("Free Fire में Custom Room का उपयोग किसलिए होता है?","निजी मैच बनाने के लिए",["फोन चार्ज करने","इंटरनेट बदलने","गेम अपडेट करने"]),
+Q("Free Fire में Sensitivity सेटिंग किससे संबंधित है?","कैमरा और Aim नियंत्रण",["आवाज","भाषा","डाउनलोड"]),
+Q("Free Fire में Training Ground का मुख्य उद्देश्य क्या है?","अभ्यास करना",["रैंक बढ़ाना","डायमंड खरीदना","अकाउंट हटाना"]),
+Q("Free Fire में Revival Point किससे जुड़ा है?","टीममेट को वापस लाने की सुविधा",["मैप बदलना","स्किन बनाना","नाम बदलना"]),
+Q("Free Fire में Pet का उपयोग किसलिए होता है?","विशेष सहायक क्षमता के लिए",["फोन चलाने","मैच रोकने","मैप हटाने"]),
+Q("Free Fire में Kill का सामान्य अर्थ क्या है?","विरोधी खिलाड़ी को मैच से बाहर करना",["टीम बनाना","मैप खोलना","गेम अपडेट करना"]),
+Q("Free Fire में Emote का उपयोग किसलिए होता है?","भाव या डांस दिखाने के लिए",["हथियार सुधारने","HP बढ़ाने","मैप बदलने"])
+]
+},
 
-  categories.forEach(category => {
-    const card = document.createElement("button");
-    card.className = "category-card";
-    card.innerHTML = `
-      <span class="category-emoji">${category.emoji}</span>
-      <h3>${category.name}</h3>
-      <p>${category.detail}</p>
-      <span class="category-enter">ENTER SYSTEM ↗</span>
-    `;
+freefireindia:{
+easy:[
+Q("Free Fire India किस गेम से संबंधित है?","Garena Free Fire",["Minecraft","Roblox","PUBG"]),
+Q("भारत का राष्ट्रीय ध्वज कितने रंगों का है?","तीन",["दो","चार","पाँच"]),
+Q("भारत की मुद्रा क्या है?","रुपया",["डॉलर","यूरो","येन"]),
+Q("भारत का राष्ट्रीय खेल दिवस कब मनाया जाता है?","29 अगस्त",["15 अगस्त","26 जनवरी","2 अक्टूबर"]),
+Q("भारत का स्वतंत्रता दिवस कब मनाया जाता है?","15 अगस्त",["26 जनवरी","2 अक्टूबर","14 नवंबर"]),
+Q("भारत का गणतंत्र दिवस कब है?","26 जनवरी",["15 अगस्त","5 सितंबर","1 मई"]),
+Q("भारत का राष्ट्रीय गान कौन सा है?","जन गण मन",["वंदे मातरम्","सारे जहाँ से अच्छा","ऐ मेरे वतन"]),
+Q("भारत का राष्ट्रीय गीत कौन सा है?","वंदे मातरम्",["जन गण मन","जय हो","हम होंगे कामयाब"]),
+Q("भारत का राष्ट्रीय वृक्ष कौन सा है?","बरगद",["नीम","पीपल","आम"]),
+Q("भारत का राष्ट्रीय नदी कौन सी है?","गंगा",["यमुना","कावेरी","नर्मदा"])
+],
+medium:[
+Q("भारत में कितने राज्य हैं?","28",["27","29","30"]),
+Q("भारत में कितने केंद्र शासित प्रदेश हैं?","8",["7","9","10"]),
+Q("उत्तर प्रदेश की राजधानी क्या है?","लखनऊ",["कानपुर","प्रयागराज","वाराणसी"]),
+Q("भारत का सर्वोच्च न्यायालय कहाँ है?","नई दिल्ली",["मुंबई","कोलकाता","चेन्नई"]),
+Q("भारत की संसद के कितने सदन हैं?","दो",["एक","तीन","चार"]),
+Q("लोकसभा का सामान्य कार्यकाल कितने वर्ष का होता है?","5 वर्ष",["4 वर्ष","6 वर्ष","7 वर्ष"]),
+Q("भारत के प्रथम प्रधानमंत्री कौन थे?","जवाहरलाल नेहरू",["लाल बहादुर शास्त्री","सरदार पटेल","राजेंद्र प्रसाद"]),
+Q("भारत की पहली महिला प्रधानमंत्री कौन थीं?","इंदिरा गांधी",["प्रतिभा पाटिल","सरोजिनी नायडू","सुषमा स्वराज"]),
+Q("भारतीय अंतरिक्ष अनुसंधान संगठन का संक्षिप्त नाम क्या है?","ISRO",["DRDO","NASA","BARC"]),
+Q("भारत का राष्ट्रीय कैलेंडर किस संवत पर आधारित है?","शक संवत",["विक्रम संवत","हिजरी संवत","ग्रेगोरियन"])
+],
+hard:[
+Q("भारतीय संविधान सभा की पहली बैठक कब हुई?","9 दिसंबर 1946",["15 अगस्त 1947","26 नवंबर 1949","26 जनवरी 1950"]),
+Q("भारत के संविधान को संविधान सभा ने कब अपनाया?","26 नवंबर 1949",["26 जनवरी 1950","15 अगस्त 1947","9 दिसंबर 1946"]),
+Q("भारत में प्रथम आम चुनाव कब हुए?","1951-52",["1947-48","1955-56","1960-61"]),
+Q("भारत का सबसे बड़ा उच्च न्यायालय किस राज्य में है?","इलाहाबाद उच्च न्यायालय उत्तर प्रदेश",["दिल्ली","बिहार","राजस्थान"]),
+Q("भारत में पंचायती राज को संवैधानिक दर्जा किस संशोधन से मिला?","73वाँ संशोधन",["42वाँ संशोधन","44वाँ संशोधन","74वाँ संशोधन"]),
+Q("भारत में नगरपालिकाओं को संवैधानिक दर्जा किस संशोधन से मिला?","74वाँ संशोधन",["73वाँ संशोधन","52वाँ संशोधन","61वाँ संशोधन"]),
+Q("भारत के नियंत्रक एवं महालेखा परीक्षक को क्या कहते हैं?","CAG",["CEC","UPSC","NITI"]),
+Q("भारतीय संविधान का अनुच्छेद 21 किससे संबंधित है?","जीवन और व्यक्तिगत स्वतंत्रता",["समानता","धर्म की स्वतंत्रता","शिक्षा"]),
+Q("भारत के निर्वाचन आयोग का उल्लेख किस अनुच्छेद में है?","अनुच्छेद 324",["अनुच्छेद 14","अनुच्छेद 21","अनुच्छेद 370"]),
+Q("भारत में वित्त आयोग का उल्लेख किस अनुच्छेद में है?","अनुच्छेद 280",["अनुच्छेद 110","अनुच्छेद 123","अनुच्छेद 356"])
+]
+},
 
-    card.addEventListener("click", () => {
-      selectCategory(category.id);
-    });
+cricket:{
+easy:[
+Q("क्रिकेट की एक टीम में कितने खिलाड़ी होते हैं?","11",["10","12","9"]),
+Q("क्रिकेट में गेंद को मारने के लिए किसका उपयोग होता है?","बल्ला",["रैकेट","स्टिक","क्लब"]),
+Q("क्रिकेट में विकेट पर कितनी स्टंप होती हैं?","3",["2","4","5"]),
+Q("एक ओवर में कितनी वैध गेंदें होती हैं?","6",["4","5","8"]),
+Q("क्रिकेट में शून्य रन पर आउट होने को क्या कहते हैं?","डक",["सिक्स","फोर","ओवर"]),
+Q("क्रिकेट में चौका कितने रन का होता है?","4",["2","3","6"]),
+Q("क्रिकेट में छक्का कितने रन का होता है?","6",["4","5","7"]),
+Q("क्रिकेट में मैच शुरू करने से पहले क्या होता है?","टॉस",["फाइनल","ड्रॉ","पेनल्टी"]),
+Q("क्रिकेट में गेंद फेंकने वाले को क्या कहते हैं?","गेंदबाज",["बल्लेबाज","अंपायर","कप्तान"]),
+Q("क्रिकेट में मैदान पर निर्णय कौन देता है?","अंपायर",["कोच","दर्शक","कमेंटेटर"])
+],
+medium:[
+Q("एकदिवसीय अंतरराष्ट्रीय मैच में प्रत्येक टीम कितने ओवर खेलती है?","50",["20","40","60"]),
+Q("T20 अंतरराष्ट्रीय मैच में प्रत्येक टीम कितने ओवर खेलती है?","20",["10","15","50"]),
+Q("टेस्ट क्रिकेट में एक टीम की एक पारी में अधिकतम कितने ओवर होते हैं?","कोई निश्चित सीमा नहीं",["50","90","100"]),
+Q("क्रिकेट में LBW का पूरा नाम क्या है?","Leg Before Wicket",["Long Ball Wicket","Last Bat Wicket","Leg Behind Wicket"]),
+Q("भारत ने पहला क्रिकेट विश्व कप किस वर्ष जीता?","1983",["1975","1987","2011"]),
+Q("भारत ने दूसरा वनडे विश्व कप किस वर्ष जीता?","2011",["2003","2007","2015"]),
+Q("क्रिकेट में विकेटकीपर कहाँ खड़ा होता है?","स्टंप के पीछे",["बाउंड्री पर","गेंदबाज के पास","मिड-ऑफ पर"]),
+Q("क्रिकेट में हैट्रिक का अर्थ क्या है?","लगातार तीन गेंदों पर तीन विकेट",["तीन चौके","तीन छक्के","तीन ओवर"]),
+Q("क्रिकेट में रन आउट किससे संबंधित है?","क्रीज में पहुँचने से पहले विकेट गिरना",["चौका लगना","कैच छूटना","नो बॉल"]),
+Q("क्रिकेट में DRS का पूरा नाम क्या है?","Decision Review System",["Direct Run Score","Daily Review Score","Digital Run System"])
+],
+hard:[
+Q("पहला पुरुष क्रिकेट विश्व कप किस वर्ष आयोजित हुआ?","1975",["1971","1979","1983"]),
+Q("पहला पुरुष T20 विश्व कप किस वर्ष हुआ?","2007",["2005","2009","2011"]),
+Q("भारत ने पहला T20 विश्व कप किस वर्ष जीता?","2007",["2009","2011","2013"]),
+Q("क्रिकेट के नियम बनाने वाली संस्था का नाम क्या है?","MCC",["ICC","BCCI","ECB"]),
+Q("ICC का मुख्यालय कहाँ है?","दुबई",["लंदन","मुंबई","मेलबर्न"]),
+Q("रणजी ट्रॉफी किस देश की घरेलू प्रतियोगिता है?","भारत",["ऑस्ट्रेलिया","इंग्लैंड","पाकिस्तान"]),
+Q("दलीप ट्रॉफी किस खेल से संबंधित है?","क्रिकेट",["हॉकी","फुटबॉल","टेनिस"]),
+Q("क्रिकेट में मेडन ओवर का अर्थ क्या है?","जिस ओवर में कोई रन न बने",["छह विकेट वाला ओवर","छह चौके वाला ओवर","बिना गेंद वाला ओवर"]),
+Q("क्रिकेट में पावरप्ले किससे संबंधित है?","फील्डिंग प्रतिबंध",["पिच की लंबाई","गेंद का वजन","बैट का आकार"]),
+Q("क्रिकेट पिच की लंबाई कितनी होती है?","22 गज",["20 गज","24 गज","18 गज"])
+]
+},
 
-    grid.appendChild(card);
+bts:{
+easy:[
+Q("BTS किस देश का म्यूजिक ग्रुप है?","दक्षिण कोरिया",["जापान","भारत","चीन"]),
+Q("BTS का फुल फॉर्म क्या है?","Bangtan Sonyeondan",["Beyond The Stars","Best Team Sound","Bangtan Seven"]),
+Q("BTS के फैंस को क्या कहा जाता है?","ARMY",["BLINK","ONCE","MOA"]),
+Q("BTS में कितने सदस्य हैं?","7",["5","6","8"]),
+Q("BTS का डेब्यू किस वर्ष हुआ?","2013",["2011","2015","2017"]),
+Q("BTS का पहला सिंगल कौन सा था?","No More Dream",["Dynamite","Butter","Spring Day"]),
+Q("BTS किस इंडस्ट्री से जुड़ा है?","K-Pop",["J-Pop","Hollywood","Bollywood"]),
+Q("BTS का आधिकारिक फैंडम नाम क्या है?","ARMY",["EXO-L","BLINK","CARAT"]),
+Q("BTS का पहला एल्बम कौन सा था?","2 Cool 4 Skool",["Wings","Love Yourself","Map of the Soul"]),
+Q("BTS के किस सदस्य का स्टेज नाम RM है?","Kim Namjoon",["Kim Seokjin","Min Yoongi","Jung Hoseok"])
+],
+medium:[
+Q("BTS के सबसे बड़े सदस्य कौन हैं?","Jin",["RM","Jimin","Jungkook"]),
+Q("BTS के सबसे छोटे सदस्य कौन हैं?","Jungkook",["Jin","Suga","J-Hope"]),
+Q("BTS में V का असली नाम क्या है?","Kim Taehyung",["Kim Namjoon","Park Jimin","Jeon Jungkook"]),
+Q("Suga का असली नाम क्या है?","Min Yoongi",["Kim Seokjin","Jung Hoseok","Kim Taehyung"]),
+Q("J-Hope का असली नाम क्या है?","Jung Hoseok",["Park Jimin","Min Yoongi","Kim Namjoon"]),
+Q("Jimin का पूरा नाम क्या है?","Park Jimin",["Jeon Jungkook","Kim Taehyung","Kim Seokjin"]),
+Q("BTS का गाना Dynamite किस वर्ष रिलीज हुआ?","2020",["2018","2019","2021"]),
+Q("BTS का गाना Butter किस वर्ष आया?","2021",["2019","2020","2022"]),
+Q("BTS के एल्बम Map of the Soul: 7 का वर्ष क्या है?","2020",["2018","2019","2021"]),
+Q("BTS के फैनडम ARMY का गठन किस वर्ष हुआ?","2013",["2011","2015","2017"])
+],
+hard:[
+Q("BTS का पहला Billboard Hot 100 नंबर 1 गाना कौन सा था?","Dynamite",["Butter","Permission to Dance","Boy With Luv"]),
+Q("BTS ने अपना पहला Grammy नामांकन किस गाने के लिए प्राप्त किया?","Dynamite",["Butter","Fake Love","DNA"]),
+Q("BTS का एल्बम Love Yourself: Tear किस वर्ष रिलीज हुआ?","2018",["2016","2017","2019"]),
+Q("BTS के गाने Spring Day का कोरियाई नाम क्या है?","봄날",["불타오르네","작은 것들을 위한 시","피 땀 눈물"]),
+Q("BTS के गाने Fire का कोरियाई नाम क्या है?","불타오르네",["봄날","DNA","작은 것들을 위한 시"]),
+Q("BTS का गाना Boy With Luv किसके साथ सहयोग में था?","Halsey",["Adele","Taylor Swift","Dua Lipa"]),
+Q("BTS का गाना My Universe किस बैंड के साथ था?","Coldplay",["Maroon 5","Imagine Dragons","OneRepublic"]),
+Q("BTS का पहला अंग्रेजी सिंगल कौन सा था?","Dynamite",["Butter","Permission to Dance","Life Goes On"]),
+Q("BTS का एल्बम Wings किस वर्ष आया?","2016",["2014","2015","2018"]),
+Q("BTS का गाना Permission to Dance किस वर्ष रिलीज हुआ?","2021",["2019","2020","2022"])
+]
+}
+
+};
+</script>
+
+
+<script>
+// ===============================
+// QUIZ KING - CATEGORY SYSTEM
+// ===============================
+
+function renderCategories(){
+  $("categoryCards").innerHTML = "";
+
+  categories.forEach(cat => {
+    const button = document.createElement("button");
+    button.className = "category";
+
+    const emoji = document.createElement("span");
+    emoji.className = "emoji";
+    emoji.textContent = cat.emoji;
+
+    const name = document.createElement("strong");
+    name.textContent = cat.name;
+
+    const detail = document.createElement("small");
+    detail.textContent = cat.detail;
+
+    button.append(emoji,name,detail);
+    button.addEventListener("click",()=>selectCategory(cat));
+
+    $("categoryCards").appendChild(button);
   });
 }
 
-// CATEGORY SELECT
-function selectCategory(id) {
-  selectedCategory = id;
+function selectCategory(cat){
+  selectedCategory = cat.id;
+  selectedLevel = "";
 
-  document.querySelectorAll(".category-card").forEach(card => {
-    card.classList.remove("selected");
+  $("selectedCategoryTitle").textContent =
+    cat.emoji + " " + cat.name;
+
+  $("levelPanel").classList.remove("hidden");
+  $("quizPanel").classList.add("hidden");
+  $("resultPanel").classList.add("hidden");
+
+  $("selectionStatus").textContent =
+    "अब Easy, Medium या Hard Level चुनें।";
+
+  $("startBtn").disabled = true;
+
+  document.querySelectorAll(".level-btn").forEach(btn=>{
+    btn.classList.remove("active");
   });
 
-  const levelSection = document.getElementById("levelSection");
-  const quizPanel = document.getElementById("quizPanel");
-  const resultPanel = document.getElementById("resultPanel");
-
-  if (levelSection) levelSection.hidden = false;
-  if (quizPanel) quizPanel.hidden = true;
-  if (resultPanel) resultPanel.hidden = true;
-
-  const selected = categories.find(c => c.id === id);
-
-  const status = document.getElementById("levelStatus");
-  if (status && selected) {
-    status.textContent = `${selected.emoji} ${selected.name} — Difficulty चुनें`;
-  }
-
-  if (levelSection) {
-    levelSection.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
-  }
+  $("levelPanel").scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
 }
 
-// LEVEL BUTTONS
-document.querySelectorAll("[data-level]").forEach(button => {
-  button.addEventListener("click", () => {
-    selectedLevel = button.dataset.level;
+// ===============================
+// LEVEL SELECTION
+// ===============================
 
-    document.querySelectorAll("[data-level]").forEach(btn => {
-      btn.classList.remove("active");
+document.querySelectorAll(".level-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    selectedLevel = btn.dataset.level;
+
+    document.querySelectorAll(".level-btn").forEach(b=>{
+      b.classList.remove("active");
     });
 
-    button.classList.add("active");
-    startQuiz();
+    btn.classList.add("active");
+
+    $("selectionStatus").textContent =
+      "Level चुन लिया गया! अब Quiz शुरू करें।";
+
+    $("startBtn").disabled = false;
   });
 });
 
+// ===============================
 // START QUIZ
-function startQuiz() {
-  if (!selectedCategory || !selectedLevel) {
-    alert("पहले Category और Difficulty चुनें!");
+// ===============================
+
+$("startBtn").addEventListener("click",startQuiz);
+
+function startQuiz(){
+  if(!currentUser){
+    showStatus("Quiz खेलने के लिए पहले Google Login करें।",true);
+    $("loginBtn").scrollIntoView({behavior:"smooth"});
     return;
   }
 
-  if (
-    typeof questionBank === "undefined" ||
-    !questionBank[selectedCategory] ||
-    !Array.isArray(questionBank[selectedCategory][selectedLevel])
-  ) {
-    alert("इस Category और Level के प्रश्न नहीं मिले। Part 3 में questionBank जाँचें।");
+  const list = questionBank[selectedCategory]?.[selectedLevel];
+
+  if(!list || !list.length){
+    showStatus("इस Level के Questions उपलब्ध नहीं हैं।",true);
     return;
   }
 
-  const source = questionBank[selectedCategory][selectedLevel];
-
-  if (source.length === 0) {
-    alert("इस Level में अभी प्रश्न उपलब्ध नहीं हैं।");
-    return;
-  }
-
-  quizQuestions = shuffleArray(source).map(question => ({
-    ...question,
-    options: shuffleArray([...question.options])
-  }));
-
+  quizQuestions = shuffleArray(list);
   questionIndex = 0;
   score = 0;
-  answered = false;
+  savingScore = false;
 
-  document.getElementById("levelSection").hidden = true;
-  document.getElementById("resultPanel").hidden = true;
-  document.getElementById("quizPanel").hidden = false;
+  $("levelPanel").classList.add("hidden");
+  $("resultPanel").classList.add("hidden");
+  $("quizPanel").classList.remove("hidden");
 
   showQuestion();
 
-  document.getElementById("quizPanel").scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
+  $("quizPanel").scrollIntoView({behavior:"smooth"});
 }
 
+// ===============================
 // SHOW QUESTION
-function showQuestion() {
-  if (questionIndex >= quizQuestions.length) {
-    finishQuiz();
-    return;
-  }
+// ===============================
 
+function showQuestion(){
   answered = false;
 
-  const current = quizQuestions[questionIndex];
+  const item = quizQuestions[questionIndex];
 
-  document.getElementById("questionCounter").textContent =
-    `QUESTION ${questionIndex + 1} / ${quizQuestions.length}`;
+  $("questionCount").textContent =
+    "प्रश्न " + (questionIndex+1) +
+    " / " + quizQuestions.length;
 
-  document.getElementById("scoreDisplay").textContent =
-    `SCORE: ${score}`;
+  $("quizScore").textContent = "अंक: " + score;
 
-  document.getElementById("questionText").textContent =
-    current.question;
+  $("questionText").textContent = item.question;
+  $("answerStatus").textContent = "";
+  $("nextBtn").disabled = true;
 
-  document.getElementById("answerStatus").textContent = "";
-  document.getElementById("nextBtn").hidden = true;
+  $("nextBtn").textContent =
+    questionIndex === quizQuestions.length-1
+    ? "🏆 परिणाम देखें"
+    : "अगला प्रश्न ➜";
 
-  const progress =
-    ((questionIndex) / quizQuestions.length) * 100;
+  $("progressBar").style.width =
+    (questionIndex / quizQuestions.length * 100) + "%";
 
-  document.getElementById("progressFill").style.width =
-    `${progress}%`;
+  $("optionsBox").innerHTML = "";
 
-  const optionsBox = document.getElementById("optionsBox");
-  optionsBox.innerHTML = "";
-
-  current.options.forEach((option, index) => {
+  shuffleArray(item.options).forEach(option=>{
     const button = document.createElement("button");
-
-    button.className = "option-btn";
+    button.className = "option";
     button.textContent = option;
 
-    button.addEventListener("click", () => {
-      selectAnswer(option, button);
+    button.addEventListener("click",()=>{
+      selectAnswer(button,option,item);
     });
 
-    optionsBox.appendChild(button);
+    $("optionsBox").appendChild(button);
   });
 }
 
+// ===============================
 // CHECK ANSWER
-function selectAnswer(selectedOption, selectedButton) {
-  if (answered) return;
+// ===============================
+
+function selectAnswer(button,chosen,item){
+  if(answered) return;
 
   answered = true;
 
-  const current = quizQuestions[questionIndex];
-  const correctAnswer = current.answer;
+  const buttons = [
+    ...$("optionsBox").querySelectorAll("button")
+  ];
 
-  const allOptions = document.querySelectorAll(".option-btn");
-  const status = document.getElementById("answerStatus");
+  buttons.forEach(b=>{
+    b.disabled = true;
 
-  allOptions.forEach(button => {
-    button.disabled = true;
-
-    if (button.textContent === correctAnswer) {
-      button.classList.add("correct");
+    if(b.textContent === item.answer){
+      b.classList.add("correct");
     }
   });
 
-  if (selectedOption === correctAnswer) {
+  if(chosen === item.answer){
     score += 5;
 
-    selectedButton.classList.add("correct");
-    status.textContent = "✓ सही जवाब! आपको 5 अंक मिले।";
-    status.className = "answer-status correct-text";
-  } else {
-    selectedButton.classList.add("wrong");
+    $("answerStatus").textContent =
+      "✅ बिल्कुल सही! +5 अंक";
 
-    status.textContent =
-      `✕ गलत जवाब! सही उत्तर: ${correctAnswer}`;
+    $("answerStatus").style.color = "#20d99a";
 
-    status.className = "answer-status wrong-text";
+  }else{
+    button.classList.add("wrong");
+
+    $("answerStatus").textContent =
+      "❌ गलत जवाब! सही उत्तर: " + item.answer;
+
+    $("answerStatus").style.color = "#ff526f";
   }
 
-  document.getElementById("scoreDisplay").textContent =
-    `SCORE: ${score}`;
-
-  document.getElementById("nextBtn").hidden = false;
+  $("quizScore").textContent = "अंक: " + score;
+  $("nextBtn").disabled = false;
 }
 
+// ===============================
 // NEXT QUESTION
-document.getElementById("nextBtn").addEventListener("click", () => {
+// ===============================
+
+$("nextBtn").addEventListener("click",()=>{
+  if(!answered) return;
+
   questionIndex++;
-  showQuestion();
+
+  if(questionIndex >= quizQuestions.length){
+    finishQuiz();
+  }else{
+    showQuestion();
+  }
 });
 
-// FINISH QUIZ
-function finishQuiz() {
-  document.getElementById("quizPanel").hidden = true;
-  document.getElementById("resultPanel").hidden = false;
+// ===============================
+// QUIZ RESULT
+// ===============================
 
-  document.getElementById("progressFill").style.width = "100%";
-  document.getElementById("finalScore").textContent = score;
+async function finishQuiz(){
+  $("quizPanel").classList.add("hidden");
+  $("resultPanel").classList.remove("hidden");
+
+  $("progressBar").style.width = "100%";
 
   const total = quizQuestions.length * 5;
-  const percentage = total ? (score / total) * 100 : 0;
 
-  let message = "";
+  $("finalScore").textContent =
+    score + " / " + total;
 
-  if (percentage >= 80) {
-    message = "🏆 शानदार! आप Quiz King हैं!";
-  } else if (percentage >= 50) {
-    message = "🔥 अच्छा प्रदर्शन! ऐसे ही आगे बढ़ें!";
-  } else {
-    message = "🚀 अभ्यास जारी रखें, अगली बार बेहतर होगा!";
+  const percentage = Math.round(score/total*100);
+
+  if(percentage >= 80){
+    $("resultMessage").textContent =
+      "🏆 शानदार प्रदर्शन! आप Quiz King हैं!";
+  }else if(percentage >= 50){
+    $("resultMessage").textContent =
+      "👏 बहुत अच्छा! थोड़ी और Practice करें।";
+  }else{
+    $("resultMessage").textContent =
+      "💪 अच्छा प्रयास! अगली बार और बेहतर होगा।";
   }
 
-  document.getElementById("resultMessage").textContent = message;
+  await saveScore();
 
-  saveScore();
+  $("resultPanel").scrollIntoView({behavior:"smooth"});
 }
 
-// PLAY AGAIN
-document.getElementById("playAgainBtn").addEventListener("click", () => {
-  startQuiz();
-});
+// ===============================
+// SAVE SCORE IN FIREBASE
+// ===============================
 
-// HOME BUTTON
-document.getElementById("homeBtn").addEventListener("click", goHome);
+async function saveScore(){
+  if(!currentUser || savingScore) return;
 
-function goHome() {
-  document.getElementById("quizPanel").hidden = true;
-  document.getElementById("resultPanel").hidden = true;
-  document.getElementById("levelSection").hidden = true;
+  savingScore = true;
 
-  document.getElementById("categorySection").scrollIntoView({
-    behavior: "smooth"
-  });
-}
+  try{
+    const playerRef = db.ref(
+      "leaderboard/" + currentUser.uid
+    );
 
-// ==========================================
-// GOOGLE LOGIN / LOGOUT
-// ==========================================
+    const playerName = (
+      currentUser.displayName || "खिलाड़ी"
+    ).trim().slice(0,30) || "खिलाड़ी";
 
-const loginBtn = document.getElementById("loginBtn");
-const logoutBtn = document.getElementById("logoutBtn");
+    await playerRef.transaction(oldData=>{
+      const oldPoints =
+        oldData && Number(oldData.points)
+        ? Number(oldData.points)
+        : 0;
 
-if (loginBtn) {
-  loginBtn.addEventListener("click", async () => {
-    try {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      await auth.signInWithPopup(provider);
-    } catch (error) {
-      alert("Login नहीं हो पाया: " + error.message);
-    }
-  });
-}
-
-if (logoutBtn) {
-  logoutBtn.addEventListener("click", async () => {
-    try {
-      await auth.signOut();
-    } catch (error) {
-      alert("Logout में समस्या: " + error.message);
-    }
-  });
-}
-
-// AUTH STATE
-auth.onAuthStateChanged(user => {
-  currentUser = user;
-
-  if (loginBtn) loginBtn.hidden = !!user;
-  if (logoutBtn) logoutBtn.hidden = !user;
-
-  loadLeaderboard();
-});
-
-// ==========================================
-// FIREBASE LEADERBOARD
-// ==========================================
-
-async function saveScore() {
-  const saveStatus = document.getElementById("saveStatus");
-
-  if (!currentUser) {
-    if (saveStatus) {
-      saveStatus.textContent = "Score सेव करने के लिए Google Login करें।";
-    }
-    return;
-  }
-
-  try {
-    if (saveStatus) saveStatus.textContent = "Score सेव हो रहा है...";
-
-    const userRef = database.ref("leaderboard/" + currentUser.uid);
-    const snapshot = await userRef.once("value");
-    const oldData = snapshot.val() || {};
-
-    const oldScore = Number(oldData.score || 0);
-    const newScore = oldScore + score;
-
-    await userRef.set({
-      name: currentUser.displayName || "Quiz Player",
-      photo: currentUser.photoURL || "",
-      score: newScore,
-      updatedAt: firebase.database.ServerValue.TIMESTAMP
+      return {
+        uid:currentUser.uid,
+        name:playerName,
+        points:oldPoints + score
+      };
     });
 
-    if (saveStatus) saveStatus.textContent = "✓ आपका Score सेव हो गया!";
+    $("resultMessage").textContent +=
+      " आपके अंक Leaderboard में सेव हो गए!";
+
     loadLeaderboard();
 
-  } catch (error) {
-    console.error(error);
+  }catch(error){
+    console.error("Score save error:",error);
 
-    if (saveStatus) {
-      saveStatus.textContent = "Score सेव नहीं हुआ। Firebase Rules जाँचें।";
-    }
+    $("resultMessage").textContent +=
+      " अंक सेव नहीं हो पाए। Firebase Rules जाँचें।";
+
+  }finally{
+    savingScore = false;
   }
 }
 
-// LOAD LEADERBOARD
-async function loadLeaderboard() {
-  const list = document.getElementById("leaderboardList");
-  if (!list) return;
+// ===============================
+// LEADERBOARD
+// ===============================
 
-  list.innerHTML = "<p>Loading leaderboard...</p>";
+async function loadLeaderboard(){
+  const body = $("leaderboardBody");
 
-  try {
-    const snapshot = await database
-      .ref("leaderboard")
-      .orderByChild("score")
-      .limitToLast(10)
+  body.innerHTML =
+    "<tr><td colspan='3'>Loading...</td></tr>";
+
+  try{
+    const snapshot = await db.ref("leaderboard")
+      .orderByChild("points")
       .once("value");
 
     const players = [];
 
-    snapshot.forEach(child => {
-      players.push({
-        uid: child.key,
-        ...child.val()
-      });
+    snapshot.forEach(child=>{
+      const player = child.val();
+
+      if(
+        player &&
+        player.name &&
+        Number.isFinite(Number(player.points))
+      ){
+        players.push(player);
+      }
     });
 
-    players.sort((a, b) => Number(b.score || 0) - Number(a.score || 0));
+    players.sort((a,b)=>Number(b.points)-Number(a.points));
 
-    if (players.length === 0) {
-      list.innerHTML = "<p>अभी कोई खिलाड़ी नहीं है। आप पहले बन सकते हैं!</p>";
+    body.innerHTML = "";
+
+    if(players.length === 0){
+      body.innerHTML =
+        "<tr><td colspan='3'>अभी कोई खिलाड़ी नहीं है।</td></tr>";
       return;
     }
 
-    list.innerHTML = "";
+    players.forEach((player,index)=>{
+      const tr = document.createElement("tr");
 
-    players.forEach((player, index) => {
-      const item = document.createElement("div");
-      item.className = "leaderboard-item";
+      if(currentUser && player.uid === currentUser.uid){
+        tr.className = "me";
+      }
 
-      const name = document.createElement("strong");
-      name.textContent = `${index + 1}. ${player.name || "Quiz Player"}`;
+      const rank = document.createElement("td");
+      rank.textContent = index+1;
 
-      const points = document.createElement("span");
-      points.textContent = `${player.score || 0} PTS`;
+      const name = document.createElement("td");
+      name.textContent = player.name;
 
-      item.appendChild(name);
-      item.appendChild(points);
-      list.appendChild(item);
+      const points = document.createElement("td");
+      points.textContent = player.points;
+
+      tr.append(rank,name,points);
+      body.appendChild(tr);
     });
 
-  } catch (error) {
-    console.error(error);
-    list.innerHTML = "<p>Leaderboard लोड नहीं हुआ।</p>";
+  }catch(error){
+    console.error("Leaderboard error:",error);
+
+    body.innerHTML =
+      "<tr><td colspan='3'>Leaderboard लोड नहीं हुआ। Firebase Rules जाँचें।</td></tr>";
   }
 }
 
+$("refreshBoardBtn").addEventListener(
+  "click",loadLeaderboard
+);
+
+// ===============================
+// GOOGLE LOGIN
+// ===============================
+
+async function googleLogin(){
+  try{
+    showStatus("Google Login खोला जा रहा है...");
+
+    await auth.signInWithPopup(provider);
+
+  }catch(error){
+    console.error("Google Login error:",error);
+
+    if(
+      error.code === "auth/popup-blocked" ||
+      error.code === "auth/operation-not-supported-in-this-environment"
+    ){
+      try{
+        await auth.signInWithRedirect(provider);
+      }catch(redirectError){
+        showStatus(
+          "Login समस्या: " + redirectError.message,
+          true
+        );
+      }
+    }else{
+      showStatus("Login समस्या: "+error.message,true);
+    }
+  }
+}
+
+$("loginBtn").addEventListener("click",googleLogin);
+
+// ===============================
+// GOOGLE LOGOUT
+// ===============================
+
+$("logoutBtn").addEventListener("click",async()=>{
+  try{
+    await auth.signOut();
+    showStatus("आप Logout हो गए हैं।");
+  }catch(error){
+    showStatus("Logout समस्या: "+error.message,true);
+  }
+});
+
+// ===============================
+// AUTH STATE
+// ===============================
+
+auth.getRedirectResult().catch(error=>{
+  console.error("Redirect error:",error);
+  showStatus("Google Login समस्या: "+error.message,true);
+});
+
+auth.onAuthStateChanged(user=>{
+  currentUser = user;
+
+  if(user){
+    $("userName").textContent =
+      user.displayName || "खिलाड़ी";
+
+    $("loginBtn").classList.add("hidden");
+    $("logoutBtn").classList.remove("hidden");
+
+    showStatus(
+      "स्वागत है, "+(user.displayName || "खिलाड़ी")+"!"
+    );
+
+  }else{
+    $("userName").textContent = "लॉगिन नहीं है";
+
+    $("loginBtn").classList.remove("hidden");
+    $("logoutBtn").classList.add("hidden");
+
+    showStatus("Quiz खेलने के लिए Google Login करें।");
+  }
+
+  loadLeaderboard();
+});
+
+// ===============================
+// HOME BUTTON
+// ===============================
+
+function goHome(){
+  $("resultPanel").classList.add("hidden");
+  $("quizPanel").classList.add("hidden");
+  $("levelPanel").classList.add("hidden");
+
+  $("categoryCards").scrollIntoView({
+    behavior:"smooth"
+  });
+}
+
+$("homeBtn").addEventListener("click",goHome);
+
+// ===============================
 // INITIALIZE
+// ===============================
+
 renderCategories();
 loadLeaderboard();
+</script>
 
-  </script>
-  <script>
-// ==========================================
-// QUIZ KING — FUN CHALLENGE ZONE
-// ==========================================
 
-const funChallenges = {
-  funny: [
-    "30 सेकंड तक बिना हँसे रहकर दिखाओ!",
-    "किसी जानवर की आवाज निकालो!",
-    "एक मजेदार जोक सुनाओ!",
-    "किसी फिल्म का मजेदार डायलॉग बोलो!"
-  ],
-
-  brain: [
-    "30 सेकंड में 5 देशों के नाम बताओ!",
-    "बिना रुके 10 फलों के नाम बोलो!",
-    "5 गणित के सवाल मन में हल करो!",
-    "10 भारतीय शहरों के नाम बताओ!"
-  ],
-
-  acting: [
-    "किसी शिक्षक की एक्टिंग करके दिखाओ!",
-    "एक क्रिकेट कमेंटेटर की एक्टिंग करो!",
-    "रोबोट की तरह चलने की एक्टिंग करो!",
-    "किसी सुपरहीरो की एक्टिंग करो!"
-  ],
-
-  singing: [
-    "अपना पसंदीदा गाना गुनगुनाओ!",
-    "किसी गाने की एक लाइन गाओ!",
-    "बिना म्यूजिक के गाना गाओ!"
-  ],
-
-  quick: [
-    "10 सेकंड में 5 रंगों के नाम बताओ!",
-    "10 सेकंड में 5 जानवरों के नाम बताओ!",
-    "10 सेकंड में 5 सब्जियों के नाम बताओ!",
-    "10 सेकंड में 5 खिलाड़ियों के नाम बताओ!"
-  ],
-
-  random: [
-    "अपनी पसंदीदा फिल्म का नाम बताओ!",
-    "अपना पसंदीदा खेल बताओ!",
-    "एक नई वेबसाइट का आइडिया सोचो!",
-    "किसी दोस्त की अच्छी बात बताओ!"
-  ]
-};
-
-let currentType = "random";
-let challengeTimer = null;
-let remainingTime = 30;
-let challengeCompleted = false;
-
-// ELEMENTS
-const funZoneButton = document.getElementById("funZoneButton");
-const funZonePage = document.getElementById("funZonePage");
-const funZoneContent = document.getElementById("funZoneContent");
-const funBackButton = document.getElementById("funBackButton");
-
-// OPEN FUN ZONE
-if (funZoneButton) {
-  funZoneButton.addEventListener("click", () => {
-    funZonePage.hidden = false;
-
-    document.getElementById("categorySection").hidden = true;
-    document.getElementById("levelSection").hidden = true;
-    document.getElementById("quizPanel").hidden = true;
-    document.getElementById("resultPanel").hidden = true;
-
-    showFunCategories();
-  });
+<style>
+#funZonePage {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  overflow-y: auto;
+  padding: 22px 14px;
+  background:
+    radial-gradient(circle at top left, #24205a, transparent 40%),
+    radial-gradient(circle at bottom right, #063d50, transparent 40%),
+    #080914;
 }
-
-// BACK BUTTON
-if (funBackButton) {
-  funBackButton.addEventListener("click", () => {
-    stopChallengeTimer();
-
-    funZonePage.hidden = true;
-    document.getElementById("categorySection").hidden = false;
-
-    document.getElementById("categorySection").scrollIntoView({
-      behavior: "smooth"
-    });
-  });
+.fz-wrap {
+  max-width: 850px;
+  margin: 25px auto;
+  padding: 20px;
+  border: 1px solid #34365f;
+  border-radius: 22px;
+  background: rgba(18,20,43,.94);
+  box-shadow: 0 15px 50px #0008;
 }
-
-// SHOW CHALLENGE CATEGORIES
-function showFunCategories() {
-  funZoneContent.innerHTML = `
-    <div class="fun-heading">
-      <h2>⚡ FUN CHALLENGE ARENA</h2>
-      <p>Choose your challenge and earn points!</p>
-    </div>
-
-    <div class="fun-grid">
-      <button class="fun-card" data-type="funny">😂 FUNNY</button>
-      <button class="fun-card" data-type="brain">🧠 BRAIN</button>
-      <button class="fun-card" data-type="acting">🎭 ACTING</button>
-      <button class="fun-card" data-type="singing">🎵 SINGING</button>
-      <button class="fun-card" data-type="quick">⚡ QUICK</button>
-      <button class="fun-card" data-type="random">🎲 RANDOM</button>
-    </div>
-
-    <p class="fun-note">हर Challenge पूरा करने पर 5 Points मिलेंगे।</p>
-  `;
-
-  funZoneContent.querySelectorAll("[data-type]").forEach(button => {
-    button.addEventListener("click", () => {
-      startFunChallenge(button.dataset.type);
-    });
-  });
+.fz-heading {
+  text-align: center;
+  font-size: 27px;
+  font-weight: 900;
+  color: #a99bff;
+  text-shadow: 0 0 18px #7964ff;
 }
-
-// DAILY REWARD KEY
-function getDailyRewardKey() {
-  const today = new Date().toISOString().slice(0, 10);
-  const uid = currentUser ? currentUser.uid : "guest";
-
-  return `gsp_fun_${uid}_${today}_${currentType}`;
+.fz-sub {
+  text-align: center;
+  color: #aaaac5;
+  margin: 10px 0 24px;
 }
+.fz-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 13px;
+}
+.fz-card {
+  padding: 20px 10px;
+  text-align: center;
+  border: 1px solid #45436e;
+  border-radius: 17px;
+  background: linear-gradient(145deg,#202348,#111426);
+  color: white;
+  cursor: pointer;
+  transition: .2s;
+}
+.fz-card:active { transform: scale(.96); }
+.fz-emoji { font-size: 34px; }
+.fz-card h3 { margin: 9px 0 4px; }
+.fz-card p { color: #aaaac5; font-size: 12px; margin: 0; }
+.fz-game {
+  display: none;
+  text-align: center;
+  margin-top: 20px;
+}
+#fzTitle { color: #a99bff; }
+#fzTask {
+  padding: 24px 15px;
+  margin: 18px 0;
+  border-radius: 16px;
+  background: #10142b;
+  border: 1px solid #55518d;
+  font-size: 20px;
+  line-height: 1.5;
+}
+#fzTimer {
+  font-size: 42px;
+  font-weight: 900;
+  color: #5ee7ff;
+  margin: 12px;
+}
+.fz-btn {
+  padding: 12px 18px;
+  margin: 5px;
+  border: 0;
+  border-radius: 12px;
+  color: white;
+  background: linear-gradient(100deg,#684bff,#168bd7);
+  font-weight: 800;
+  cursor: pointer;
+}
+.fz-btn:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+.fz-secondary { background: #343750; }
+#fzMessage {
+  min-height: 28px;
+  color: #70edbb;
+  margin: 12px 0;
+}
+@media(max-width:430px) {
+  .fz-wrap { padding: 14px; }
+  .fz-heading { font-size: 23px; }
+  .fz-card { padding: 16px 5px; }
+}
+</style>
 
-// START CHALLENGE
-function startFunChallenge(type) {
-  currentType = type;
-  challengeCompleted = false;
-  remainingTime = 30;
+<div id="funZonePage">
+  <div class="fz-wrap">
+    <div class="fz-heading">⚡ FUN CHALLENGE ZONE</div>
+    <p class="fz-sub">Complete challenges • Earn points • Have fun!</p>
 
-  const questions = funChallenges[type] || funChallenges.random;
-  const challenge = questions[
-    Math.floor(Math.random() * questions.length)
-  ];
-
-  funZoneContent.innerHTML = `
-    <div class="challenge-box">
-      <h2>⚡ YOUR MISSION</h2>
-
-      <div class="challenge-timer" id="challengeTimer">
-        30
+    <div id="fzHome">
+      <div class="fz-grid">
+        <div class="fz-card" data-type="funny">
+          <div class="fz-emoji">😂</div>
+          <h3>Funny</h3><p>Make it funny!</p>
+        </div>
+        <div class="fz-card" data-type="brain">
+          <div class="fz-emoji">🧠</div>
+          <h3>Brain</h3><p>Test your mind!</p>
+        </div>
+        <div class="fz-card" data-type="acting">
+          <div class="fz-emoji">🎭</div>
+          <h3>Acting</h3><p>Show your talent!</p>
+        </div>
+        <div class="fz-card" data-type="singing">
+          <div class="fz-emoji">🎤</div>
+          <h3>Singing</h3><p>Show your voice!</p>
+        </div>
+        <div class="fz-card" data-type="quick">
+          <div class="fz-emoji">⚡</div>
+          <h3>Quick</h3><p>Think quickly!</p>
+        </div>
+        <div class="fz-card" data-type="random">
+          <div class="fz-emoji">🎲</div>
+          <h3>Random</h3><p>Surprise challenge!</p>
+        </div>
       </div>
-
-      <div class="challenge-question">
-        ${challenge}
-      </div>
-
-      <p id="challengeStatus">तैयार हो जाओ!</p>
-
-      <button class="challenge-complete-btn" id="completeChallengeBtn">
-        ✓ CHALLENGE COMPLETE
-      </button>
-
-      <button class="challenge-back-btn" id="backToChallenges">
-        वापस जाएँ
-      </button>
     </div>
-  `;
 
-  document.getElementById("backToChallenges").addEventListener("click", () => {
-    stopChallengeTimer();
-    showFunCategories();
-  });
+    <div class="fz-game" id="fzGame">
+      <h2 id="fzTitle">Challenge</h2>
+      <div id="fzTask">Your task will appear here.</div>
+      <div id="fzTimer">30</div>
+      <div id="fzMessage">Press Start when ready!</div>
+      <button class="fz-btn" id="fzStart">▶ START</button>
+      <button class="fz-btn" id="fzDone" disabled>🏆 COMPLETE</button>
+      <br>
+      <button class="fz-btn fz-secondary" id="fzNext">🔄 NEXT TASK</button>
+      <button class="fz-btn fz-secondary" id="fzBack">← BACK</button>
+    </div>
 
-  document.getElementById("completeChallengeBtn").addEventListener("click", completeFunChallenge);
+    <div style="text-align:center;margin-top:20px">
+      <button class="fz-btn fz-secondary" id="fzClose">✕ CLOSE</button>
+    </div>
+  </div>
+</div>
 
-  stopChallengeTimer();
+<script>
+(function(){
+  const page = document.getElementById("funZonePage");
+  const home = document.getElementById("fzHome");
+  const game = document.getElementById("fzGame");
+  const title = document.getElementById("fzTitle");
+  const task = document.getElementById("fzTask");
+  const timerText = document.getElementById("fzTimer");
+  const message = document.getElementById("fzMessage");
+  const startBtn = document.getElementById("fzStart");
+  const doneBtn = document.getElementById("fzDone");
+  const nextBtn = document.getElementById("fzNext");
+  const backBtn = document.getElementById("fzBack");
+  const closeBtn = document.getElementById("fzClose");
 
-  challengeTimer = setInterval(() => {
-    remainingTime--;
+  const challenges = {
+    funny: [
+      "30 सेकंड में 3 मजेदार जोक्स सुनाओ।",
+      "किसी कार्टून की आवाज की नकल करो।",
+      "एक मजेदार काल्पनिक विज्ञापन बनाओ।",
+      "30 सेकंड तक बिना हँसे रहकर दिखाओ।"
+    ],
+    brain: [
+      "ऐसी कौन सी चीज है जो पानी पीते ही मर जाती है? उत्तर: आग।",
+      "एक सप्ताह में कितने दिन होते हैं?",
+      "ऐसी कौन सी चीज है जिसके दाँत हैं पर काटती नहीं? उत्तर: कंघी।",
+      "अगर 5 आम में से 2 दे दिए, तो कितने बचेंगे?"
+    ],
+    acting: [
+      "30 सेकंड तक किसी शिक्षक की मजेदार एक्टिंग करो।",
+      "खुशी का भाव बिना बोले दिखाओ।",
+      "किसी रोबोट की तरह चलने की एक्टिंग करो।",
+      "एक सुपरहीरो की एंट्री दिखाओ।"
+    ],
+    singing: [
+      "अपना पसंदीदा गाना 30 सेकंड तक गुनगुनाओ।",
+      "किसी धुन को बिना शब्दों के गुनगुनाओ।",
+      "अपनी पसंद का एक छोटा सा गाना गाओ।",
+      "किसी गाने को धीमी आवाज में गुनगुनाओ।"
+    ],
+    quick: [
+      "30 सेकंड में 10 फलों के नाम बोलो।",
+      "30 सेकंड में 10 देशों के नाम बताओ।",
+      "30 सेकंड में 5 जानवर और 5 पक्षियों के नाम बताओ।",
+      "30 सेकंड में हिंदी के 10 शब्द बोलो।"
+    ]
+  };
 
-    const timer = document.getElementById("challengeTimer");
+  const labels = {
+    funny:"😂 Funny Challenge",
+    brain:"🧠 Brain Challenge",
+    acting:"🎭 Acting Challenge",
+    singing:"🎤 Singing Challenge",
+    quick:"⚡ Quick Challenge",
+    random:"🎲 Random Challenge"
+  };
 
-    if (timer) timer.textContent = remainingTime;
+  let currentType = "";
+  let seconds = 30;
+  let interval = null;
+  let running = false;
+  let saving = false;
 
-    if (remainingTime <= 0) {
-      stopChallengeTimer();
+  function stopTimer(){
+    if(interval !== null) clearInterval(interval);
+    interval = null;
+    running = false;
+  }
 
-      const status = document.getElementById("challengeStatus");
-      const completeButton = document.getElementById("completeChallengeBtn");
+  function newTask(){
+    stopTimer();
+    seconds = 30;
+    timerText.textContent = "30";
+    startBtn.disabled = false;
+    doneBtn.disabled = true;
+    doneBtn.textContent = "🏆 COMPLETE";
+    message.textContent = "Press Start when ready!";
 
-      if (status) status.textContent = "⏰ समय पूरा हुआ!";
-      if (completeButton) completeButton.disabled = true;
+    const list = challenges[currentType] || challenges.funny;
+    task.textContent = list[Math.floor(Math.random()*list.length)];
+  }
+
+  function openGame(type){
+    currentType = type;
+    if(type === "random"){
+      const types = ["funny","brain","acting","singing","quick"];
+      currentType = types[Math.floor(Math.random()*types.length)];
     }
-  }, 1000);
-}
-
-// STOP TIMER
-function stopChallengeTimer() {
-  if (challengeTimer) {
-    clearInterval(challengeTimer);
-    challengeTimer = null;
-  }
-}
-
-// COMPLETE CHALLENGE
-async function completeFunChallenge() {
-  if (challengeCompleted) return;
-
-  if (remainingTime <= 0) {
-    alert("समय पूरा हो चुका है!");
-    return;
+    home.style.display = "none";
+    game.style.display = "block";
+    title.textContent = labels[type];
+    newTask();
   }
 
-  challengeCompleted = true;
-  stopChallengeTimer();
-
-  const rewardKey = getDailyRewardKey();
-
-  if (localStorage.getItem(rewardKey)) {
-    document.getElementById("challengeStatus").textContent =
-      "आज इस Category का Reward मिल चुका है!";
-
-    document.getElementById("completeChallengeBtn").disabled = true;
-    return;
-  }
-
-  localStorage.setItem(rewardKey, "true");
-
-  document.getElementById("challengeStatus").textContent =
-    "🎉 Challenge पूरा! 5 Points मिल गए!";
-
-  document.getElementById("completeChallengeBtn").disabled = true;
-
-  await saveFunPoints();
-}
-
-// SAVE FUN POINTS
-async function saveFunPoints() {
-  if (!currentUser) {
-    alert("Points को Leaderboard में सेव करने के लिए Google Login करें।");
-    return;
-  }
-
-  try {
-    const userRef = database.ref("leaderboard/" + currentUser.uid);
-    const snapshot = await userRef.once("value");
-    const oldData = snapshot.val() || {};
-
-    await userRef.set({
-      name: currentUser.displayName || "Quiz Player",
-      photo: currentUser.photoURL || "",
-      score: Number(oldData.score || 0) + 5,
-      updatedAt: firebase.database.ServerValue.TIMESTAMP
+  document.querySelectorAll("#fzHome .fz-card").forEach(card=>{
+    card.addEventListener("click",()=>{
+      openGame(card.dataset.type);
     });
+  });
 
-    loadLeaderboard();
+  startBtn.addEventListener("click",()=>{
+    if(running || seconds === 0) return;
+    running = true;
+    startBtn.disabled = true;
+    message.textContent = "Challenge started! Keep going!";
+    interval = setInterval(()=>{
+      seconds--;
+      timerText.textContent = seconds;
+      if(seconds <= 0){
+        stopTimer();
+        doneBtn.disabled = false;
+        message.textContent = "Time complete! Now claim your points.";
+      }
+    },1000);
+  });
 
-  } catch (error) {
-    console.error(error);
-    alert("Points सेव नहीं हो पाए।");
+  doneBtn.addEventListener("click",async()=>{
+    if(saving || seconds > 0) return;
+
+    if(!currentUser){
+      message.textContent = "पहले Google Login करो, फिर points मिलेंगे।";
+      return;
+    }
+
+    const today = new Date();
+    const dayKey = [
+      today.getFullYear(),
+      String(today.getMonth()+1).padStart(2,"0"),
+      String(today.getDate()).padStart(2,"0")
+    ].join("-");
+    const key = "quizKingFun_" + currentUser.uid + "_" + currentType + "_" + dayKey;
+
+    if(localStorage.getItem(key)){
+      message.textContent = "इस challenge के 5 points आज मिल चुके हैं!";
+      return;
+    }
+
+    saving = true;
+    doneBtn.disabled = true;
+    message.textContent = "Saving your points...";
+
+    try{
+      const ref = db.ref("leaderboard/" + currentUser.uid);
+      const result = await ref.transaction(data=>{
+        if(!data) return;
+        data.points = Number(data.points || 0) + 5;
+        return data;
+      });
+
+      if(result.committed){
+        localStorage.setItem(key,"yes");
+        message.textContent = "🎉 Congratulations! +5 points added!";
+        doneBtn.textContent = "✅ POINTS ADDED";
+        loadLeaderboard();
+      }else{
+        message.textContent = "पहले quiz खेलकर leaderboard में अपना नाम बनाओ।";
+        doneBtn.disabled = false;
+      }
+    }catch(error){
+      console.error(error);
+      message.textContent = "Points save नहीं हुए। Login और database rules जाँचो।";
+      doneBtn.disabled = false;
+    }finally{
+      saving = false;
+    }
+  });
+
+  nextBtn.addEventListener("click",newTask);
+
+  backBtn.addEventListener("click",()=>{
+    stopTimer();
+    game.style.display = "none";
+    home.style.display = "block";
+  });
+
+  function closeZone(){
+    stopTimer();
+    page.style.display = "none";
   }
-}
 
-// INITIAL STATE
-if (funZonePage) {
-  funZonePage.hidden = true;
-}
+  closeBtn.addEventListener("click",closeZone);
 
+  document.getElementById("funZoneButton").addEventListener("click",()=>{
+    page.style.display = "block";
+    home.style.display = "block";
+    game.style.display = "none";
+  });
+})();
+</script>
+  
+<!-- QUIZ KING FINAL PART -->
+
+<script>
+// Final safety checks
+window.addEventListener("load", function () {
+  if (typeof renderCategories === "function") {
+    renderCategories();
+  }
+
+  if (typeof loadLeaderboard === "function") {
+    loadLeaderboard();
+  }
+
+  console.log("QUIZ KING successfully loaded!");
+});
 </script>
 
 </body>
